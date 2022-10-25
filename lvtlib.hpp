@@ -2,104 +2,120 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
-#include <iterator>
 #include <vector>
 #include <span>
 
-// Returns numeric type from a string '__str'
-template <typename T>
-T str_to_num(const std::string &__str);
+namespace lvt
+{
+    namespace print
+    {
+        // Since C++20 (need std::span)
+        // Prints range to terminal
+        template <typename T>
+        void print_range(std::span<const T> __range);
 
-// Returns true if string is a unsigned integer number (unsigned short, unsigned int, size_t, etc.)
-bool is_uint_number(const std::string &__str);
+        // Prints range to terminal by iterators
+        template <typename Iter>
+        void print_range(Iter begin, Iter end);
 
-// Returns user's input as unsigned integer number
-template <typename T>
-T input_to_uint(const char *msg);
+        // Prints vector of pairs to terminal
+        template <typename T1, typename T2>
+        void print_pair_vec(const std::vector<std::pair<T1, T2>> &__vec);
+    }
 
-// Returns true if string is a signed integer number (short, int, long, etc.)
-bool is_int_number(const std::string &__str);
+    namespace string
+    {
+        namespace convert
+        {
+            // Returns string parameter as T
+            template <typename T>
+            T string_to_T(const std::string &__str);
+        }
 
-// Returns user's input as signed integer number
-template <typename T>
-T input_to_int(const char *msg);
+        namespace chekings
+        {
+            // Returns true if string is a unsigned integer number (unsigned short, unsigned int, size_t, etc.)
+            bool is_uint_number(const std::string &__str);
 
-// Returns true if string is a floating number (float, double, etc.)
-bool is_floating_number(const std::string &__str);
+            // Returns true if string is a signed integer number (short, int, long, etc.)
+            bool is_int_number(const std::string &__str);
 
-// Returns user's input as floating number
-template <typename T>
-T input_to_floating(const char *msg);
+            // Returns true if string is a floating number (float, double, etc.)
+            bool is_floating_number(const std::string &__str);
+        }
 
-// Returns true if first number bigger than the second number
-template <typename T>
-bool is_bigger(const T &__num1, const T &__num2);
+        namespace modifying
+        {
+            // Turning all characters in string to lowercase
+            std::string str_to_lower(const std::string &__str);
 
-// Returns one random double number
-double create_random_double(const double &__lower = 0.0, const double &__upper = 10.0);
+            // Makes all characters in string to uppercase
+            std::string str_to_upper(const std::string &__str);
+        }
+    }
 
-// Returns random string
-/* Hint: You must declare at the top following line:
-#define __GENERATE__ALL__SYMBOLS__ for generate string consisting of all symbols
-or
-#define __GENERATE__ONLY__DIGITS__ for generate string consisting of only digits */
-std::string generateRandomString(const size_t &__lenght);
+    namespace input
+    {
+        // Returns user's input as unsigned integer number
+        template <typename T>
+        T input_to_uint(const char *msg = "");
 
-// Turning all characters in string to lowercase
-std::string str_to_lower(const char *__str);
+        // Returns user's input as signed integer number
+        template <typename T>
+        T input_to_int(const char *msg = "");
 
-// Makes all characters in string to uppercase
-std::string str_to_upper(const std::string &__str);
+        // Returns user's input as floating number
+        template <typename T>
+        T input_to_floating(const char *msg = "");
+    }
 
-// Returns array of digits in descending order
-// from integer and non-negative type of number
-template <typename unumeric_t>
-std::vector<int> split_number_on_digits_descending(const unumeric_t &__number);
+    namespace random
+    {
+        // Returns one random double number
+        double create_random_double(const double &__lower = 0.0, const double &__upper = 10.0);
 
-// Returns array of digits in ascending order
-// from integer and non-negative type of number
-template <typename unumeric_t>
-std::vector<int> split_number_on_digits_ascending(const unumeric_t &__number);
+        // Returns random string
+        /* Hint: You must declare at the top following line:
+            #define __GENERATE__ALL__SYMBOLS__ for generate string consisting of all symbols
+            or
+            #define __GENERATE__ONLY__DIGITS__ for generate string consisting of only digits */
+        std::string generateRandomString(const size_t &__lenght);
+    }
 
-// Returns result of mathematical operation 'op' that applies to each element of range
-template <typename Iter, typename StartValue, typename Operation>
-auto accumulateData(Iter begin, Iter end, StartValue start_value, Operation op);
+    namespace algorithm
+    {
+        // Returns true if both are equals
+        template <typename T>
+        bool is_equal(const T &__num1, const T &__num2);
 
-// Returns 'T' as string
-template <typename T>
-std::string T_to_string(const T &__value);
+        // Returns true if first lower than the second
+        template <typename T>
+        bool is_lower(const T &__num1, const T &__num2);
 
-// Returns string parameter as T
-template <typename T>
-T string_to_T(const std::string &__str);
+        // Returns true if first bigger than the second
+        template <typename T>
+        bool is_bigger(const T &__num1, const T &__num2);
 
-// Removing consecutive same characters from some range
-template <typename T>
-void remove_same_elems(std::vector<T> &__range);
+        // Returns array of digits in descending order
+        // from integer and non-negative type of number
+        template <typename unumeric_t>
+        std::vector<int> split_number_on_digits(const unumeric_t &__number);
 
-// Since C++20 (need std::span)
-// Prints range to terminal
-template <typename T>
-void print_range(std::span<const T> __range);
+        // Returns result of mathematical operation 'op' that applies to each element of range
+        template <typename Iter, typename StartValue, typename Operation>
+        auto accumulateData(Iter begin, Iter end, StartValue start_value, Operation op);
 
-// Prints range to terminal by iterators
-template <typename Iter>
-void print_range(Iter begin, Iter end);
+        // Returns 'T' as string
+        template <typename T>
+        std::string T_to_string(const T &__value);
 
-// Removes spaces from '__str'
-// Not modifies the '__str'
-std::string remove_spaces_from_str(const std::string &__str);
+        // Removing consecutive same characters from some range
+        template <typename T>
+        void remove_same_elems(std::vector<T> &__range);
 
-// Removes spaces from '__str'
-// Modifies the '__str'
-void remove_spaces_from_str(std::string &__str);
-
-// From C++20
-// Removes spaces from '__str'
-// Not modifies the '__str'
-std::string remove_spaces_from_str(const std::string &__str);
-
-// From C++20
-// Removes spaces from '__str'
-// Modifies the '__str'
-std::string remove_spaces_from_str(std::string &__str);
+        // Returns vector of pairs from two vectors same length
+        template <typename T1, typename T2>
+        std::vector<std::pair<T1, T2>> make_vector_of_pairs_by_two_vectors(const std::vector<T1> &__vec1,
+                                                                           const std::vector<T2> &__vec2);
+    }
+}
