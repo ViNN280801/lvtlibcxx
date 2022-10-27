@@ -169,6 +169,34 @@ namespace lvt
                 std::transform(std::begin(str), std::end(str), std::begin(str), ::toupper);
                 return str;
             }
+
+            // Returns string '__str' without vowels
+            std::string remove_vowels_(const std::string &__str)
+            {
+                std::string str(__str);
+                str.erase(std::remove_if(std::begin(str), std::end(str), [](const char &ch)
+                                         { return lvt::algorithm::is_vowel(ch); }),
+                          std::cend(str));
+                return str;
+            }
+
+            // Since C++20 (need std::erase_if())
+            // Returns string '__str' without vowels
+            std::string remove_vowels_cxx_20(const std::string &__str)
+            {
+                std::string str(__str);
+                std::erase_if(str, [](const char &ch)
+                              { return lvt::algorithm::is_vowel(ch); });
+                return str;
+            }
+
+            // Returns string '__str' without vowels (need std::regex)
+            std::string remove_vowels_regex(const std::string &__str)
+            {
+                std::string str(__str);
+                std::regex vowels("[aeiouAEOIOU]");
+                return std::regex_replace(str, vowels, "");
+            }
         }
     }
 
@@ -326,6 +354,16 @@ namespace lvt
         bool is_bigger(const T &__num1, const T &__num2)
         {
             return (__num1 > __num2) ? true : false;
+        }
+
+        // Returns "true" if '__ch' is vowel, otherwise - "false"
+        bool is_vowel(const char &__ch)
+        {
+            return (__ch == 'a' || __ch == 'e' || __ch == 'i' || __ch == 'o' ||
+                    __ch == 'u' || __ch == 'A' || __ch == 'E' ||
+                    __ch == 'I' || __ch == 'O' || __ch == 'U')
+                       ? true
+                       : false;
         }
 
         // Returns array of digits in descending order

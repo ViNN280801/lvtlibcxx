@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <vector>
+#include <regex>
 #include <span>
 
 namespace lvt
@@ -51,6 +52,16 @@ namespace lvt
 
             // Makes all characters in string to uppercase
             std::string str_to_upper(const std::string &__str);
+
+            // Returns string '__str' without vowels
+            std::string remove_vowels(const std::string &__str);
+
+            // Since C++20 (need std::erase_if())
+            // Returns string '__str' without vowels
+            std::string remove_vowels_cxx_20(const std::string &__str);
+
+            // Returns string '__str' without vowels (need std::regex)
+            std::string remove_vowels_regex(const std::string &__str);
         }
     }
 
@@ -95,6 +106,9 @@ namespace lvt
         // Returns true if first bigger than the second
         template <typename T>
         bool is_bigger(const T &__num1, const T &__num2);
+
+        // Returns "true" if '__ch' is vowel, otherwise - "false"
+        bool is_vowel(const char &__ch);
 
         // Returns array of digits in descending order
         // from integer and non-negative type of number
