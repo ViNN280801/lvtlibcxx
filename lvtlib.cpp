@@ -197,6 +197,29 @@ namespace lvt
                 std::regex vowels("[aeiouAEOIOU]");
                 return std::regex_replace(str, vowels, "");
             }
+
+            // Returns string '__str' without vowels
+            void remove_vowels_(std::string &__str)
+            {
+                __str.erase(std::remove_if(std::begin(__str), std::end(__str), [](const char &ch)
+                                           { return lvt::algorithm::is_vowel(ch); }),
+                            std::cend(__str));
+            }
+
+            // Since C++20 (need std::erase_if())
+            // Returns string '__str' without vowels
+            void remove_vowels_cxx_20(std::string &__str)
+            {
+                std::erase_if(__str, [](const char &ch)
+                              { return lvt::algorithm::is_vowel(ch); });
+            }
+
+            // Returns string '__str' without vowels (need std::regex)
+            void remove_vowels_regex(std::string &__str)
+            {
+                std::regex vowels("[aeiouAEOIOU]");
+                std::regex_replace(__str, vowels, "");
+            }
         }
     }
 

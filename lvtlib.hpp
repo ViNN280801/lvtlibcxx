@@ -62,6 +62,16 @@ namespace lvt
 
             // Returns string '__str' without vowels (need std::regex)
             std::string remove_vowels_regex(const std::string &__str);
+
+            // Returns string '__str' without vowels
+            void remove_vowels(std::string &__str);
+
+            // Since C++20 (need std::erase_if())
+            // Returns string '__str' without vowels
+            void remove_vowels_cxx_20(std::string &__str);
+
+            // Returns string '__str' without vowels (need std::regex)
+            void remove_vowels_regex(std::string &__str);
         }
     }
 
