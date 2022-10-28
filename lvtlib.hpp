@@ -22,6 +22,10 @@ namespace lvt
         // Prints vector of pairs to terminal
         template <typename T1, typename T2>
         void print_pair_vec(const std::vector<std::pair<T1, T2>> &__vec);
+
+        // Prints dictionary to terminal (need std::map)
+        template <typename T1, typename T2>
+        void print_dictionary(const std::map<T1, T2> &__dictionary);
     }
 
     namespace string

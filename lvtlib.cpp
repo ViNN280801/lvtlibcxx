@@ -36,6 +36,16 @@ namespace lvt
                 std::cout << "array[" << __vec.at(index).first << "] = " << __vec.at(index).second << std::endl;
             }
         }
+
+        // Prints dictionary to terminal (need std::map)
+        template <typename T1, typename T2>
+        void print_dictionary(const std::map<T1, T2> &__dictionary)
+        {
+            for (const auto &pair : __dictionary)
+            {
+                std::cout << pair.first << " - " << pair.second << '\n';
+            }
+        }
     }
 
     namespace string
