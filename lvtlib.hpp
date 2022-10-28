@@ -76,6 +76,12 @@ namespace lvt
 
             // Returns string '__str' without vowels (need std::regex)
             void remove_vowels_regex(std::string &__str);
+
+            // Removing consecutive same characters from some range
+            std::string remove_consecutive_spaces(const std::string &__str);
+
+            // Removing consecutive same characters from some range
+            void remove_consecutive_spaces(std::string &__str);
         }
     }
 
@@ -145,5 +151,15 @@ namespace lvt
         template <typename T1, typename T2>
         std::vector<std::pair<T1, T2>> make_vector_of_pairs_by_two_vectors(const std::vector<T1> &__vec1,
                                                                            const std::vector<T2> &__vec2);
+
+        // Returns vector of words in a string, except any spaces
+        std::vector<std::string> split_str(const std::string &__str, const std::string &__delimiter = " ");
+
+        // Composing vector of string to a single string
+        std::string vec_to_str(const std::vector<std::string> &__vec);
+
+        // Since C++20 (need std::span)
+        // Composing vector of string to a single string
+        std::string vec_to_str(std::span<const std::string> __vec);
     }
 }

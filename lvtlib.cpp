@@ -230,6 +230,30 @@ namespace lvt
                 std::regex vowels("[aeiouAEOIOU]");
                 std::regex_replace(__str, vowels, "");
             }
+
+            // Removing consecutive same characters from some range
+            std::string remove_consecutive_spaces(const std::string &__str)
+            {
+                std::string str(__str);
+
+                for (auto it{std::cbegin(str)}; it != std::cend(str); ++it)
+                {
+                    while (((it + 1) != std::cend(str)) && (*it == *(it + 1) && (*it == ' ')))
+                        str.erase(it);
+                }
+
+                return str;
+            }
+
+            // Removing consecutive same characters from some range
+            void remove_consecutive_spaces(std::string &__str)
+            {
+                for (auto it{std::cbegin(__str)}; it != std::cend(__str); ++it)
+                {
+                    while (((it + 1) != std::cend(__str)) && (*it == *(it + 1) && (*it == ' ')))
+                        __str.erase(it);
+                }
+            }
         }
     }
 
@@ -466,6 +490,50 @@ namespace lvt
                            });
 
             return result_vec;
+        }
+
+        // Returns vector of words in a string, except any spaces
+        std::vector<std::string> split_str(const std::string &__str, const std::string &__delimiter)
+        {
+            std::vector<std::string> splitted_str;
+            std::string str(__str);
+
+            // Splitting string on words
+            size_t pos{str.find(__delimiter)}, initial_pos{0UL};
+            while (pos != std::string::npos)
+            {
+                splitted_str.push_back(str.substr(initial_pos, pos - initial_pos));
+                initial_pos = pos + 1UL;
+                pos = str.find(__delimiter, initial_pos);
+            }
+
+            // Adding last word
+            splitted_str.push_back(str.substr(initial_pos, std::min(pos, str.size()) - initial_pos + 1));
+
+            return splitted_str;
+        }
+
+        // Composing vector of string to a single string
+        std::string vec_to_str(const std::vector<std::string> &__vec)
+        {
+            std::string single_str("");
+            for (const auto &word : __vec)
+            {
+                single_str += word + " ";
+            }
+            return single_str;
+        }
+
+        // Since C++20 (need std::span)
+        // Composing vector of string to a single string
+        std::string vec_to_str(std::span<const std::string> __vec)
+        {
+            std::string single_str("");
+            for (const auto &word : __vec)
+            {
+                single_str += word + " ";
+            }
+            return single_str;
         }
     }
 }
