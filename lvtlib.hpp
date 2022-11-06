@@ -161,5 +161,15 @@ namespace lvt
         // Since C++20 (need std::span)
         // Composing vector of string to a single string
         std::string vec_to_str(std::span<const std::string> __vec);
+
+        // Returns iterator on output sequence that is one-past-last element
+        // stored in the output sequence, which is contains all elements with their positions,
+        // matching a predicate in a given range
+        // 'first' - start iterator of the input sequence
+        // 'last' - end iterator of the input sequence
+        // 'dest' - start iterator of the output sequence
+        template <typename InputIter, typename OutputIter, typename Predicate>
+        OutputIter find_all(InputIter first, InputIter last,
+                            OutputIter dest, Predicate pred);
     }
 }

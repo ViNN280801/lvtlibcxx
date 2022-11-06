@@ -535,5 +535,39 @@ namespace lvt
             }
             return single_str;
         }
+
+        // Returns iterator on output sequence that is one-past-last element
+        // stored in the output sequence, which is contains all elements with their positions,
+        // matching a predicate in a given range
+        // 'first' - start iterator of the input sequence
+        // 'last' - end iterator of the input sequence
+        // 'dest' - start iterator of the output sequence
+        template <typename InputIter, typename OutputIter, typename Predicate>
+        OutputIter find_all(InputIter first, InputIter last,
+                            OutputIter dest, Predicate pred)
+        {
+            while (first not_eq last)
+            {
+                if (pred(*first))
+                {
+                    *dest = first;
+                    ++dest;
+                }
+                ++first;
+            }
+            return dest;
+
+            // Example:
+            // vector vec{3, 4, 5, 4, 5, 6, 5, 8};
+            // vector<vector<int>::iterator> matches;
+            // find_all(begin(vec), end(vec), back_inserter(matches),
+            //          [](int i)
+            //          { return i == 5; });
+            // cout << format("Found {} matching elements: ", matches.size()) << endl;
+            // for (const auto &it : matches)
+            // {
+            //     cout << *it << " at position " << distance(begin(vec), it) << endl;
+            // }
+        }
     }
 }
