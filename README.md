@@ -1,0 +1,2 @@
+# lvtlibcxx
+<p>This library does not represent a specific library, (yes, I know, the name of the repository does not correspond to the content). This repository was created in order to access it using its functions in your projects. The functions are separated by <code>namespace</code>s. cmake file is just for my training in writing similar files.</p>
