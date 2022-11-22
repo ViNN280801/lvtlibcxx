@@ -50,22 +50,11 @@ namespace lvt
         namespace print_tuple
         {
             template <typename TupleType, int TupleSize>
-            class TuplePrintHelper
+            TuplePrintHelper<TupleType, TupleSize>::TuplePrintHelper(const TupleType &t)
             {
-            public:
-                TuplePrintHelper(const TupleType &t)
-                {
-                    TuplePrintHelper<TupleType, TupleSize - 1> tp{t};
-                    std::cout << std::get<TupleSize - 1>(t) << std::endl;
-                }
-            };
-
-            template <typename TupleType>
-            class TuplePrintHelper<TupleType, 0>
-            {
-            public:
-                TuplePrintHelper(const TupleType &) {}
-            };
+                TuplePrintHelper<TupleType, TupleSize - 1> tp{t};
+                std::cout << std::get<TupleSize - 1>(t) << std::endl;
+            }
 
             template <typename T>
             void printTuple(const T &t)
