@@ -27,6 +27,26 @@ namespace lvt
         // Prints dictionary to terminal (need std::map)
         template <typename T1, typename T2>
         void print_dictionary(const std::map<T1, T2> &__dictionary);
+
+        namespace print_tuple
+        {
+            template <typename TupleType, int TupleSize>
+            class TuplePrintHelper
+            {
+            public:
+                TuplePrintHelper(const TupleType &t);
+            };
+
+            template <typename TupleType>
+            class TuplePrintHelper<TupleType, 0>
+            {
+            public:
+                TuplePrintHelper(const TupleType &) {}
+            };
+
+            template <typename T>
+            void printTuple(const T &t);
+        }
     }
 
     namespace string
