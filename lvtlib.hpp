@@ -5,6 +5,7 @@
 #include <vector>
 #include <regex>
 #include <span>
+#include <tuple>
 
 namespace lvt
 {
