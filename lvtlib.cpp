@@ -47,30 +47,14 @@ namespace lvt
             }
         }
 
-        namespace print_tuple
+        // Prints tuple to terminal (need std::tuple)
+        template <typename TupleType, size_t TupleSize>
+        void printTuple(const TupleType &t)
         {
-            template <typename TupleType, int TupleSize>
-            TuplePrintHelper<TupleType, TupleSize>::TuplePrintHelper(const TupleType &t)
-            {
-                TuplePrintHelper<TupleType, TupleSize - 1> tp{t};
-                std::cout << std::get<TupleSize - 1>(t) << std::endl;
-            }
+            if constexpr (TupleSize > 1)
+                printTuple<TupleType, TupleSize - 1>(t);
 
-            template <typename T>
-            void printTuple(const T &t)
-            {
-                TuplePrintHelper<T, std::tuple_size<T>::value> tph{t};
-            }
-
-            // Example:
-            // std::tuple t{167, "Testing", false, 2.3, 53.46f};
-            // printTuple(t);
-            // Output:
-            // 167
-            // Testing
-            // 0
-            // 2.3
-            // 53.46
+            std::cout << std::get<TupleSize - 1>(t) << std::endl;
         }
     }
 
