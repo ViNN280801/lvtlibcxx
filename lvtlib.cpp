@@ -579,5 +579,24 @@ namespace lvt
             //     cout << *it << " at position " << distance(begin(vec), it) << endl;
             // }
         }
+
+        // Since C++ 20 (need std::span and <concepts>)
+        // Returns sliced vector from 'first' to 'last': [first, last]
+        template <typename T>
+        std::vector<T> sliceVector(std::span<const T> vec, const std::integral auto &first, const std::integral auto &last)
+        {
+            std::vector<T> res(std::cbegin(vec) + first, std::cbegin(vec) + last + 1);
+            return res;
+        }
+
+        // Since C++ 20 (need <concepts>)
+        // Slicing vector from 'first' to 'last': [first, last]
+        template <typename T>
+        void sliceVector(std::vector<T> &vec, const std::integral auto &first, const std::integral auto &last)
+        {
+            vec = std::vector(std::cbegin(vec) + first, std::cbegin(vec) + last + 1);
+            vec.shrink_to_fit();
+        }
+
     }
 }

@@ -176,5 +176,15 @@ namespace lvt
         template <typename InputIter, typename OutputIter, typename Predicate>
         OutputIter find_all(InputIter first, InputIter last,
                             OutputIter dest, Predicate pred);
+
+        // Since C++ 20 (need std::span and <concepts>)
+        // Returns sliced vector from 'first' to 'last': [first, last]
+        template <typename T>
+        std::vector<T> sliceVector(std::span<const T> vec, const std::integral auto &first, const std::integral auto &last);
+
+        // Since C++ 20 (need <concepts>)
+        // Slicing vector from 'first' to 'last': [first, last]
+        template <typename T>
+        void sliceVector(std::vector<T> &vec, const std::integral auto &first, const std::integral auto &last);
     }
 }
