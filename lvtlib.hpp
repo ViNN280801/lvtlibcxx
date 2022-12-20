@@ -6,6 +6,7 @@
 #include <regex>
 #include <span>
 #include <tuple>
+#include <concepts>
 
 namespace lvt
 {
@@ -186,5 +187,9 @@ namespace lvt
         // Slicing vector from 'first' to 'last': [first, last]
         template <typename T>
         void sliceVector(std::vector<T> &vec, const std::integral auto &first, const std::integral auto &last);
+
+        // Returns max subarray sum of contiguous elements in sequence
+        // Solves the "Maximum subarray problem" with the "Kadane's Algorithm"
+        std::integral auto maxSubarraySum(std::span<const std::integral auto> arr);
     }
 }

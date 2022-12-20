@@ -598,5 +598,21 @@ namespace lvt
             vec.shrink_to_fit();
         }
 
+        // Returns max subarray sum of contiguous elements in sequence
+        // Solves the "Maximum subarray problem" with the "Kadane's Algorithm"
+        std::integral auto maxSubarraySum(std::span<const std::integral auto> arr)
+        {
+            std::integral auto max{0}, local{0};
+            for (const auto &el : arr)
+            {
+                local += el;
+
+                if (local > max)
+                    max = local;
+                if (local < 0)
+                    local = 0;
+            }
+            return max;
+        }
     }
 }
