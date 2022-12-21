@@ -600,19 +600,25 @@ namespace lvt
 
         // Returns max subarray sum of contiguous elements in sequence
         // Solves the "Maximum subarray problem" with the "Kadane's Algorithm"
-        std::integral auto maxSubarraySum(std::span<const std::integral auto> arr)
+        template <typename T>
+        T maxSubarraySum(std::span<const T> arr)
         {
-            std::integral auto max{0}, local{0};
-            for (const auto &el : arr)
-            {
-                local += el;
+            T max{0}, local{0};
 
-                if (local > max)
-                    max = local;
-                if (local < 0)
-                    local = 0;
+            if constexpr (std::is_integral_v<T> || std::is_signed_v<T> ||
+                          std::is_unsigned_v<T> || std::is_floating_point_v<T>)
+            {
+                for (const auto &el : arr)
+                {
+                    local += el;
+
+                    if (local > max)
+                        max = local;
+                    if (local < 0)
+                        local = 0;
+                }
+                return max;
             }
-            return max;
         }
     }
 }

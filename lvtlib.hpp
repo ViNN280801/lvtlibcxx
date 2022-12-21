@@ -190,6 +190,7 @@ namespace lvt
 
         // Returns max subarray sum of contiguous elements in sequence
         // Solves the "Maximum subarray problem" with the "Kadane's Algorithm"
-        std::integral auto maxSubarraySum(std::span<const std::integral auto> arr);
+        template <typename T>
+        T maxSubarraySum(std::span<const T> arr)
     }
 }
