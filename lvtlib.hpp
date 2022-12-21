@@ -136,6 +136,10 @@ namespace lvt
         // Returns "true" if '__ch' is vowel, otherwise - "false"
         bool is_vowel(const char &__ch);
 
+        // Returns "true" if type of passed arg is arythmetic type of 'char'
+        template <typename T>
+        consteval bool isArithmeticType([[maybe_unused]] const T &val) noexcept;
+
         // Returns array of digits in descending order
         // from integer and non-negative type of number
         template <typename unumeric_t>
@@ -191,6 +195,6 @@ namespace lvt
         // Returns max subarray sum of contiguous elements in sequence
         // Solves the "Maximum subarray problem" with the "Kadane's Algorithm"
         template <typename T>
-        T maxSubarraySum(std::span<const T> arr)
+        T maxSubarraySum(std::span<const T> arr);
     }
 }

@@ -433,6 +433,16 @@ namespace lvt
                        : false;
         }
 
+        // Returns "true" if type of passed arg is arythmetic type of 'char'
+        template <typename T>
+        consteval bool isArithmeticType([[maybe_unused]] const T &val) noexcept
+        {
+            if constexpr (std::is_integral_v<T> || std::is_signed_v<T> ||
+                          std::is_unsigned_v<T> || std::is_floating_point_v<T>)
+                return true;
+            return false;
+        }
+
         // Returns array of digits in descending order
         // from integer and non-negative type of number
         template <typename unumeric_t>
