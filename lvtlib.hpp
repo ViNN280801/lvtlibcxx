@@ -145,6 +145,10 @@ namespace lvt
         template <typename unumeric_t>
         std::vector<int> split_number_on_digits(const unumeric_t &__number);
 
+        // Returns number by vector of digits
+        template <typename T = int, typename retType = T>
+        retType composeNumberWithDigits(const std::vector<T> &vec);
+
         // Returns result of mathematical operation 'op' that applies to each element of range
         template <typename Iter, typename StartValue, typename Operation>
         auto accumulateData(Iter begin, Iter end, StartValue start_value, Operation op);

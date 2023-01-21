@@ -461,6 +461,23 @@ namespace lvt
             }
         }
 
+        // Returns number by vector of digits
+        template <typename T, typename retType>
+        retType composeNumberWithDigits(const std::vector<T> &vec)
+        {
+            std::vector<T> vecCopy{vec};
+            std::reverse(std::begin(vecCopy), std::end(vecCopy));
+
+            retType num{}, decimal{1};
+            for (const auto &digit : vecCopy)
+            {
+                num += digit * decimal;
+                decimal *= 10;
+            }
+
+            return num;
+        }
+
         // Returns result of mathematical operation 'op' that applies to each element of range
         template <typename Iter, typename StartValue, typename Operation>
         auto accumulateData(Iter begin, Iter end, StartValue start_value, Operation op)
