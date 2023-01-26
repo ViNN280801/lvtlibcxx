@@ -647,5 +647,39 @@ namespace lvt
                 return max;
             }
         }
+
+        // Returns vector of symbols in the string 'str', except any 'delim'eters
+        std::vector<std::string> splitVecStringBy(std::string &str, const char &delim) noexcept
+        {
+            std::vector<std::string> vec;
+            std::stringstream ss(str);
+            while (std::getline(ss, str, delim))
+            {
+                vec.push_back(str);
+            }
+            return vec;
+        }
+
+        // Returns count of unique symbols in the string 'str'
+        int countOfUniqueSymbols(const std::string &str)
+        {
+            std::map<char, int> m;
+            size_t i{0UL};
+
+            while (i < str.length())
+            {
+                m[str[i]]++;
+                i++;
+            }
+
+            return m.size();
+        }
+
+        // Returns sum of only digits in the string 'str'
+        int sumOfOnlyDigits(const std::string &str)
+        {
+            return std::accumulate(std::begin(str), std::end(str), 0, [](unsigned i, char &ch)
+                                   { return std::isdigit(ch) ? i + (ch - '0') : i; });
+        }
     }
 }

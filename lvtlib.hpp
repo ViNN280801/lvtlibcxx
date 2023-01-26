@@ -7,6 +7,7 @@
 #include <span>
 #include <tuple>
 #include <concepts>
+#include <numeric>
 
 namespace lvt
 {
@@ -15,23 +16,23 @@ namespace lvt
         // Since C++20 (need std::span)
         // Prints range to terminal
         template <typename T>
-        void print_range(std::span<const T> __range);
+        void print_range(std::span<const T>);
 
         // Prints range to terminal by iterators
         template <typename Iter>
-        void print_range(Iter begin, Iter end);
+        void print_range(Iter, Iter);
 
         // Prints vector of pairs to terminal
         template <typename T1, typename T2>
-        void print_pair_vec(const std::vector<std::pair<T1, T2>> &__vec);
+        void print_pair_vec(const std::vector<std::pair<T1, T2>> &);
 
         // Prints dictionary to terminal (need std::map)
         template <typename T1, typename T2>
-        void print_dictionary(const std::map<T1, T2> &__dictionary);
+        void print_dictionary(const std::map<T1, T2> &);
 
         // Prints tuple to terminal (need std::tuple)
         template <typename TupleType, size_t TupleSize = std::tuple_size<TupleType>::value>
-        void printTuple(const TupleType &t);
+        void printTuple(const TupleType &);
     }
 
     namespace string
@@ -40,54 +41,54 @@ namespace lvt
         {
             // Returns string parameter as T
             template <typename T>
-            T string_to_T(const std::string &__str);
+            T string_to_T(const std::string &);
         }
 
         namespace chekings
         {
             // Returns true if string is a unsigned integer number (unsigned short, unsigned int, size_t, etc.)
-            bool is_uint_number(const std::string &__str);
+            bool is_uint_number(const std::string &);
 
             // Returns true if string is a signed integer number (short, int, long, etc.)
-            bool is_int_number(const std::string &__str);
+            bool is_int_number(const std::string &);
 
             // Returns true if string is a floating number (float, double, etc.)
-            bool is_floating_number(const std::string &__str);
+            bool is_floating_number(const std::string &);
         }
 
         namespace modifying
         {
             // Turning all characters in string to lowercase
-            std::string str_to_lower(const std::string &__str);
+            std::string str_to_lower(const std::string &);
 
             // Makes all characters in string to uppercase
-            std::string str_to_upper(const std::string &__str);
+            std::string str_to_upper(const std::string &);
 
             // Returns string '__str' without vowels
-            std::string remove_vowels(const std::string &__str);
+            std::string remove_vowels(const std::string &);
 
             // Since C++20 (need std::erase_if())
             // Returns string '__str' without vowels
-            std::string remove_vowels_cxx_20(const std::string &__str);
+            std::string remove_vowels_cxx_20(const std::string &);
 
             // Returns string '__str' without vowels (need std::regex)
-            std::string remove_vowels_regex(const std::string &__str);
+            std::string remove_vowels_regex(const std::string &);
 
             // Returns string '__str' without vowels
             void remove_vowels(std::string &__str);
 
             // Since C++20 (need std::erase_if())
             // Returns string '__str' without vowels
-            void remove_vowels_cxx_20(std::string &__str);
+            void remove_vowels_cxx_20(std::string &);
 
             // Returns string '__str' without vowels (need std::regex)
-            void remove_vowels_regex(std::string &__str);
+            void remove_vowels_regex(std::string &);
 
             // Removing consecutive same characters from some range
-            std::string remove_consecutive_spaces(const std::string &__str);
+            std::string remove_consecutive_spaces(const std::string &);
 
             // Removing consecutive same characters from some range
-            void remove_consecutive_spaces(std::string &__str);
+            void remove_consecutive_spaces(std::string &);
         }
     }
 
@@ -116,34 +117,34 @@ namespace lvt
             #define __GENERATE__ALL__SYMBOLS__ for generate string consisting of all symbols
             or
             #define __GENERATE__ONLY__DIGITS__ for generate string consisting of only digits */
-        std::string generateRandomString(const size_t &__lenght);
+        std::string generateRandomString(const size_t &);
     }
 
     namespace algorithm
     {
         // Returns true if both are equals
         template <typename T>
-        bool is_equal(const T &__num1, const T &__num2);
+        bool is_equal(const T &, const T &);
 
         // Returns true if first lower than the second
         template <typename T>
-        bool is_lower(const T &__num1, const T &__num2);
+        bool is_lower(const T &, const T &);
 
         // Returns true if first bigger than the second
         template <typename T>
-        bool is_bigger(const T &__num1, const T &__num2);
+        bool is_bigger(const T &, const T &);
 
         // Returns "true" if '__ch' is vowel, otherwise - "false"
-        bool is_vowel(const char &__ch);
+        bool is_vowel(const char &);
 
         // Returns "true" if type of passed arg is arythmetic type of 'char'
         template <typename T>
-        consteval bool isArithmeticType([[maybe_unused]] const T &val) noexcept;
+        consteval bool isArithmeticType([[maybe_unused]] const T &) noexcept;
 
         // Returns array of digits in descending order
         // from integer and non-negative type of number
         template <typename unumeric_t>
-        std::vector<int> split_number_on_digits(const unumeric_t &__number);
+        std::vector<int> split_number_on_digits(const unumeric_t &);
 
         // Returns number by vector of digits
         template <typename T = int, typename retType = T>
@@ -151,30 +152,30 @@ namespace lvt
 
         // Returns result of mathematical operation 'op' that applies to each element of range
         template <typename Iter, typename StartValue, typename Operation>
-        auto accumulateData(Iter begin, Iter end, StartValue start_value, Operation op);
+        auto accumulateData(Iter, Iter, StartValue, Operation);
 
         // Returns 'T' as string
         template <typename T>
-        std::string T_to_string(const T &__value);
+        std::string T_to_string(const T &);
 
         // Removing consecutive same characters from some range
         template <typename T>
-        void remove_same_elems(std::vector<T> &__range);
+        void remove_same_elems(std::vector<T> &);
 
         // Returns vector of pairs from two vectors same length
         template <typename T1, typename T2>
-        std::vector<std::pair<T1, T2>> make_vector_of_pairs_by_two_vectors(const std::vector<T1> &__vec1,
-                                                                           const std::vector<T2> &__vec2);
+        std::vector<std::pair<T1, T2>> make_vector_of_pairs_by_two_vectors(const std::vector<T1> &,
+                                                                           const std::vector<T2> &);
 
         // Returns vector of words in a string, except any spaces
-        std::vector<std::string> split_str(const std::string &__str, const std::string &__delimiter = " ");
+        std::vector<std::string> split_str(const std::string &, const std::string & = " ");
 
         // Composing vector of string to a single string
-        std::string vec_to_str(const std::vector<std::string> &__vec);
+        std::string vec_to_str(const std::vector<std::string> &);
 
         // Since C++20 (need std::span)
         // Composing vector of string to a single string
-        std::string vec_to_str(std::span<const std::string> __vec);
+        std::string vec_to_str(std::span<const std::string>);
 
         // Returns iterator on output sequence that is one-past-last element
         // stored in the output sequence, which is contains all elements with their positions,
@@ -183,22 +184,31 @@ namespace lvt
         // 'last' - end iterator of the input sequence
         // 'dest' - start iterator of the output sequence
         template <typename InputIter, typename OutputIter, typename Predicate>
-        OutputIter find_all(InputIter first, InputIter last,
-                            OutputIter dest, Predicate pred);
+        OutputIter find_all(InputIter, InputIter,
+                            OutputIter, Predicate);
 
         // Since C++ 20 (need std::span and <concepts>)
         // Returns sliced vector from 'first' to 'last': [first, last]
         template <typename T>
-        std::vector<T> sliceVector(std::span<const T> vec, const std::integral auto &first, const std::integral auto &last);
+        std::vector<T> sliceVector(std::span<const T>, const std::integral auto &, const std::integral auto &);
 
         // Since C++ 20 (need <concepts>)
         // Slicing vector from 'first' to 'last': [first, last]
         template <typename T>
-        void sliceVector(std::vector<T> &vec, const std::integral auto &first, const std::integral auto &last);
+        void sliceVector(std::vector<T> &, const std::integral auto &first, const std::integral auto &);
 
         // Returns max subarray sum of contiguous elements in sequence
         // Solves the "Maximum subarray problem" with the "Kadane's Algorithm"
         template <typename T>
-        T maxSubarraySum(std::span<const T> arr);
+        T maxSubarraySum(std::span<const T>);
+
+        // Returns vector of symbols in the string 'str', except any 'delim'eters
+        std::vector<std::string> splitVecStringBy(std::string &, const char &) noexcept;
+
+        // Returns count of unique symbols in the string 'str'
+        int countOfUniqueSymbols(const std::string &str);
+
+        // Returns sum of only digits in the string 'str'
+        int sumOfOnlyDigits(const std::string &str);
     }
 }
