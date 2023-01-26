@@ -209,6 +209,6 @@ namespace lvt
         int countOfUniqueSymbols(const std::string &str);
 
         // Returns sum of only digits in the string 'str'
-        int sumOfOnlyDigits(const std::string &str);
+        int sumOfOnlyDigits(std::string str);
     }
 }

@@ -676,7 +676,7 @@ namespace lvt
         }
 
         // Returns sum of only digits in the string 'str'
-        int sumOfOnlyDigits(const std::string &str)
+        int sumOfOnlyDigits(std::string str)
         {
             return std::accumulate(std::begin(str), std::end(str), 0, [](unsigned i, char &ch)
                                    { return std::isdigit(ch) ? i + (ch - '0') : i; });
