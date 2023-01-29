@@ -682,4 +682,72 @@ namespace lvt
                                    { return std::isdigit(ch) ? i + (ch - '0') : i; });
         }
     }
+
+    // Calculates sum of 2 big numbers represented as array of integer
+    void big_numbers::sum(const std::vector<int> &num1, const std::vector<int> &num2, std::vector<int> &res)
+    {
+        size_t pos{num1.size() - 1UL};
+        int carry{0};
+        while (pos not_eq 0)
+        {
+            int total{num1.at(pos) + num2.at(pos) + carry};
+            res[pos + 1UL] = total % 10;
+
+            if (total > 9)
+                carry = 1;
+            else
+                carry = 0;
+
+            pos--;
+        }
+        res[0UL] = carry;
+    }
+
+    // Calculates product of 2 big numbers represented as array of integer
+    void big_numbers::product(const std::vector<int> &num1, const std::vector<int> &num2, std::vector<int> &res)
+    {
+        size_t pos{res.size() - 1UL};
+
+        // Zeroing out all values in the 'res' array
+        for (size_t i{0UL}; i < res.size(); i++)
+        {
+            res.at(i) = 0;
+        }
+
+        for (size_t i{num1.size() - 1UL}; i not_eq 0; i--)
+        {
+            size_t off{num1.size() - 1UL - i};
+
+            for (size_t j{num2.size() - 1}; j not_eq 0; j--)
+            {
+                int prod{num1.at(i) * num2.at(j)};
+
+                res.at(pos - off) += prod % 10;
+                res.at(pos - off - 1UL) += res.at(pos - off) / 10 + prod / 10;
+                res.at(pos - off) %= 10;
+            }
+        }
+    }
+
+    // Returns factorial of number
+    std::string big_numbers::factorial(const int num)
+    {
+        std::vector vec{1};
+        int c{0};
+        for (int i{1}; i <= num; i++)
+        {
+            for (auto &d : vec)
+            {
+                int v{d * i + c};
+                d = v % 10;
+                c = v / 10;
+            }
+            for (; c > 0; c /= 10)
+                vec.push_back(c % 10);
+        }
+
+        std::stringstream ss;
+        std::copy(std::rbegin(vec), std::rend(vec), std::ostream_iterator<int>(ss));
+        return ss.str();
+    }
 }

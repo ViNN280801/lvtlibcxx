@@ -8,6 +8,7 @@
 #include <tuple>
 #include <concepts>
 #include <numeric>
+#include <iterator>
 
 namespace lvt
 {
@@ -210,5 +211,18 @@ namespace lvt
 
         // Returns sum of only digits in the string 'str'
         int sumOfOnlyDigits(std::string str);
+    }
+
+    namespace big_numbers
+    {
+        // Calculates sum of 2 big numbers represented as array of integer
+        void sum(const std::vector<int> &, const std::vector<int> &, std::vector<int> &);
+
+        // Calculates product of 2 big numbers represented as array of integer
+        void product(const std::vector<int> &, const std::vector<int> &, std::vector<int> &);
+
+        // Returns factorial of number
+        std::string factorial(int);
+
     }
 }
