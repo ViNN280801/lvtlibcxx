@@ -45,7 +45,7 @@ namespace lvt
             T string_to_T(const std::string &);
         }
 
-        namespace chekings
+        namespace checkings
         {
             // Returns true if string is a unsigned integer number (unsigned short, unsigned int, size_t, etc.)
             bool is_uint_number(const std::string &);
