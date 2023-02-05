@@ -9,9 +9,19 @@
 #include <concepts>
 #include <numeric>
 #include <iterator>
+#include <iomanip>
+#include <chrono>
+#include <ratio>
+
+using namespace std::chrono_literals;
 
 namespace lvt
 {
+    // Concept that specifies all types that can be convert to "std::string_view" type
+    // For example, "char", "const char *", "std::string", etc.
+    template <typename T>
+    concept String = std::is_convertible_v<T, std::string_view>;
+
     namespace print
     {
         // Since C++20 (need std::span)
@@ -223,6 +233,17 @@ namespace lvt
 
         // Returns factorial of number
         std::string factorial(int);
+    }
 
+    namespace time
+    {
+        // Printing current time to terminal at specified format
+        void printCurTime(const String auto &);
+
+        // Printing duration of executing some code snippet
+        // At first, where do you want to start the timer, you need to write following line:
+        // auto start{std::chrono::high_resolution_clock::now()};
+        // and then execute this func
+        void printExecutionTime(const auto &);
     }
 }

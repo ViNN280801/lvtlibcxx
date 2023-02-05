@@ -726,3 +726,26 @@ std::string big_numbers::factorial(const int num)
     std::copy(std::rbegin(vec), std::rend(vec), std::ostream_iterator<int>(ss));
     return ss.str();
 }
+
+void lvt::time::printCurTime(const String auto str = "%H:%M:%S")
+{
+    std::chrono::system_clock::time_point tp{std::chrono::system_clock::now()};
+    time_t tt{std::chrono::system_clock::to_time_t(tp)};
+    tm *t{localtime(&tt)};
+    std::stringstream ss;
+    ss << std::put_time(t, str);
+    std::cout << ss.str() << std::endl;
+}
+
+void lvt::time::printExecutionTime(const auto &start)
+{
+    auto end{std::chrono::high_resolution_clock::now()};
+    auto diff{end - start};
+    std::cout << std::chrono::duration<double, std::milli>{diff}.count() << "ms" << std::endl;
+
+    /* The line above is equals to next line: */
+    // std::cout << std::chrono::duration<double, std::ratio<1, 1'000>>{diff}.count() << "ms" << std::endl;
+
+    /* If you want to print result in seconds, use this: */
+    // std::cout << std::chrono::duration<double>{diff}.count() << "s" << std::endl;
+}
