@@ -659,6 +659,34 @@ int algorithm::sumOfOnlyDigits(std::string str)
                            { return std::isdigit(ch) ? i + (ch - '0') : i; });
 }
 
+// Returns count of the maximum of consecutive equal letters in the string 's'
+constexpr int countOfConsecutiveChars(const std::string &s)
+{
+    // Keep the end of the string, and point i to the first run's beginning
+    auto endIter{std::cend(s)}, nextConsecPairIter{std::adjacent_find(std::cbegin(s), endIter)};
+
+    // Vector that stores counters of consecutive elements
+    std::vector<int> counterVec;
+
+    if (nextConsecPairIter == endIter)
+        return 0;
+    else
+        // Until reached the end of the string
+        while (nextConsecPairIter not_eq endIter)
+        {
+            // Locate the end of the run (that is, the first different letter)
+            auto next{std::find_if(nextConsecPairIter, endIter, [&nextConsecPairIter](const char &c)
+                                   { return c != *nextConsecPairIter; })};
+
+            counterVec.push_back(std::distance(nextConsecPairIter, next));
+
+            // Skip to the next run's beginning
+            nextConsecPairIter = std::adjacent_find(next, endIter);
+        }
+
+    return *std::max_element(std::cbegin(counterVec), std::cend(counterVec));
+}
+
 // Calculates sum of 2 big numbers represented as array of integer
 void big_numbers::sum(const std::vector<int> &num1, const std::vector<int> &num2, std::vector<int> &res)
 {

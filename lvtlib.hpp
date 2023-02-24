@@ -221,6 +221,9 @@ namespace lvt
 
         // Returns sum of only digits in the string 'str'
         int sumOfOnlyDigits(std::string str);
+
+        // Returns count of the maximum of consecutive equal letters in the string 's'
+        constexpr int countOfConsecutiveChars(const std::string &s);
     }
 
     namespace big_numbers
