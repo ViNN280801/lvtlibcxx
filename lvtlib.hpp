@@ -217,13 +217,20 @@ namespace lvt
         std::vector<std::string> splitVecStringBy(std::string &, const char &) noexcept;
 
         // Returns count of unique symbols in the string 'str'
-        int countOfUniqueSymbols(const std::string &str);
+        int countOfUniqueSymbols(const std::string &);
 
         // Returns sum of only digits in the string 'str'
-        int sumOfOnlyDigits(std::string str);
+        int sumOfOnlyDigits(std::string);
 
-        // Returns count of the maximum of consecutive equal letters in the string 's'
-        constexpr int countOfConsecutiveChars(const std::string &s);
+        // Returns count of the first consecutive occurrences in the string
+        constexpr int firstCountOfConsecutiveOccurrences(const std::string &);
+
+        // Returns count of the first consecutive occurrences in the string
+        // 'n'- is number of occurrence
+        constexpr int countOfConsecutiveOccurrencesAt_n(const std::string &, const size_t &n = 1UL);
+
+        // Returns maximum count of the consecutive occurrences in the string 's'
+        constexpr int maxCountOfConsecutiveOccurrences(const std::string &);
     }
 
     namespace big_numbers
