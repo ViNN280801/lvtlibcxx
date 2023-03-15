@@ -231,6 +231,10 @@ namespace lvt
 
         // Returns maximum count of the consecutive occurrences in the string 's'
         constexpr int maxCountOfConsecutiveOccurrences(const std::string &);
+
+        // Return vector of pairs that will store the only unique keys as a first value of pair
+        // and sum of values of repeating keys as a second value of pair
+        std::vector<std::pair<char, int>> compressTheVectorOfPairs(std::vector<std::string> const &);
     }
 
     namespace big_numbers

@@ -729,6 +729,56 @@ constexpr int algorithm::maxCountOfConsecutiveOccurrences(const std::string &s)
     return *std::max_element(std::cbegin(counterVec), std::cend(counterVec));
 }
 
+// Return vector of pairs that will store the only unique keys as a first value of pair
+// and sum of values of repeating keys as a second value of pair
+std::vector<std::pair<char, int>> algorithm::compressTheVectorOfPairs(std::vector<std::string> const &lstOfArt)
+{
+    // Getting vector of all categories of books and it's count
+    std::vector<std::pair<char, int>> vec{{'A', 0}, {'B', 0}, {'C', 0}, {'D', 0}, {'E', 0}, {'F', 0}, {'G', 0}, {'H', 0}, {'I', 0}, {'J', 0}, {'K', 0}, {'L', 0}, {'M', 0}, {'N', 0}, {'O', 0}, {'P', 0}, {'Q', 0}, {'R', 0}, {'S', 0}, {'T', 0}, {'U', 0}, {'V', 0}, {'W', 0}, {'X', 0}, {'Y', 0}, {'Z', 0}};
+    for (auto const &art : lstOfArt)
+        vec.push_back(std::make_pair(*std::cbegin(art), std::stoi(art.substr(art.find(' ')))));
+
+    // Sorting this vector in ascending order
+    std::sort(std::begin(vec), std::end(vec));
+
+    // Creating map, that's counts the repeats of categories in 'vec' vector
+    std::map<char, int> m;
+    for (auto const &el : vec)
+    {
+        m[el.first]++;
+    }
+
+    // Creating new vector to return it as a result
+    // This vector wouldn't store the repeats, only unique keys (pair.first = key)
+    std::vector<std::pair<char, int>> newVec;
+
+    // Iterating over the map
+    for (auto const &el : m)
+    {
+        int sum{};
+        // Iterating over the vector 'vec'
+        for (size_t i{}; i < vec.size(); i++)
+        {
+            // If first letter of category of map is the same with
+            // first letter of category of vector -> get previous and next indeces
+            if (el.first == vec.at(i).first)
+            {
+                size_t prevIdx{i}, nextIdx{prevIdx + static_cast<size_t>(m.at(vec.at(i).first))};
+                // Iterating in vector where keys are non-unique and sum their values
+                for (size_t j{prevIdx}; j < nextIdx; j++)
+                    sum += vec.at(j).second;
+                // Then break the loop to avoid repeating
+                break;
+            }
+        }
+        // Filling up the new vector 'newVec' with the only unique keys and sum
+        // of their values
+        newVec.push_back(std::make_pair<char, int>(std::forward<char>(const_cast<char &>(el.first)),
+                                                   std::forward<int>(sum)));
+    }
+    return newVec;
+}
+
 // Calculates sum of 2 big numbers represented as array of integer
 void big_numbers::sum(const std::vector<int> &num1, const std::vector<int> &num2, std::vector<int> &res)
 {
