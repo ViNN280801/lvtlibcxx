@@ -847,6 +847,7 @@ std::string big_numbers::factorial(const int num)
     return ss.str();
 }
 
+// Printing current time to terminal at specified format
 void lvt::time::printCurTime(const String auto str = "%H:%M:%S")
 {
     std::chrono::system_clock::time_point tp{std::chrono::system_clock::now()};
@@ -857,6 +858,10 @@ void lvt::time::printCurTime(const String auto str = "%H:%M:%S")
     std::cout << ss.str() << std::endl;
 }
 
+// Printing duration of executing some code snippet
+// At first, where do you want to start the timer, you need to write following line:
+// auto start{std::chrono::high_resolution_clock::now()};
+// and then execute this func
 void lvt::time::printExecutionTime(const auto &start)
 {
     auto end{std::chrono::high_resolution_clock::now()};
@@ -868,4 +873,19 @@ void lvt::time::printExecutionTime(const auto &start)
 
     /* If you want to print result in seconds, use this: */
     // std::cout << std::chrono::duration<double>{diff}.count() << "s" << std::endl;
+}
+
+// Returns all content from a file 'filename' as a "std::string"
+std::string lvt::files::readFileToStr(std::string const &filename)
+{
+    std::fstream fin(filename);
+    std::stringstream ss;
+    ss << fin.rdbuf();
+    return ss.str();
+}
+
+// Returns size of the file as a "std::size_t"
+size_t lvt::files::getSizeOfTheFile(std::string const &filename)
+{
+    return std::filesystem::file_size(filename);
 }

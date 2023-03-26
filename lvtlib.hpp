@@ -12,6 +12,8 @@
 #include <iomanip>
 #include <chrono>
 #include <ratio>
+#include <fstream>
+#include <filesystem>
 
 using namespace std::chrono_literals;
 
@@ -259,5 +261,14 @@ namespace lvt
         // auto start{std::chrono::high_resolution_clock::now()};
         // and then execute this func
         void printExecutionTime(const auto &);
+    }
+
+    namespace files
+    {
+        // Returns all content from a file as a "std::string"
+        std::string readFileToStr(std::string const &);
+
+        // Returns size of the file as a "std::size_t"
+        size_t getSizeOfTheFile(std::string const &);
     }
 }
