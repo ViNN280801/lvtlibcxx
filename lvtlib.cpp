@@ -443,6 +443,55 @@ std::vector<int> lvt::random::generateRandomIntVector(size_t const &vecSize, int
     return vec;
 }
 
+// Sorting elems in vector. Best case - O(n). Middle and worst cases - O(n^2)
+template <typename T>
+constexpr void lvt::algorithm::sorting::insertionSort(std::vector<T> &vecToSort)
+{
+    // Iterating by vector from 2nd element to end: [begin + 1; end]
+    for (size_t i{1UL}; i < vecToSort.size(); i++)
+    {
+        // Initializing position of previous element from 'i'
+        size_t j{i - 1UL};
+
+        // Initializing current value of vector
+        T value{vecToSort[i]};
+
+        // While position of prev element is lower than size of vector
+        // and element in this position is bigger than current value ->
+        // assigning it to next element (j + 1) of vector
+        while (j < vecToSort.size() && vecToSort[j] > value)
+        {
+            vecToSort[j + 1] = vecToSort[j];
+            j--;
+        }
+        // Assigning current element to next from previous
+        vecToSort[j + 1] = value;
+    }
+}
+
+// Sorting vector by selection algorithm (the lowest perfonamce algorithm)
+template <typename T>
+constexpr void lvt::algorithm::sorting::selectionSort(std::vector<T> &vecToSort)
+{
+    // Iterating over the range
+    for (size_t i{}; i < vecToSort.size(); i++)
+    {
+        // For example, minimal element is begin element of the vector
+        size_t minPos{i};
+
+        // Iterating over the unsorted range
+        for (size_t j{i + 1UL}; j < vecToSort.size(); j++)
+        {
+            // If element from the unsorted range is lower than the current ->
+            // assigning new position to 'minPos' variable
+            if (vecToSort.at(j) < vecToSort.at(minPos))
+                minPos = j;
+        }
+        // Swap minimal element with current
+        std::swap(vecToSort.at(i), vecToSort.at(minPos));
+    }
+}
+
 // Returns array of digits in descending order
 // from integer and non-negative type of number
 template <typename unumeric_t>

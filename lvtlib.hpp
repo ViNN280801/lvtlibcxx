@@ -161,6 +161,17 @@ namespace lvt
 
     namespace algorithm
     {
+        namespace sorting
+        {
+            // Sorting elems in vector. Best case - O(n). Middle and worst cases - O(n^2)
+            template <typename T>
+            constexpr void insertionSort(std::vector<T> &);
+
+            // Sorting vector by selection algorithm (the lowest perfonamce algorithm)
+            template <typename T>
+            constexpr void selectionSort(std::vector<T> &);
+        }
+
         // Returns array of digits in descending order
         // from integer and non-negative type of number
         template <typename unumeric_t>
