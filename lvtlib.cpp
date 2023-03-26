@@ -379,6 +379,29 @@ std::string lvt::random::generateRandomString(const size_t &__lenght)
     return rndmString;
 }
 
+// Returns random vector filled with integer numbers
+// 'vecSize' - size of the vector
+// 'from' - lower number
+// 'to' - higher number to generate
+std::vector<int> lvt::random::generateRandomIntVector(size_t const &vecSize, int const &from, int const &to)
+{
+    // Initializing vector with size 'vecSize'
+    std::vector<int> vec(vecSize);
+
+    // Create an instance of an engine
+    std::random_device rdm_device;
+
+    // Specify engine and distribution
+    std::mt19937 engine{rdm_device()};
+
+    // Generating random integer numbers
+    std::uniform_int_distribution<int> dist{from, to};
+    std::generate(std::begin(vec), std::end(vec), [&dist, &engine]()
+                  { return dist(engine); });
+
+    return vec;
+}
+
 // Returns true if both are equals
 template <typename T>
 bool algorithm::is_equal(const T &__num1, const T &__num2)

@@ -14,6 +14,7 @@
 #include <ratio>
 #include <fstream>
 #include <filesystem>
+#include <random>
 
 using namespace std::chrono_literals;
 
@@ -131,6 +132,12 @@ namespace lvt
             or
             #define __GENERATE__ONLY__DIGITS__ for generate string consisting of only digits */
         std::string generateRandomString(const size_t &);
+
+        // Returns random vector filled with integer numbers
+        // 'vecSize' - size of the vector
+        // 'from' - lower number
+        // 'to' - higher number to generate
+        std::vector<int> generateRandomIntVector(size_t const &vecSize = 10UL, int const &from = -50, int const &to = 50);
     }
 
     namespace algorithm
