@@ -55,18 +55,49 @@ void print::printTuple(const TupleType &t)
     std::cout << std::get<TupleSize - 1>(t) << std::endl;
 }
 
-// Returns string parameter as T
+// Returns true if both are equals
 template <typename T>
-T string::convert::string_to_T(const std::string &__str)
+bool lvt::checkings::is_equal(const T &__num1, const T &__num2)
 {
-    T value;
-    std::istringstream iss(__str);
-    iss >> value;
-    return value;
+    return (__num1 == __num2) ? true : false;
+}
+
+// Returns true if first lower than the second
+template <typename T>
+bool lvt::checkings::is_lower(const T &__num1, const T &__num2)
+{
+    return (__num1 < __num2) ? true : false;
+}
+
+// Returns true if first bigger than the second
+template <typename T>
+bool lvt::checkings::is_bigger(const T &__num1, const T &__num2)
+{
+    return (__num1 > __num2) ? true : false;
+}
+
+// Returns "true" if '__ch' is vowel, otherwise - "false"
+bool lvt::checkings::is_vowel(const char &__ch)
+{
+    return (__ch == 'a' || __ch == 'e' || __ch == 'i' || __ch == 'o' ||
+            __ch == 'u' || __ch == 'A' || __ch == 'E' ||
+            __ch == 'I' || __ch == 'O' || __ch == 'U')
+               ? true
+               : false;
+}
+
+// Returns "true" if type of passed arg is arythmetic type of 'char'
+template <typename T>
+consteval bool lvt::checkings::isArithmeticType([[maybe_unused]] const T &val) noexcept
+{
+    if constexpr (std::is_integral_v<T> || std::is_signed_v<T> ||
+                  std::is_unsigned_v<T> || std::is_floating_point_v<T>)
+        return true;
+    return false;
 }
 
 // Returns true if string is a unsigned integer number (unsigned short, unsigned int, size_t, etc.)
-bool string::checkings::is_uint_number(const std::string &__str)
+bool lvt::checkings::is_uint_number(const std::string &__str)
 {
     // Iterator for '__str' variable
     std::string::const_iterator it = __str.begin();
@@ -82,7 +113,7 @@ bool string::checkings::is_uint_number(const std::string &__str)
 }
 
 // Returns true if string is a signed integer number (short, int, long, etc.)
-bool string::checkings::is_int_number(const std::string &__str)
+bool lvt::checkings::is_int_number(const std::string &__str)
 {
     // Iterator for '__str' variable
     std::string::const_iterator it = __str.begin();
@@ -116,7 +147,7 @@ bool string::checkings::is_int_number(const std::string &__str)
 }
 
 // Returns true if string is a floating number (float, double, etc.)
-bool string::checkings::is_floating_number(const std::string &__str)
+bool lvt::checkings::is_floating_number(const std::string &__str)
 {
     // Iterator for '__str' variable
     std::string::const_iterator it = __str.begin();
@@ -161,6 +192,16 @@ bool string::checkings::is_floating_number(const std::string &__str)
     return ((!__str.empty()) && (it == __str.end()));
 }
 
+// Returns string parameter as T
+template <typename T>
+T string::convert::string_to_T(const std::string &__str)
+{
+    T value;
+    std::istringstream iss(__str);
+    iss >> value;
+    return value;
+}
+
 // Turning all characters in string to lowercase
 std::string string::modifying::str_to_lower(const std::string &__str)
 {
@@ -182,7 +223,7 @@ std::string string::modifying::remove_vowels(const std::string &__str)
 {
     std::string str(__str);
     str.erase(std::remove_if(std::begin(str), std::end(str), [](const char &ch)
-                             { return lvt::algorithm::is_vowel(ch); }),
+                             { return lvt::checkings::is_vowel(ch); }),
               std::cend(str));
     return str;
 }
@@ -193,7 +234,7 @@ std::string string::modifying::remove_vowels_cxx_20(const std::string &__str)
 {
     std::string str(__str);
     std::erase_if(str, [](const char &ch)
-                  { return lvt::algorithm::is_vowel(ch); });
+                  { return lvt::checkings::is_vowel(ch); });
     return str;
 }
 
@@ -209,7 +250,7 @@ std::string string::modifying::remove_vowels_regex(const std::string &__str)
 void string::modifying::remove_vowels(std::string &__str)
 {
     __str.erase(std::remove_if(std::begin(__str), std::end(__str), [](const char &ch)
-                               { return lvt::algorithm::is_vowel(ch); }),
+                               { return lvt::checkings::is_vowel(ch); }),
                 std::cend(__str));
 }
 
@@ -218,7 +259,7 @@ void string::modifying::remove_vowels(std::string &__str)
 void string::modifying::remove_vowels_cxx_20(std::string &__str)
 {
     std::erase_if(__str, [](const char &ch)
-                  { return lvt::algorithm::is_vowel(ch); });
+                  { return lvt::checkings::is_vowel(ch); });
 }
 
 // Returns string '__str' without vowels (need std::regex)
@@ -266,7 +307,7 @@ T input::input_to_uint(const char *__msg)
         std::cin >> users_input;
 
         // If 'input' is contains only of digits -> break infinity loop
-        if (lvt::string::checkings::is_uint_number(users_input))
+        if (lvt::checkings::is_uint_number(users_input))
             break;
         // Else: print message and back to the begininng of 'while' loop
         else
@@ -294,7 +335,7 @@ T input::input_to_int(const char *__msg)
         std::cin >> users_input;
 
         // If 'input' is contains only of digits -> break infinity loop
-        if (lvt::string::checkings::is_int_number(users_input))
+        if (lvt::checkings::is_int_number(users_input))
             break;
         // Else: print message and back to the begininng of 'while' loop
         else
@@ -322,7 +363,7 @@ T input::input_to_floating(const char *__msg)
         std::cin >> users_input;
 
         // If 'input' is contains only of digits -> break infinity loop
-        if (lvt::string::checkings::is_floating_number(users_input))
+        if (lvt::checkings::is_floating_number(users_input))
             break;
         // Else: print message and back to the begininng of 'while' loop
         else
@@ -400,47 +441,6 @@ std::vector<int> lvt::random::generateRandomIntVector(size_t const &vecSize, int
                   { return dist(engine); });
 
     return vec;
-}
-
-// Returns true if both are equals
-template <typename T>
-bool algorithm::is_equal(const T &__num1, const T &__num2)
-{
-    return (__num1 == __num2) ? true : false;
-}
-
-// Returns true if first lower than the second
-template <typename T>
-bool algorithm::is_lower(const T &__num1, const T &__num2)
-{
-    return (__num1 < __num2) ? true : false;
-}
-
-// Returns true if first bigger than the second
-template <typename T>
-bool algorithm::is_bigger(const T &__num1, const T &__num2)
-{
-    return (__num1 > __num2) ? true : false;
-}
-
-// Returns "true" if '__ch' is vowel, otherwise - "false"
-bool algorithm::is_vowel(const char &__ch)
-{
-    return (__ch == 'a' || __ch == 'e' || __ch == 'i' || __ch == 'o' ||
-            __ch == 'u' || __ch == 'A' || __ch == 'E' ||
-            __ch == 'I' || __ch == 'O' || __ch == 'U')
-               ? true
-               : false;
-}
-
-// Returns "true" if type of passed arg is arythmetic type of 'char'
-template <typename T>
-consteval bool algorithm::isArithmeticType([[maybe_unused]] const T &val) noexcept
-{
-    if constexpr (std::is_integral_v<T> || std::is_signed_v<T> ||
-                  std::is_unsigned_v<T> || std::is_floating_point_v<T>)
-        return true;
-    return false;
 }
 
 // Returns array of digits in descending order

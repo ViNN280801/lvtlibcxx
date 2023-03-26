@@ -49,6 +49,37 @@ namespace lvt
         void printTuple(const TupleType &);
     }
 
+    namespace checkings
+    {
+        // Returns true if string is a unsigned integer number (unsigned short, unsigned int, size_t, etc.)
+        bool is_uint_number(const std::string &);
+
+        // Returns true if string is a signed integer number (short, int, long, etc.)
+        bool is_int_number(const std::string &);
+
+        // Returns true if string is a floating number (float, double, etc.)
+        bool is_floating_number(const std::string &);
+
+        // Returns true if both are equals
+        template <typename T>
+        bool is_equal(const T &, const T &);
+
+        // Returns true if first lower than the second
+        template <typename T>
+        bool is_lower(const T &, const T &);
+
+        // Returns true if first bigger than the second
+        template <typename T>
+        bool is_bigger(const T &, const T &);
+
+        // Returns "true" if '__ch' is vowel, otherwise - "false"
+        bool is_vowel(const char &);
+
+        // Returns "true" if type of passed arg is arythmetic type of 'char'
+        template <typename T>
+        consteval bool isArithmeticType([[maybe_unused]] const T &) noexcept;
+    }
+
     namespace string
     {
         namespace convert
@@ -56,18 +87,6 @@ namespace lvt
             // Returns string parameter as T
             template <typename T>
             T string_to_T(const std::string &);
-        }
-
-        namespace checkings
-        {
-            // Returns true if string is a unsigned integer number (unsigned short, unsigned int, size_t, etc.)
-            bool is_uint_number(const std::string &);
-
-            // Returns true if string is a signed integer number (short, int, long, etc.)
-            bool is_int_number(const std::string &);
-
-            // Returns true if string is a floating number (float, double, etc.)
-            bool is_floating_number(const std::string &);
         }
 
         namespace modifying
@@ -142,25 +161,6 @@ namespace lvt
 
     namespace algorithm
     {
-        // Returns true if both are equals
-        template <typename T>
-        bool is_equal(const T &, const T &);
-
-        // Returns true if first lower than the second
-        template <typename T>
-        bool is_lower(const T &, const T &);
-
-        // Returns true if first bigger than the second
-        template <typename T>
-        bool is_bigger(const T &, const T &);
-
-        // Returns "true" if '__ch' is vowel, otherwise - "false"
-        bool is_vowel(const char &);
-
-        // Returns "true" if type of passed arg is arythmetic type of 'char'
-        template <typename T>
-        consteval bool isArithmeticType([[maybe_unused]] const T &) noexcept;
-
         // Returns array of digits in descending order
         // from integer and non-negative type of number
         template <typename unumeric_t>
