@@ -2,32 +2,49 @@
 
 using namespace lvt;
 
+// Prints array to terminal
+template <typename T>
+void lvt::print::printVec(std::vector<T> const &vec)
+{
+    for (const auto &el : vec)
+        std::cout << el << ' ';
+    endl(std::cout);
+}
+
 // Since C++20 (need std::span)
 // Prints range to terminal
 template <typename T>
-void print::print_range(std::span<const T> __range)
+void lvt::print::print_range(std::span<const T> __range)
 {
     for (const auto &el : __range)
-    {
         std::cout << el << ' ';
-    }
     endl(std::cout);
 }
 
 // Prints range to terminal by iterators
 template <typename Iter>
-void print::print_range(Iter begin, Iter end)
+void lvt::print::print_range(Iter begin, Iter end)
 {
     for (auto iter{begin}; iter != end; ++iter)
-    {
         std::cout << *iter << ' ';
-    }
     endl(std::cout);
+}
+
+// Prints matrix to terminal
+template <typename T>
+void lvt::print::printMatrix(std::vector<std::vector<T>> const &matrix)
+{
+    for (size_t row{}; row < matrix.size(); row++)
+    {
+        for (size_t col{}; col < matrix.at(row).size(); col++)
+            std::cout << matrix.at(row).at(col) << '\t';
+        std::endl(std::cout);
+    }
 }
 
 // Prints vector of pairs to terminal
 template <typename T1, typename T2>
-void print::print_pair_vec(const std::vector<std::pair<T1, T2>> &__vec)
+void lvt::print::print_pair_vec(const std::vector<std::pair<T1, T2>> &__vec)
 {
     for (size_t index{0UL}; index < __vec.size(); index++)
     {
@@ -37,7 +54,7 @@ void print::print_pair_vec(const std::vector<std::pair<T1, T2>> &__vec)
 
 // Prints dictionary to terminal (need std::map)
 template <typename T1, typename T2>
-void print::print_dictionary(const std::map<T1, T2> &__dictionary)
+void lvt::print::print_dictionary(const std::map<T1, T2> &__dictionary)
 {
     for (const auto &pair : __dictionary)
     {
@@ -47,7 +64,7 @@ void print::print_dictionary(const std::map<T1, T2> &__dictionary)
 
 // Prints tuple to terminal (need std::tuple)
 template <typename TupleType, size_t TupleSize>
-void print::printTuple(const TupleType &t)
+void lvt::print::printTuple(const TupleType &t)
 {
     if constexpr (TupleSize > 1)
         printTuple<TupleType, TupleSize - 1>(t);
@@ -194,12 +211,52 @@ bool lvt::checkings::is_floating_number(const std::string &__str)
 
 // Returns string parameter as T
 template <typename T>
-T string::convert::string_to_T(const std::string &__str)
+T convert::str_to_T(const std::string &__str)
 {
     T value;
     std::istringstream iss(__str);
     iss >> value;
     return value;
+}
+
+// Returns array that formed from the 2d array
+template <typename T>
+std::vector<T> convert::matrixToArr(std::vector<std::vector<T>> const &matrix)
+{
+    std::vector<T> arr(matrix.size() * matrix.at(0).size());
+    size_t idx{};
+    for (size_t row{}; row < matrix.size(); row++)
+    {
+        for (size_t col{}; col < matrix.at(row).size(); col++)
+        {
+            arr.at(idx) = matrix.at(row).at(col);
+            idx++;
+        }
+    }
+    return arr;
+}
+
+// Returns 2d array that formed from the 1d array
+template <typename T>
+std::vector<std::vector<T>> convert::arrToMatrix(std::vector<T> const &arr, size_t const &rows, size_t const &cols)
+{
+    if (arr.size() != rows * cols)
+    {
+        std::cout << "The size of array and matrix don't match. Returning empty matrix..." << std::endl;
+        return std::vector<std::vector<T>>{{}};
+    }
+
+    std::vector<std::vector<T>> matrix(rows, std::vector<T>(cols));
+    size_t idx{};
+    for (size_t row{}; row < rows && (idx < arr.size()); row++)
+    {
+        for (size_t col{}; col < cols; col++)
+        {
+            matrix.at(row).at(col) = arr.at(idx);
+            idx++;
+        }
+    }
+    return matrix;
 }
 
 // Turning all characters in string to lowercase
@@ -315,7 +372,7 @@ T input::input_to_uint(const char *__msg)
     }
 
     // Converting user's string to numeric type to return it as a result
-    T num{str_to_num<T>(users_input)};
+    T num{str_to_T<T>(users_input)};
 
     // Returning converted user's inputted value to 'T' type
     return num;
@@ -343,7 +400,7 @@ T input::input_to_int(const char *__msg)
     }
 
     // Converting user's string to numeric type to return it as a result
-    T num{str_to_num<T>(users_input)};
+    T num{str_to_T<T>(users_input)};
 
     // Returning converted user's inputted value to 'T' type
     return num;
@@ -371,7 +428,7 @@ T input::input_to_floating(const char *__msg)
     }
 
     // Converting user's string to numeric type to return it as a result
-    T num{str_to_num<T>(users_input)};
+    T num{str_to_T<T>(users_input)};
 
     // Returning converted user's inputted value to 'T' type
     return num;
@@ -443,9 +500,47 @@ std::vector<int> lvt::random::generateRandomIntVector(size_t const &vecSize, int
     return vec;
 }
 
+// Returns matrix of integers that is filled with random numbers
+// Gets rows as a first parameter and columns as a second
+// Third param - offset, fourth - range
+std::vector<std::vector<int>> lvt::random::generateRandomIntMatrix(size_t const &rows, size_t const &cols,
+                                                                   int const &offset, int const &range)
+{
+    srand(std::time(nullptr));
+
+    // Allocating necessary memory for matrix
+    std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
+    for (size_t row{}; row < rows; row++)
+        for (size_t col{}; col < cols; col++)
+            matrix.at(row).at(col) = offset + (rand() % range);
+    return matrix;
+}
+
+// Sorting 1d array by bubble sorting algorithm
+template <typename T>
+constexpr void lvt::algorithm::sorting::bubbleSortAscending(std::vector<T> &arr)
+{
+    for (size_t i{}; i < arr.size(); i++)
+        for (size_t j{}; j < arr.size(); j++)
+            if (arr.at(i) < arr.at(j))
+                std::swap(arr.at(i), arr.at(j));
+}
+
+// Sorting 2d array by bubble sorting algorithm
+template <typename T>
+constexpr void lvt::algorithm::sorting::bubbleSort2DAscending(std::vector<std::vector<T>> &matrix)
+{
+    for (size_t row_1{}; row_1 < matrix.size(); row_1++)
+        for (size_t row_2{}; row_2 < matrix.size(); row_2++)
+            for (size_t col_1{}; col_1 < matrix.at(row_1).size(); col_1++)
+                for (size_t col_2{}; col_2 < matrix.at(row_2).size(); col_2++)
+                    if (matrix.at(row_1).at(col_1) < matrix.at(row_2).at(col_2))
+                        std::swap(matrix.at(row_1).at(col_1), matrix.at(row_2).at(col_2));
+}
+
 // Sorting elems in vector. Best case - O(n). Middle and worst cases - O(n^2)
 template <typename T>
-constexpr void lvt::algorithm::sorting::insertionSort(std::vector<T> &vecToSort)
+constexpr void lvt::algorithm::sorting::insertionSortAscending(std::vector<T> &vecToSort)
 {
     // Iterating by vector from 2nd element to end: [begin + 1; end]
     for (size_t i{1UL}; i < vecToSort.size(); i++)
@@ -469,9 +564,28 @@ constexpr void lvt::algorithm::sorting::insertionSort(std::vector<T> &vecToSort)
     }
 }
 
+// Sorting 2d array by insertion sorting algorithm
+template <typename T>
+constexpr void lvt::algorithm::sorting::insertionSort2DAscending(std::vector<std::vector<T>> &matrix)
+{
+    std::vector<T> arr(lvt::convert::matrixToArr(matrix));
+    for (size_t i{1}; i < arr.size(); i++)
+    {
+        T val{arr.at(i)};
+        size_t pos{i - 1};
+        while (pos < arr.size() && arr.at(pos) > val)
+        {
+            arr.at(pos + 1) = arr.at(pos);
+            pos--;
+        }
+        arr.at(pos + 1) = val;
+    }
+    matrix = lvt::convert::arrToMatrix(arr, matrix.size(), matrix.at(0).size());
+}
+
 // Sorting vector by selection algorithm (the lowest perfonamce algorithm)
 template <typename T>
-constexpr void lvt::algorithm::sorting::selectionSort(std::vector<T> &vecToSort)
+constexpr void lvt::algorithm::sorting::selectionSortAscending(std::vector<T> &vecToSort)
 {
     // Iterating over the range
     for (size_t i{}; i < vecToSort.size(); i++)
@@ -490,6 +604,112 @@ constexpr void lvt::algorithm::sorting::selectionSort(std::vector<T> &vecToSort)
         // Swap minimal element with current
         std::swap(vecToSort.at(i), vecToSort.at(minPos));
     }
+}
+
+// Sorting 2d array by selection sorting algorithm
+template <typename T>
+constexpr void lvt::algorithm::sorting::selectionSort2DAscending(std::vector<std::vector<T>> &matrix)
+{
+    for (size_t row{}; row < matrix.size(); row++)
+    {
+        for (size_t col{}; col < matrix.at(row).size(); col++)
+        {
+            size_t minRow{row}, minCol{col};
+            T min{matrix.at(row).at(col)};
+
+            for (size_t j{col + 1}; j < matrix.at(row).size(); j++)
+            {
+                if (matrix.at(row).at(j) < min)
+                {
+                    minRow = row;
+                    minCol = j;
+                    min = matrix.at(row).at(j);
+                }
+            }
+            for (size_t i{row + 1}; i < matrix.size(); i++)
+            {
+                for (size_t j{}; j < matrix.at(row).size(); j++)
+                {
+                    if (matrix.at(i).at(j) < min)
+                    {
+                        minRow = i;
+                        minCol = j;
+                        min = matrix.at(i).at(j);
+                    }
+                }
+            }
+            matrix.at(minRow).at(minCol) = matrix.at(row).at(col);
+            std::swap(matrix.at(row).at(col), min);
+        }
+    }
+}
+
+// Sorting 2d array by Shell sorting algorithm
+template <typename T>
+constexpr void lvt::algorithm::sorting::ShellSort2DAscending(std::vector<std::vector<T>> &matrix)
+{
+    std::vector<int> arr(lvt::convert::matrixToArr(matrix));
+    for (size_t interval{arr.size() / 2}; interval > 0; interval /= 2)
+    {
+        for (size_t i{}; i < arr.size(); i++)
+        {
+            T val{arr.at(i)};
+            size_t j{};
+            for (j = i; (j >= interval) && (arr.at(j - interval) > val); j -= interval)
+            {
+                arr.at(j) = arr.at(j - interval);
+            }
+            arr.at(j) = val;
+        }
+    }
+    matrix = lvt::convert::arrToMatrix(arr, matrix.size(), matrix.at(0).size());
+}
+
+// Auxiliary method for quick sort algortihm
+template <typename T>
+constexpr void lvt::algorithm::sorting::qSortAscending(std::vector<T> &arr, size_t low, size_t high)
+{
+    size_t i{low}, j{high};
+    // Select pivot value
+    T pivot{arr.at((i + j) / 2)}, tmp{};
+
+    while (i <= j && i < arr.size() && j < arr.size())
+    {
+        while (arr.at(i) < pivot && i < arr.size())
+            i++;
+        while (arr.at(j) > pivot && j < arr.size())
+            j--;
+        if (i <= j && i < arr.size() && j < arr.size())
+        {
+            tmp = arr.at(i);
+            arr.at(i) = arr.at(j);
+            arr.at(j) = tmp;
+            i++;
+            j--;
+        }
+    }
+    // Recursive call sorting to left side from pivot
+    if (j > low && j < arr.size())
+        lvt::algorithm::sorting::qSortAscending(arr, low, j);
+    // Recursive call sorting to right side from pivot
+    if (i < high && i < arr.size())
+        lvt::algorithm::sorting::qSortAscending(arr, i, high);
+}
+
+// Sorting array by quick sorting (Hoare sort) algorithm
+template <typename T>
+constexpr void lvt::algorithm::sorting::quickSortAscending(std::vector<T> &arr)
+{
+    lvt::algorithm::sorting::qSortAscending(arr, 0, arr.size() - 1);
+}
+
+// Sorting 2d array by quick sorting (Hoare sort) algorithm
+template <typename T>
+constexpr void lvt::algorithm::sorting::quickSort2DAscending(std::vector<std::vector<T>> &matrix)
+{
+    std::vector<T> arr(lvt::convert::matrixToArr(matrix));
+    lvt::algorithm::sorting::qSortAscending(arr, 0, arr.size() - 1);
+    matrix = lvt::convert::arrToMatrix(arr, matrix.size(), matrix.at(0).size());
 }
 
 // Returns array of digits in descending order

@@ -1,3 +1,6 @@
+#ifndef LVTLIB_HPP
+#define LVTLIB_HPP
+
 #include <iostream>
 #include <sstream>
 #include <iomanip>
@@ -15,6 +18,7 @@
 #include <fstream>
 #include <filesystem>
 #include <random>
+#include <ctime>
 
 using namespace std::chrono_literals;
 
@@ -27,6 +31,10 @@ namespace lvt
 
     namespace print
     {
+        // Prints array to terminal
+        template <typename T>
+        void printVec(std::vector<T> const &);
+
         // Since C++20 (need std::span)
         // Prints range to terminal
         template <typename T>
@@ -35,6 +43,10 @@ namespace lvt
         // Prints range to terminal by iterators
         template <typename Iter>
         void print_range(Iter, Iter);
+
+        // Prints matrix to terminal
+        template <typename T>
+        void printMatrix(std::vector<std::vector<T>> const &);
 
         // Prints vector of pairs to terminal
         template <typename T1, typename T2>
@@ -80,15 +92,23 @@ namespace lvt
         consteval bool isArithmeticType([[maybe_unused]] const T &) noexcept;
     }
 
+    namespace convert
+    {
+        // Returns string parameter as T
+        template <typename T>
+        T str_to_T(const std::string &);
+
+        // Returns array that formed from the 2d array
+        template <typename T>
+        std::vector<T> matrixToArr(std::vector<std::vector<T>> const &);
+
+        // Returns 2d array that formed from the 1d array
+        template <typename T>
+        std::vector<std::vector<T>> arrToMatrix(std::vector<T> const &, size_t const &, size_t const &);
+    }
+
     namespace string
     {
-        namespace convert
-        {
-            // Returns string parameter as T
-            template <typename T>
-            T string_to_T(const std::string &);
-        }
-
         namespace modifying
         {
             // Turning all characters in string to lowercase
@@ -157,19 +177,57 @@ namespace lvt
         // 'from' - lower number
         // 'to' - higher number to generate
         std::vector<int> generateRandomIntVector(size_t const &vecSize = 10UL, int const &from = -50, int const &to = 50);
+
+        // Returns matrix of integers that is filled with random numbers
+        // Gets rows as a first parameter and columns as a second
+        // Third param - offset, fourth - range
+        std::vector<std::vector<int>> generateRandomIntMatrix(size_t const &rows, size_t const &cols,
+                                                              int const &offset = 1, int const &range = 100);
     }
 
     namespace algorithm
     {
         namespace sorting
         {
+            // Sorting 1d array by bubble sorting algorithm
+            template <typename T>
+            constexpr void bubbleSortAscending(std::vector<T> &);
+
+            // Sorting 2d array by bubble sorting algorithm
+            template <typename T>
+            constexpr void bubbleSort2DAscending(std::vector<std::vector<T>> &);
+
             // Sorting elems in vector. Best case - O(n). Middle and worst cases - O(n^2)
             template <typename T>
-            constexpr void insertionSort(std::vector<T> &);
+            constexpr void insertionSortAscending(std::vector<T> &);
 
-            // Sorting vector by selection algorithm (the lowest perfonamce algorithm)
+            // Sorting 2d array by insertion sorting algorithm
             template <typename T>
-            constexpr void selectionSort(std::vector<T> &);
+            constexpr void insertionSort2DAscending(std::vector<std::vector<T>> &);
+
+            // Sorting vector by selection algorithm
+            template <typename T>
+            constexpr void selectionSortAscending(std::vector<T> &);
+
+            // Sorting 2d array by selection sorting algorithm
+            template <typename T>
+            constexpr void selectionSort2DAscending(std::vector<std::vector<T>> &);
+
+            // Sorting 2d array by Shell sorting algorithm
+            template <typename T>
+            constexpr void ShellSort2DAscending(std::vector<std::vector<T>> &);
+
+            // Auxiliary method for quick sort algortihm
+            template <typename T>
+            constexpr void qSortAscending(std::vector<T> &arr, size_t, size_t);
+
+            // Sorting array by quick sorting (Hoare sort) algorithm
+            template <typename T>
+            constexpr void quickSortAscending(std::vector<T> &);
+
+            // Sorting 2d array by quick sorting (Hoare sort) algorithm
+            template <typename T>
+            constexpr void quickSort2DAscending(std::vector<std::vector<T>> &);
         }
 
         // Returns array of digits in descending order
@@ -290,3 +348,5 @@ namespace lvt
         size_t getSizeOfTheFile(std::string const &);
     }
 }
+
+#endif // LVTLIB_HPP
