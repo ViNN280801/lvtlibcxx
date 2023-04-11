@@ -20,6 +20,8 @@
 #include <random>
 #include <ctime>
 
+#include "lvt_impl.hpp"
+
 using namespace std::chrono_literals;
 
 namespace lvt
@@ -33,7 +35,7 @@ namespace lvt
     {
         // Prints array to terminal
         template <typename T>
-        void printVec(std::vector<T> const &);
+        extern void printVec(std::vector<T> const &);
 
         // Since C++20 (need std::span)
         // Prints range to terminal
