@@ -1,4 +1,4 @@
-#include "lvtlib.hpp"
+#include "lvt.hpp"
 
 using namespace lvt;
 
@@ -234,6 +234,15 @@ std::vector<T> convert::matrixToArr(std::vector<std::vector<T>> const &matrix)
         }
     }
     return arr;
+}
+
+// Returns 'T' as string
+template <typename T>
+std::string convert::T_to_str(const T &__value)
+{
+    std::ostringstream oss;
+    oss << __value;
+    return oss.str();
 }
 
 // Returns 2d array that formed from the 1d array
@@ -757,15 +766,6 @@ auto algorithm::accumulateData(Iter begin, Iter end, StartValue start_value, Ope
         accumulated = op(accumulated, *iter);
     }
     return accumulated;
-}
-
-// Returns 'T' as string
-template <typename T>
-std::string algorithm::T_to_string(const T &__value)
-{
-    std::ostringstream oss;
-    oss << __value;
-    return oss.str();
 }
 
 // Removing consecutive same characters from some range

@@ -1,5 +1,5 @@
-#ifndef LVTLIB_HPP
-#define LVTLIB_HPP
+#ifndef LVT_HPP
+#define LVT_HPP
 
 #include <iostream>
 #include <sstream>
@@ -97,6 +97,10 @@ namespace lvt
         // Returns string parameter as T
         template <typename T>
         T str_to_T(const std::string &);
+
+        // Returns 'T' as string
+        template <typename T>
+        std::string T_to_str(const T &);
 
         // Returns array that formed from the 2d array
         template <typename T>
@@ -243,10 +247,6 @@ namespace lvt
         template <typename Iter, typename StartValue, typename Operation>
         auto accumulateData(Iter, Iter, StartValue, Operation);
 
-        // Returns 'T' as string
-        template <typename T>
-        std::string T_to_string(const T &);
-
         // Removing consecutive same characters from some range
         template <typename T>
         void remove_same_elems(std::vector<T> &);
@@ -349,4 +349,4 @@ namespace lvt
     }
 }
 
-#endif // LVTLIB_HPP
+#endif // LVT_HPP
