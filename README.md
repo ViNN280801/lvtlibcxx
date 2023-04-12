@@ -23,14 +23,14 @@ This library does not represent a specific library, (yes, I know, the name of th
 [ 50%] Building CXX object CMakeFiles/lvt.dir/lvt.cpp.o
 [100%] Linking CXX shared library liblvt.so
 [100%] Built target lvt
-<loveit@fedora lvtlibcxx>$ gcc -g -c main.cpp -std=c++23 -Wall -Wpedantic -Wextra -o main.o
+<loveit@fedora lvtlibcxx>$ gcc -g -c main.cpp -lstdc++ -std=c++23 -Wall -Wpedantic -Wextra -o main.o
 <loveit@fedora lvtlibcxx>$ ls
 CMakeCache.txt       liblvt.so      lvt.hpp       Makefile
 CMakeFiles           liblvt.so.1    lvt_impl.hpp  cmake_install.cmake
 liblvt.so.1.0        main.cpp       README.md     CMakeLists.txt
 lvt.cpp              main.o
 <loveit@fedora lvtlibcxx>$ pwd | xclip -sel c
-<loveit@fedora lvtlibcxx>$ gcc main.o -L${YOUR_PATH} -llvt -std=c++23 -o main.out
+<loveit@fedora lvtlibcxx>$ gcc main.o -L${YOUR_PATH} -llvt -lstdc++ -std=c++23 -o main.out
 <loveit@fedora lvtlibcxx>$ LD_LIBRARY_PATH=${YOUR_PATH} ./main.out
 ```
 
@@ -40,14 +40,14 @@ File ==main.cpp== presented your source file with the "main()" function
 ### Using GNU GCC
 
 ```console
-<loveit@fedora lvtlibcxx>$ gcc -g -c lvt.cpp -std=c++23 -fPIC -Wall -Wpedantic -Wextra -o lvt.o
+<loveit@fedora lvtlibcxx>$ gcc -g -c lvt.cpp -lstdc++ -std=c++23 -fPIC -Wall -Wpedantic -Wextra -o lvt.o
 <loveit@fedora lvtlibcxx>$ gcc -shared lvt.o -o liblvt.so
 <loveit@fedora lvtlibcxx>$ ls
 CMakeLists.txt  lvt.cpp  lvt_impl.hpp  main.cpp README.md
 liblvt.so       lvt.hpp  lvt.o
-<loveit@fedora lvtlibcxx>$ gcc -g -c main.cpp -std=c++23 -Wall -Wpedantic -Wextra -o main.o
+<loveit@fedora lvtlibcxx>$ gcc -g -c main.cpp -lstdc++ -std=c++23 -Wall -Wpedantic -Wextra -o main.o
 <loveit@fedora lvtlibcxx>$ pwd | xclip -sel c
-<loveit@fedora lvtlibcxx>$ gcc main.o -L${COPIED_FROM_PWD_PATH} -llvt -std=c++23 -o main.out
+<loveit@fedora lvtlibcxx>$ gcc main.o -L${COPIED_FROM_PWD_PATH} -llvt -lstdc++ -std=c++23 -o main.out
 <loveit@fedora lvtlibcxx>$ LD_LIBRARY_PATH=${COPIED_FROM_PWD_PATH} ./main.out
 <loveit@fedora lvtlibcxx>$ rm lvt.o main.o
 ```
