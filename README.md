@@ -31,11 +31,28 @@ liblvt.so.1.0        main.cpp       README.md     CMakeLists.txt
 lvt.cpp              main.o
 <loveit@fedora lvtlibcxx>$ pwd | xclip -sel c
 <loveit@fedora lvtlibcxx>$ gcc main.o -L${YOUR_PATH} -llvt -lstdc++ -std=c++23 -o main.out
+<loveit@fedora lvtlibcxx>$ rm main.o
 <loveit@fedora lvtlibcxx>$ LD_LIBRARY_PATH=${YOUR_PATH} ./main.out
 ```
 
+#### Only commands
+
+<b>Attention.</b> These commands creating new subdirectory with shared library in your "/opt" directory.
+
+```console
+cmake .
+cmake --build .
+gcc -g -c main.cpp -lstdc++ -std=c++23 -Wall -Wpedantic -Wextra -o main.o
+mkdir -p /opt/lvt
+mv liblvt.so /opt/lvt
+gcc main.o -L/opt/lvt -llvt -lstdc++ -std=c++23 -o main.out
+rm main.o
+LD_LIBRARY_PATH=/opt/lvt ./main.out
+
+```
+
 Command <code>cmake --build .</code> can be replaced with <code>make</code>
-File ==main.cpp== presented your source file with the "main()" function
+File <b>main.cpp</b> presented your source file with the "main()" function
 
 ### Using GNU GCC
 
@@ -48,8 +65,23 @@ liblvt.so       lvt.hpp  lvt.o
 <loveit@fedora lvtlibcxx>$ gcc -g -c main.cpp -lstdc++ -std=c++23 -Wall -Wpedantic -Wextra -o main.o
 <loveit@fedora lvtlibcxx>$ pwd | xclip -sel c
 <loveit@fedora lvtlibcxx>$ gcc main.o -L${COPIED_FROM_PWD_PATH} -llvt -lstdc++ -std=c++23 -o main.out
-<loveit@fedora lvtlibcxx>$ LD_LIBRARY_PATH=${COPIED_FROM_PWD_PATH} ./main.out
 <loveit@fedora lvtlibcxx>$ rm lvt.o main.o
+<loveit@fedora lvtlibcxx>$ LD_LIBRARY_PATH=${COPIED_FROM_PWD_PATH} ./main.out
+```
+
+#### Only commands
+
+<b>Attention.</b> These commands creating new subdirectory with shared library in your "/opt" directory.
+
+```console
+gcc -g -c lvt.cpp -lstdc++ -std=c++23 -fPIC -Wall -Wpedantic -Wextra -o lvt.o
+gcc -shared lvt.o -o liblvt.so
+gcc -g -c main.cpp -lstdc++ -std=c++23 -Wall -Wpedantic -Wextra -o main.o
+mkdir -p /opt/lvt
+mv liblvt.so /opt/lvt
+gcc main.o -L/opt/lvt -llvt -lstdc++ -std=c++23 -o main.out
+rm lvt.o main.o
+LD_LIBRARY_PATH=/opt/lvt ./main.out
 ```
 
 - 1st line - compiling with "[-g](https://www.rapidtables.com/code/linux/gcc/gcc-g.html)" (default info about debug), "[-c](https://www.rapidtables.com/code/linux/gcc/gcc-c.html)" (means compile), "[-std=c++23](https://gcc.gnu.org/projects/cxx-status.html)" (c++ 23 version of standard), "[-fPIC](https://www.rapidtables.com/code/linux/gcc/gcc-fpic.html)" (position independent code. It's nead to compile shared library), "[-Wall](https://www.rapidtables.com/code/linux/gcc/gcc-wall.html) [-Wpedantic -Wextra](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)" (connects all kinds of warnings), "[-o](https://www.rapidtables.com/code/linux/gcc/gcc-o.html#output%20file)" (output file)
