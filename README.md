@@ -42,13 +42,12 @@ lvt.cpp              main.o
 ```console
 cmake .
 cmake --build .
+sudo mkdir -p /opt/lvt
+sudo mv *.so* /opt/lvt
 gcc -g -c main.cpp -lstdc++ -std=c++23 -Wall -Wpedantic -Wextra -o main.o
-mkdir -p /opt/lvt
-mv liblvt.so /opt/lvt
 gcc main.o -L/opt/lvt -llvt -lstdc++ -std=c++23 -o main.out
 rm main.o
 LD_LIBRARY_PATH=/opt/lvt ./main.out
-
 ```
 
 Command <code>cmake --build .</code> can be replaced with <code>make</code>
@@ -76,9 +75,9 @@ liblvt.so       lvt.hpp  lvt.o
 ```console
 gcc -g -c lvt.cpp -lstdc++ -std=c++23 -fPIC -Wall -Wpedantic -Wextra -o lvt.o
 gcc -shared lvt.o -o liblvt.so
+sudo mkdir -p /opt/lvt
+sudo mv liblvt.so /opt/lvt
 gcc -g -c main.cpp -lstdc++ -std=c++23 -Wall -Wpedantic -Wextra -o main.o
-mkdir -p /opt/lvt
-mv liblvt.so /opt/lvt
 gcc main.o -L/opt/lvt -llvt -lstdc++ -std=c++23 -o main.out
 rm lvt.o main.o
 LD_LIBRARY_PATH=/opt/lvt ./main.out
