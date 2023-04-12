@@ -219,6 +219,10 @@ namespace lvt
             template <typename T>
             constexpr void selectionSort2DAscending(std::vector<std::vector<T>> &);
 
+            // Sorting array by Shell sorting algorithm
+            template <typename T>
+            constexpr void ShellSortAscending(std::vector<T> &);
+
             // Sorting 2d array by Shell sorting algorithm
             template <typename T>
             constexpr void ShellSort2DAscending(std::vector<std::vector<T>> &);
@@ -234,6 +238,50 @@ namespace lvt
             // Sorting 2d array by quick sorting (Hoare sort) algorithm
             template <typename T>
             constexpr void quickSort2DAscending(std::vector<std::vector<T>> &);
+
+            // Sorting 1d array by bubble sorting algorithm
+            template <typename T>
+            constexpr void bubbleSortDescending(std::vector<T> &);
+
+            // Sorting 2d array by bubble sorting algorithm
+            template <typename T>
+            constexpr void bubbleSort2DDescending(std::vector<std::vector<T>> &);
+
+            // Sorting elems in vector. Best case - O(n). Middle and worst cases - O(n^2)
+            template <typename T>
+            constexpr void insertionSortDescending(std::vector<T> &);
+
+            // Sorting 2d array by insertion sorting algorithm
+            template <typename T>
+            constexpr void insertionSort2DDescending(std::vector<std::vector<T>> &);
+
+            // Sorting vector by selection algorithm
+            template <typename T>
+            constexpr void selectionSortDescending(std::vector<T> &);
+
+            // Sorting 2d array by selection sorting algorithm
+            template <typename T>
+            constexpr void selectionSort2DDescending(std::vector<std::vector<T>> &);
+
+            // Sorting array by Shell sorting algorithm
+            template <typename T>
+            constexpr void ShellSortDescending(std::vector<T> &);
+
+            // Sorting 2d array by Shell sorting algorithm
+            template <typename T>
+            constexpr void ShellSort2DDescending(std::vector<std::vector<T>> &);
+
+            // Auxiliary method for quick sort algortihm
+            template <typename T>
+            constexpr void qSortDescending(std::vector<T> &arr, size_t, size_t);
+
+            // Sorting array by quick sorting (Hoare sort) algorithm
+            template <typename T>
+            constexpr void quickSortDescending(std::vector<T> &);
+
+            // Sorting 2d array by quick sorting (Hoare sort) algorithm
+            template <typename T>
+            constexpr void quickSort2DDescending(std::vector<std::vector<T>> &);
         }
 
         // Returns array of digits in descending order

@@ -471,11 +471,10 @@ constexpr void selectionSort2DAscending(std::vector<std::vector<T>> &matrix)
     }
 }
 
-// Sorting 2d array by Shell sorting algorithm
+// Sorting array by Shell sorting algorithm
 template <typename T>
-constexpr void ShellSort2DAscending(std::vector<std::vector<T>> &matrix)
+constexpr void ShellSortAscending(std::vector<T> &arr)
 {
-    std::vector<int> arr(matrixToArr(matrix));
     for (size_t interval{arr.size() / 2}; interval > 0; interval /= 2)
     {
         for (size_t i{}; i < arr.size(); i++)
@@ -489,6 +488,14 @@ constexpr void ShellSort2DAscending(std::vector<std::vector<T>> &matrix)
             arr.at(j) = val;
         }
     }
+}
+
+// Sorting 2d array by Shell sorting algorithm
+template <typename T>
+constexpr void ShellSort2DAscending(std::vector<std::vector<T>> &matrix)
+{
+    std::vector<int> arr(matrixToArr(matrix));
+    ShellSortAscending(arr);
     matrix = arrToMatrix(arr, matrix.size(), matrix.at(0).size());
 }
 
@@ -536,6 +543,199 @@ constexpr void quickSort2DAscending(std::vector<std::vector<T>> &matrix)
 {
     std::vector<T> arr(matrixToArr(matrix));
     qSortAscending(arr, 0, arr.size() - 1);
+    matrix = arrToMatrix(arr, matrix.size(), matrix.at(0).size());
+}
+
+// Sorting 1d array by bubble sorting algorithm
+template <typename T>
+constexpr void bubbleSortDescending(std::vector<T> &arr)
+{
+    for (size_t i{}; i < arr.size(); i++)
+        for (size_t j{}; j < arr.size(); j++)
+            if (arr.at(i) > arr.at(j))
+                std::swap(arr.at(i), arr.at(j));
+}
+
+// Sorting 2d array by bubble sorting algorithm
+template <typename T>
+constexpr void bubbleSort2DDescending(std::vector<std::vector<T>> &matrix)
+{
+    for (size_t row_1{}; row_1 < matrix.size(); row_1++)
+        for (size_t row_2{}; row_2 < matrix.size(); row_2++)
+            for (size_t col_1{}; col_1 < matrix.at(row_1).size(); col_1++)
+                for (size_t col_2{}; col_2 < matrix.at(row_2).size(); col_2++)
+                    if (matrix.at(row_1).at(col_1) > matrix.at(row_2).at(col_2))
+                        std::swap(matrix.at(row_1).at(col_1), matrix.at(row_2).at(col_2));
+}
+
+// Sorting elems in vector. Best case - O(n). Middle and worst cases - O(n^2)
+template <typename T>
+constexpr void insertionSortDescending(std::vector<T> &arr)
+{
+    // Iterating by vector from 2nd element to end: [begin + 1; end]
+    for (size_t i{1}; i < arr.size(); i++)
+    {
+        // Initializing current value of vector
+        T val{arr.at(i)};
+
+        // Initializing position of previous element from 'i'
+        size_t pos{i - 1};
+
+        // While position of prev element is lower than size of vector
+        // and element in this position is bigger than current value ->
+        // assigning it to next element (j + 1) of vector
+        while (pos < arr.size() && arr.at(pos) < val)
+        {
+            arr.at(pos + 1) = arr.at(pos);
+            pos--;
+        }
+        // Assigning current element to next from previous
+        arr.at(pos + 1) = val;
+    }
+}
+
+// Sorting 2d array by insertion sorting algorithm
+template <typename T>
+constexpr void insertionSort2DDescending(std::vector<std::vector<T>> &matrix)
+{
+    std::vector<T> arr(matrixToArr(matrix));
+    insertionSortDescending(arr);
+    matrix = arrToMatrix(arr, matrix.size(), matrix.at(0).size());
+}
+
+// Sorting vector by selection algorithm (the lowest perfonamce algorithm)
+template <typename T>
+constexpr void selectionSortDescending(std::vector<T> &vecToSort)
+{
+    // Iterating over the range
+    for (size_t i{}; i < vecToSort.size(); i++)
+    {
+        // For example, minimal element is begin element of the vector
+        size_t maxPos{i};
+
+        // Iterating over the unsorted range
+        for (size_t j{i + 1UL}; j < vecToSort.size(); j++)
+        {
+            // If element from the unsorted range is lower than the current ->
+            // assigning new position to 'maxPos' variable
+            if (vecToSort.at(j) > vecToSort.at(maxPos))
+                maxPos = j;
+        }
+        // Swap minimal element with current
+        std::swap(vecToSort.at(i), vecToSort.at(maxPos));
+    }
+}
+
+// Sorting 2d array by selection sorting algorithm
+template <typename T>
+constexpr void selectionSort2DDescending(std::vector<std::vector<T>> &matrix)
+{
+    for (size_t row{}; row < matrix.size(); row++)
+    {
+        for (size_t col{}; col < matrix.at(row).size(); col++)
+        {
+            size_t maxRow{row}, maxCol{col};
+            T max{matrix.at(row).at(col)};
+
+            for (size_t j{col + 1}; j < matrix.at(row).size(); j++)
+            {
+                if (matrix.at(row).at(j) > max)
+                {
+                    maxRow = row;
+                    maxCol = j;
+                    max = matrix.at(row).at(j);
+                }
+            }
+            for (size_t i{row + 1}; i < matrix.size(); i++)
+            {
+                for (size_t j{}; j < matrix.at(row).size(); j++)
+                {
+                    if (matrix.at(i).at(j) > max)
+                    {
+                        maxRow = i;
+                        maxCol = j;
+                        max = matrix.at(i).at(j);
+                    }
+                }
+            }
+            matrix.at(maxRow).at(maxCol) = matrix.at(row).at(col);
+            std::swap(matrix.at(row).at(col), max);
+        }
+    }
+}
+
+// Sorting array by Shell sorting algorithm
+template <typename T>
+constexpr void ShellSortDescending(std::vector<T> &arr)
+{
+    for (size_t interval{arr.size() / 2}; interval > 0; interval /= 2)
+    {
+        for (size_t i{}; i < arr.size(); i++)
+        {
+            T val{arr.at(i)};
+            size_t j{};
+            for (j = i; (j >= interval) && (arr.at(j - interval) < val); j -= interval)
+            {
+                arr.at(j) = arr.at(j - interval);
+            }
+            arr.at(j) = val;
+        }
+    }
+}
+
+// Sorting 2d array by Shell sorting algorithm
+template <typename T>
+constexpr void ShellSort2DDescending(std::vector<std::vector<T>> &matrix)
+{
+    std::vector<int> arr(matrixToArr(matrix));
+    ShellSortDescending(arr);
+    matrix = arrToMatrix(arr, matrix.size(), matrix.at(0).size());
+}
+
+// Auxiliary method for quick sort algortihm
+template <typename T>
+constexpr void qSortDescending(std::vector<T> &arr, size_t low, size_t high)
+{
+    size_t i{low}, j{high};
+    // Select pivot value
+    T pivot{arr.at((i + j) / 2)}, tmp{};
+
+    while (i <= j && i < arr.size() && j < arr.size())
+    {
+        while (arr.at(i) > pivot && i < arr.size())
+            i++;
+        while (arr.at(j) < pivot && j < arr.size())
+            j--;
+        if (i <= j && i < arr.size() && j < arr.size())
+        {
+            tmp = arr.at(i);
+            arr.at(i) = arr.at(j);
+            arr.at(j) = tmp;
+            i++;
+            j--;
+        }
+    }
+    // Recursive call sorting to left side from pivot
+    if (j > low && j < arr.size())
+        qSortDescending(arr, low, j);
+    // Recursive call sorting to right side from pivot
+    if (i < high && i < arr.size())
+        qSortDescending(arr, i, high);
+}
+
+// Sorting array by quick sorting (Hoare sort) algorithm
+template <typename T>
+constexpr void quickSortDescending(std::vector<T> &arr)
+{
+    qSortDescending(arr, 0, arr.size() - 1);
+}
+
+// Sorting 2d array by quick sorting (Hoare sort) algorithm
+template <typename T>
+constexpr void quickSort2DDescending(std::vector<std::vector<T>> &matrix)
+{
+    std::vector<T> arr(matrixToArr(matrix));
+    qSortDescending(arr, 0, arr.size() - 1);
     matrix = arrToMatrix(arr, matrix.size(), matrix.at(0).size());
 }
 
