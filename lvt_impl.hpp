@@ -1,3 +1,6 @@
+#ifndef LVT_IMPL_HPP
+#define LVT_IMPL_HPP
+
 #include "lvt.hpp"
 
 // Prints array to terminal
@@ -687,3 +690,5 @@ T maxSubarraySum(std::span<const T> arr)
         return max;
     }
 }
+
+#endif // LVT_IMPL_HPP
