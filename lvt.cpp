@@ -383,6 +383,20 @@ std::vector<std::pair<char, int>> algorithm::compressTheVectorOfPairs(std::vecto
     return newVec;
 }
 
+// Returns vector of string with all occurences
+// If you want to fill vector with all symbols which are don't match -> 'isMatch' should be -1
+std::vector<std::string> lvt::algorithm::regexFindAll(std::string const &strToSearch, std::string const &pattern, int const &isMatch)
+{
+    // Initializing "std::regex" object (converting string with pattern to a regex)
+    const std::regex re_pattern(pattern);
+    std::smatch sm;
+    std::vector<std::string> vec;
+    // Copying all matched or not matched (in relation to 'isMatch' flag) elements to the vector
+    std::copy(std::sregex_token_iterator(std::cbegin(strToSearch), std::cend(strToSearch), re_pattern, isMatch),
+              std::sregex_token_iterator(), std::back_inserter(vec));
+    return vec;
+}
+
 // Calculates sum of 2 big numbers represented as array of integer
 void big_numbers::sum(const std::vector<int> &num1, const std::vector<int> &num2, std::vector<int> &res)
 {

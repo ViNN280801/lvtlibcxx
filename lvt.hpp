@@ -363,6 +363,11 @@ namespace lvt
         // Return vector of pairs that will store the only unique keys as a first value of pair
         // and sum of values of repeating keys as a second value of pair
         std::vector<std::pair<char, int>> compressTheVectorOfPairs(std::vector<std::string> const &);
+
+        // Returns vector of string with all occurences
+        // If you want to fill vector with all symbols which are don't match -> 'isMatch' should be -1
+        std::vector<std::string> regexFindAll(std::string const &,
+                                              std::string const &, int const &isMatch = 0);
     }
 
     namespace big_numbers
