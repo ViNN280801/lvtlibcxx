@@ -238,7 +238,7 @@ std::string T_to_str(const T &__value)
 
 // Returns 2d array that formed from the 1d array
 template <typename T>
-std::vector<std::vector<T>> arrToMatrix(std::vector<T> const &arr, size_t const &rows, size_t const &cols)
+std::vector<std::vector<T>> arrToMatrix(std::vector<T> const &arr, size_t rows, size_t cols)
 {
     if (arr.size() != rows * cols)
     {

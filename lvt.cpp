@@ -3,7 +3,7 @@
 using namespace lvt;
 
 // Returns "true" if '__ch' is vowel, otherwise - "false"
-bool lvt::checkings::is_vowel(const char &__ch)
+bool lvt::checkings::is_vowel(char __ch)
 {
     return (__ch == 'a' || __ch == 'e' || __ch == 'i' || __ch == 'o' ||
             __ch == 'u' || __ch == 'A' || __ch == 'E' ||
@@ -32,7 +32,7 @@ std::string string::modifying::str_to_upper(const std::string &__str)
 std::string string::modifying::remove_vowels(const std::string &__str)
 {
     std::string str(__str);
-    str.erase(std::remove_if(std::begin(str), std::end(str), [](const char &ch)
+    str.erase(std::remove_if(std::begin(str), std::end(str), [](char ch)
                              { return lvt::checkings::is_vowel(ch); }),
               std::cend(str));
     return str;
@@ -43,7 +43,7 @@ std::string string::modifying::remove_vowels(const std::string &__str)
 std::string string::modifying::remove_vowels_cxx_20(const std::string &__str)
 {
     std::string str(__str);
-    std::erase_if(str, [](const char &ch)
+    std::erase_if(str, [](char ch)
                   { return lvt::checkings::is_vowel(ch); });
     return str;
 }
@@ -59,7 +59,7 @@ std::string string::modifying::remove_vowels_regex(const std::string &__str)
 // Returns string '__str' without vowels
 void string::modifying::remove_vowels(std::string &__str)
 {
-    __str.erase(std::remove_if(std::begin(__str), std::end(__str), [](const char &ch)
+    __str.erase(std::remove_if(std::begin(__str), std::end(__str), [](char ch)
                                { return lvt::checkings::is_vowel(ch); }),
                 std::cend(__str));
 }
@@ -68,7 +68,7 @@ void string::modifying::remove_vowels(std::string &__str)
 // Returns string '__str' without vowels
 void string::modifying::remove_vowels_cxx_20(std::string &__str)
 {
-    std::erase_if(__str, [](const char &ch)
+    std::erase_if(__str, [](char ch)
                   { return lvt::checkings::is_vowel(ch); });
 }
 
@@ -114,7 +114,7 @@ double lvt::random::create_random_double(const double &__lower, const double &__
     #define __GENERATE__ALL__SYMBOLS__ for generate string consisting of all symbols
     or
     #define __GENERATE__ONLY__DIGITS__ for generate string consisting of only digits */
-std::string lvt::random::generateRandomString(const size_t &__lenght)
+std::string lvt::random::generateRandomString(size_t __lenght)
 {
 #ifdef __GENERATE__ALL__SYMBOLS__
     static constexpr char symbols[]{"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`1234567890-=~!@#$%^&*()_+[]{}\\|/\'\",.<>:; "};
@@ -150,7 +150,7 @@ std::string lvt::random::generateRandomString(const size_t &__lenght)
 // 'vecSize' - size of the vector
 // 'from' - lower number
 // 'to' - higher number to generate
-std::vector<int> lvt::random::generateRandomIntVector(size_t const &vecSize, int const &from, int const &to)
+std::vector<int> lvt::random::generateRandomIntVector(size_t vecSize, int from, int to)
 {
     // Initializing vector with size 'vecSize'
     std::vector<int> vec(vecSize);
@@ -172,8 +172,8 @@ std::vector<int> lvt::random::generateRandomIntVector(size_t const &vecSize, int
 // Returns matrix of integers that is filled with random numbers
 // Gets rows as a first parameter and columns as a second
 // Third param - offset, fourth - range
-std::vector<std::vector<int>> lvt::random::generateRandomIntMatrix(size_t const &rows, size_t const &cols,
-                                                                   int const &offset, int const &range)
+std::vector<std::vector<int>> lvt::random::generateRandomIntMatrix(size_t rows, size_t cols,
+                                                                   int offset, int range)
 {
     srand(std::time(nullptr));
 
@@ -230,7 +230,7 @@ std::string algorithm::vec_to_str(std::span<const std::string> __vec)
 }
 
 // Returns vector of symbols in the string 'str', except any 'delim'eters
-std::vector<std::string> algorithm::splitVecStringBy(std::string &str, const char &delim) noexcept
+std::vector<std::string> algorithm::splitVecStringBy(std::string &str, char delim) noexcept
 {
     std::vector<std::string> vec;
     std::stringstream ss(str);
@@ -272,7 +272,7 @@ constexpr int algorithm::firstCountOfConsecutiveOccurrences(const std::string &s
         return 0;
     else
     {
-        auto next{std::find_if(nextConsecPairIter, endIter, [&nextConsecPairIter](const char &c)
+        auto next{std::find_if(nextConsecPairIter, endIter, [&nextConsecPairIter](char c)
                                { return c != *nextConsecPairIter; })};
         return std::distance(nextConsecPairIter, next);
     }
@@ -280,7 +280,7 @@ constexpr int algorithm::firstCountOfConsecutiveOccurrences(const std::string &s
 
 // Returns count of the first consecutive occurrences in the string 's'
 // 'n' is number of occurrence
-constexpr int algorithm::countOfConsecutiveOccurrencesAt_n(const std::string &s, const size_t &n)
+constexpr int algorithm::countOfConsecutiveOccurrencesAt_n(const std::string &s, size_t n)
 {
     // Keep the end of the string, and point i to the first run's beginning
     auto endIter{std::cend(s)}, nextConsecPairIter{std::adjacent_find(std::cbegin(s), endIter)};
@@ -293,7 +293,7 @@ constexpr int algorithm::countOfConsecutiveOccurrencesAt_n(const std::string &s,
         while (nextConsecPairIter not_eq endIter)
         {
             // Locate the end of the run (that is, the first different letter)
-            auto next{std::find_if(nextConsecPairIter, endIter, [&nextConsecPairIter](const char &c)
+            auto next{std::find_if(nextConsecPairIter, endIter, [&nextConsecPairIter](char c)
                                    { return c != *nextConsecPairIter; })};
 
             counterVec.push_back(std::distance(nextConsecPairIter, next));
@@ -321,7 +321,7 @@ constexpr int algorithm::maxCountOfConsecutiveOccurrences(const std::string &s)
         while (nextConsecPairIter not_eq endIter)
         {
             // Locate the end of the run (that is, the first different letter)
-            auto next{std::find_if(nextConsecPairIter, endIter, [&nextConsecPairIter](const char &c)
+            auto next{std::find_if(nextConsecPairIter, endIter, [&nextConsecPairIter](char c)
                                    { return c != *nextConsecPairIter; })};
 
             counterVec.push_back(std::distance(nextConsecPairIter, next));
@@ -385,7 +385,7 @@ std::vector<std::pair<char, int>> algorithm::compressTheVectorOfPairs(std::vecto
 
 // Returns vector of string with all occurences
 // If you want to fill vector with all symbols which are don't match -> 'isMatch' should be -1
-std::vector<std::string> lvt::algorithm::regexFindAll(std::string const &strToSearch, std::string const &pattern, int const &isMatch)
+std::vector<std::string> lvt::algorithm::regexFindAll(std::string const &strToSearch, std::string const &pattern, int isMatch)
 {
     // Initializing "std::regex" object (converting string with pattern to a regex)
     const std::regex re_pattern(pattern);

@@ -87,7 +87,7 @@ namespace lvt
         bool is_bigger(const T &, const T &);
 
         // Returns "true" if '__ch' is vowel, otherwise - "false"
-        bool is_vowel(const char &);
+        bool is_vowel(char);
 
         // Returns "true" if type of passed arg is arythmetic type of 'char'
         template <typename T>
@@ -110,7 +110,7 @@ namespace lvt
 
         // Returns 2d array that formed from the 1d array
         template <typename T>
-        std::vector<std::vector<T>> arrToMatrix(std::vector<T> const &, size_t const &, size_t const &);
+        std::vector<std::vector<T>> arrToMatrix(std::vector<T> const &, size_t, size_t);
     }
 
     namespace string
@@ -176,19 +176,19 @@ namespace lvt
             #define __GENERATE__ALL__SYMBOLS__ for generate string consisting of all symbols
             or
             #define __GENERATE__ONLY__DIGITS__ for generate string consisting of only digits */
-        std::string generateRandomString(const size_t &);
+        std::string generateRandomString(size_t);
 
         // Returns random vector filled with integer numbers
         // 'vecSize' - size of the vector
         // 'from' - lower number
         // 'to' - higher number to generate
-        std::vector<int> generateRandomIntVector(size_t const &vecSize = 10UL, int const &from = -50, int const &to = 50);
+        std::vector<int> generateRandomIntVector(size_t vecSize = 10UL, int from = -50, int to = 50);
 
         // Returns matrix of integers that is filled with random numbers
         // Gets rows as a first parameter and columns as a second
         // Third param - offset, fourth - range
-        std::vector<std::vector<int>> generateRandomIntMatrix(size_t const &rows, size_t const &cols,
-                                                              int const &offset = 1, int const &range = 100);
+        std::vector<std::vector<int>> generateRandomIntMatrix(size_t rows, size_t cols,
+                                                              int offset = 1, int range = 100);
     }
 
     namespace algorithm
@@ -342,7 +342,7 @@ namespace lvt
         T maxSubarraySum(std::span<const T>);
 
         // Returns vector of symbols in the string 'str', except any 'delim'eters
-        std::vector<std::string> splitVecStringBy(std::string &, const char &) noexcept;
+        std::vector<std::string> splitVecStringBy(std::string &, char) noexcept;
 
         // Returns count of unique symbols in the string 'str'
         int countOfUniqueSymbols(const std::string &);
@@ -355,7 +355,7 @@ namespace lvt
 
         // Returns count of the first consecutive occurrences in the string
         // 'n'- is number of occurrence
-        constexpr int countOfConsecutiveOccurrencesAt_n(const std::string &, const size_t &n = 1UL);
+        constexpr int countOfConsecutiveOccurrencesAt_n(const std::string &, size_t n = 1UL);
 
         // Returns maximum count of the consecutive occurrences in the string 's'
         constexpr int maxCountOfConsecutiveOccurrences(const std::string &);
@@ -367,7 +367,7 @@ namespace lvt
         // Returns vector of string with all occurences
         // If you want to fill vector with all symbols which are don't match -> 'isMatch' should be -1
         std::vector<std::string> regexFindAll(std::string const &,
-                                              std::string const &, int const &isMatch = 0);
+                                              std::string const &, int isMatch = 0);
     }
 
     namespace big_numbers
