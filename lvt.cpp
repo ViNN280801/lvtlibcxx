@@ -493,6 +493,21 @@ void lvt::time::printExecutionTime(const auto &start)
     // std::cout << std::chrono::duration<double>{diff}.count() << "s" << std::endl;
 }
 
+std::time_t lvt::time::str_to_time_t(std::string const &str, const char *format)
+{
+    struct std::tm tm;
+    std::istringstream ss(str);
+    ss >> std::get_time(&tm, format);
+    return mktime(&tm);
+}
+
+std::string lvt::time::time_t_to_str(std::time_t const &time, char const *format)
+{
+    char buf[32];
+    std::strftime(buf, 32, format, std::localtime(&time));
+    return buf;
+}
+
 // Returns all content from a file 'filename' as a "std::string"
 std::string lvt::files::readFileToStr(std::string const &filename)
 {

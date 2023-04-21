@@ -392,6 +392,18 @@ namespace lvt
         // auto start{std::chrono::high_resolution_clock::now()};
         // and then execute this func
         void printExecutionTime(const auto &);
+
+        /// @brief Converts string to a formatted time (check 'time_t_to_str()' function)
+        /// @param str string to convert to the time format
+        /// @param format format in which will be time represented
+        /// @return "time_t" time
+        std::time_t str_to_time_t(std::string const &str, const char *format);
+
+        /// @brief Converts "time_t" variable to a string (check 'str_to_time_t()' function)
+        /// @param time time that will be converted
+        /// @param format format in which will be time represented
+        /// @return Converted time
+        std::string time_t_to_str(std::time_t const &time, char const *format);
     }
 
     namespace files
