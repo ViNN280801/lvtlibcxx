@@ -413,6 +413,11 @@ namespace lvt
 
         // Returns size of the file as a "std::size_t"
         size_t getSizeOfTheFile(std::string const &);
+
+        /// @brief Checks if file with passed filename exists
+        /// @param filename name of file to do existance check
+        /// @return "true" if file exists, otherwise - "false"
+        constexpr bool exists(std::string const &filename);
     }
 }
 

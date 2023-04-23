@@ -522,3 +522,9 @@ size_t lvt::files::getSizeOfTheFile(std::string const &filename)
 {
     return std::filesystem::file_size(filename);
 }
+
+constexpr bool lvt::files::exists(std::string const &filename)
+{
+    std::ifstream ifs(filename.c_str());
+    return ifs.good();
+}
