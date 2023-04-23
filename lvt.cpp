@@ -397,6 +397,62 @@ std::vector<std::string> lvt::algorithm::regexFindAll(std::string const &strToSe
     return vec;
 }
 
+void lvt::algorithm::removePunct(std::string &str)
+{
+    auto it{str.cbegin()};
+    while (it != str.cend())
+    {
+        if (ispunct(*it))
+            str.erase(it);
+        ++it;
+    }
+
+    // Erasing last symbol if it is a endline symbol
+    if (*(str.cend() - 1) == '\n')
+        str.erase(str.cend() - 1);
+}
+
+bool lvt::algorithm::isContains(const std::vector<std::string> &v, const std::string &s)
+{
+    for (const auto &word : v)
+        if (s == word)
+            return true;
+    return false;
+}
+
+std::vector<std::string> lvt::algorithm::getWordsInSameContexts(const std::string &text)
+{
+    // Making a copy of text
+    std::string textCopy(text);
+
+    // At first removing all punctuation and last endline symbol ('\n')
+    removePunct(textCopy);
+
+    // Splitting text by words and creating result vector of words in same contexts
+    std::vector<std::string> vec(split_str(textCopy)), wordsInSameContexts;
+
+    /* --- Comparing pairs of words in the text --- */
+    // Getting words with even indeces (i, i + 2, i + 4, ..., where i = 0)
+    for (auto fst{vec.cbegin()}, snd{std::next(std::next(fst))};
+         fst != vec.cend() && snd != vec.cend(); ++fst, ++snd)
+    {
+        // Getting words with odd indeces (i + 1, i + 3, i + 5, ..., where i = 0)
+        for (auto anotherFst{fst + 1}, anotherSnd{std::next(std::next(anotherFst))};
+             anotherFst != vec.cend() && anotherSnd != vec.cend(); ++anotherFst, ++anotherSnd)
+        {
+            // Comparing them and if they are equal -> adding them to the vector
+            if (*fst == *anotherFst && *snd == *anotherSnd)
+            {
+                if (!isContains(wordsInSameContexts, *std::next(fst)))
+                    wordsInSameContexts.emplace_back(*std::next(fst));
+                if (!isContains(wordsInSameContexts, *std::prev(anotherSnd)))
+                    wordsInSameContexts.emplace_back(*std::prev(anotherSnd));
+            }
+        }
+    }
+    return wordsInSameContexts;
+}
+
 // Calculates sum of 2 big numbers represented as array of integer
 void big_numbers::sum(const std::vector<int> &num1, const std::vector<int> &num2, std::vector<int> &res)
 {
@@ -523,7 +579,7 @@ size_t lvt::files::getSizeOfTheFile(std::string const &filename)
     return std::filesystem::file_size(filename);
 }
 
-constexpr bool lvt::files::exists(std::string const &filename)
+bool lvt::files::exists(std::string const &filename)
 {
     std::ifstream ifs(filename.c_str());
     return ifs.good();

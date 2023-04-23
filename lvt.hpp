@@ -368,6 +368,21 @@ namespace lvt
         // If you want to fill vector with all symbols which are don't match -> 'isMatch' should be -1
         std::vector<std::string> regexFindAll(std::string const &,
                                               std::string const &, int isMatch = 0);
+
+        /// @brief Removes all punctuation signs from the string
+        /// @param str string to remove punctuation
+        void removePunct(std::string &str);
+
+        /// @brief Searches occurrence: 's' == any of 'v'
+        /// @param v vector of strings to search
+        /// @param s string to search in vector of strings
+        /// @return "true" if vector of strings contains specified string
+        bool isContains(const std::vector<std::string> &v, const std::string &s);
+
+        /// @brief Finding in the text all the words that occur in the same contexts (between the same words)
+        /// @param text whole text (or any string)
+        /// @return Vector of words which are occuring in the same contexts
+        std::vector<std::string> getWordsInSameContexts(const std::string &text);
     }
 
     namespace big_numbers
@@ -417,7 +432,7 @@ namespace lvt
         /// @brief Checks if file with passed filename exists
         /// @param filename name of file to do existance check
         /// @return "true" if file exists, otherwise - "false"
-        constexpr bool exists(std::string const &filename);
+        bool exists(std::string const &filename);
     }
 }
 
