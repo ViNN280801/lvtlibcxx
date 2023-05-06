@@ -564,6 +564,22 @@ std::string lvt::time::time_t_to_str(std::time_t const &time, char const *format
     return buf;
 }
 
+std::string lvt::time::generateRandomDateOfBirth(int lowestAge, int highestAge)
+{
+    srand(std::time(nullptr));
+    std::chrono::system_clock::time_point tp(std::chrono::system_clock::now());
+    std::time_t tt{std::chrono::system_clock::to_time_t(tp)};
+    struct std::tm tm_;
+    int currentYear{(*std::localtime(&tt)).tm_year + 1900}, randomAge{};
+    tm_.tm_mday = rand() % 31 + 1;
+    tm_.tm_mon = rand() % 12 + 1;
+    while (randomAge < lowestAge || randomAge > highestAge)
+        randomAge = rand() % highestAge + lowestAge;
+    tm_.tm_year = currentYear - randomAge;
+    return (std::to_string(tm_.tm_mday) + '/' + std::to_string(tm_.tm_mon) +
+            '/' + std::to_string(tm_.tm_year));
+}
+
 // Returns all content from a file 'filename' as a "std::string"
 std::string lvt::files::readFileToStr(std::string const &filename)
 {

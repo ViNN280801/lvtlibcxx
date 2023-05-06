@@ -419,6 +419,12 @@ namespace lvt
         /// @param format format in which will be time represented
         /// @return Converted time
         std::string time_t_to_str(std::time_t const &time, char const *format);
+
+        /// @brief Generates random date of birth with age in interval [18; 100] (by default)
+        /// @param lowestAge lowest age of a person - by default is 18
+        /// @param highestAge highest age of a person - by default is 100
+        /// @return Date of birth represented as a string with format: "dd/mm/yyyy"
+        std::string generateRandomDateOfBirth(int lowestAge = 18, int highestAge = 100);
     }
 
     namespace files
