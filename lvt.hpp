@@ -383,6 +383,9 @@ namespace lvt
         /// @param text whole text (or any string)
         /// @return Vector of words which are occuring in the same contexts
         std::vector<std::string> getWordsInSameContexts(const std::string &text);
+
+        template <typename T>
+        T mostFreqElem(std::vector<T> const &range);
     }
 
     namespace big_numbers

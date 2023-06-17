@@ -891,4 +891,25 @@ T maxSubarraySum(std::span<const T> arr)
     }
 }
 
+template <typename T>
+T mostFreqElem(std::vector<T> const &range)
+{
+    int maxcount{};
+    T el_max_freq{};
+    for (int i{}; i < range.size(); i++)
+    {
+        int count{};
+        for (int j{}; j < range.size(); j++)
+            if (range.at(i) == range.at(j))
+                count++;
+
+        if (count > maxcount)
+        {
+            maxcount = count;
+            el_max_freq = range.at(i);
+        }
+    }
+    return el_max_freq;
+}
+
 #endif // LVT_IMPL_HPP
