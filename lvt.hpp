@@ -149,6 +149,14 @@ namespace lvt
             // Removing consecutive same characters from some range
             void remove_consecutive_spaces(std::string &);
         }
+
+        /**
+         * @brief Generates string with specified multiple args
+         * @tparam args arguments of type that can be convert to string
+         * @return String composed from all arguments
+         */
+        template <typename... Args>
+        constexpr std::string gen_str(Args &&...args);
     }
 
     namespace input

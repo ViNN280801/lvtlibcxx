@@ -912,4 +912,12 @@ constexpr T mostFreqElem(std::span<T const> range)
     return el_max_freq;
 }
 
+template <typename... Args>
+constexpr std::string gen_str(Args &&...args)
+{
+    std::ostringstream oss;
+    (oss << ... << args);
+    return oss.str();
+}
+
 #endif // LVT_IMPL_HPP
