@@ -185,6 +185,22 @@ std::vector<std::vector<int>> lvt::random::generateRandomIntMatrix(size_t rows, 
     return matrix;
 }
 
+void lvt::random::fillVector(std::vector<int> &v, int from = 0, int to = 100)
+{
+    std::random_device seeder;
+
+    // If "std::random_device" doesn't have an entropy -> using old C-style seed
+    // represented as a current time in "unsigned long" representation
+    // Otherwise call the ctor of the "std::random_device" instance
+    const auto seed{seeder.entropy() ? seeder() : std::time(nullptr)};
+
+    // Using Mersene twister engine as generator of integer numbers
+    std::mt19937 engine{static_cast<std::mt19937::result_type>(seed)};
+    std::uniform_int_distribution<int> uid{from, to};
+    auto generator{std::bind(uid, engine)};
+    std::generate(std::begin(v), std::end(v), generator);
+}
+
 // Returns vector of words in a string, except any spaces
 std::vector<std::string> algorithm::split_str(const std::string &__str, const std::string &__delimiter)
 {
@@ -522,7 +538,7 @@ std::string big_numbers::factorial(const int num)
 }
 
 // Printing current time to terminal at specified format
-void lvt::time::printCurTime(const String auto str = "%H:%M:%S")
+void lvt::time::printCurTime(const StringConvertible auto str = "%H:%M:%S")
 {
     std::chrono::system_clock::time_point tp{std::chrono::system_clock::now()};
     time_t tt{std::chrono::system_clock::to_time_t(tp)};

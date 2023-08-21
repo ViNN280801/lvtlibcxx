@@ -19,6 +19,8 @@
 #include <filesystem>
 #include <random>
 #include <ctime>
+#include <utility>
+#include <functional>
 
 #include "lvt_impl.hpp"
 
@@ -26,10 +28,52 @@ using namespace std::chrono_literals;
 
 namespace lvt
 {
-    // Concept that specifies all types that can be convert to "std::string_view" type
-    // For example, "char", "const char *", "std::string", etc.
+    /**
+     * @brief Concept that specifies all types that can be convert to "std::string_view" type
+     * For example, "char", "const char *", "std::string", etc.
+     */
     template <typename T>
-    concept String = std::is_convertible_v<T, std::string_view>;
+    concept StringConvertible = std::is_convertible_v<T, std::string_view> ||
+                                std::is_convertible_v<T, const char *> || std::is_convertible_v<T, char>;
+
+    /**
+     * @brief Concept that checks available of all comparison operators
+     * @tparam a first variable
+     * @tparam b second variable
+     */
+    template <typename T>
+    concept Comparable = requires(T a, T b) {
+        {
+            a < b
+        } -> std::convertible_to<bool>;
+        {
+            a == b
+        } -> std::convertible_to<bool>;
+        {
+            a != b
+        } -> std::convertible_to<bool>;
+        {
+            a > b
+        } -> std::convertible_to<bool>;
+        {
+            a <= b
+        } -> std::convertible_to<bool>;
+        {
+            a >= b
+        } -> std::convertible_to<bool>;
+    };
+
+    /**
+     * @brief Concept that checks if variable has output operator
+     * @tparam a variable to check
+     * @param os output stream
+     */
+    template <typename T>
+    concept Printable = requires(T a, std::ostream &os) {
+        {
+            os << a
+        } -> std::same_as<std::ostream &>;
+    };
 
     namespace print
     {
@@ -197,6 +241,14 @@ namespace lvt
         // Third param - offset, fourth - range
         std::vector<std::vector<int>> generateRandomIntMatrix(size_t rows, size_t cols,
                                                               int offset = 1, int range = 100);
+
+        /**
+         * @brief Fills vector with integer values
+         * @param v vector
+         * @param from min value to generate
+         * @param to max value to generate
+         */
+        void fillVector(std::vector<int> &v, int from = 0, int to = 100);
     }
 
     namespace algorithm
@@ -416,7 +468,7 @@ namespace lvt
     namespace time
     {
         // Printing current time to terminal at specified format
-        void printCurTime(const String auto &);
+        void printCurTime(const StringConvertible auto &);
 
         // Printing duration of executing some code snippet
         // At first, where do you want to start the timer, you need to write following line:
