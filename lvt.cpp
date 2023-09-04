@@ -185,7 +185,7 @@ std::vector<std::vector<int>> lvt::random::generateRandomIntMatrix(size_t rows, 
     return matrix;
 }
 
-void lvt::random::fillVector(std::vector<int> &v, int from = 0, int to = 100)
+void lvt::random::fillVector(std::vector<int> &v, int from, int to)
 {
     std::random_device seeder;
 

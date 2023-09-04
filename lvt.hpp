@@ -451,6 +451,15 @@ namespace lvt
          */
         template <typename T>
         constexpr T mostFreqElem(std::span<T const> range);
+
+        /**
+         * @brief Searches for closest element to specified in a sequence
+         * @tparam range sequence in which search
+         * @tparam value value to find closest for it
+         * @return Closest element to specified value
+         */
+        template <std::integral T>
+        constexpr T findClosest(std::span<T const> range, T value);
     }
 
     namespace big_numbers
