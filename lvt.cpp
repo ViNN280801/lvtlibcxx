@@ -469,6 +469,25 @@ std::vector<std::string> lvt::algorithm::getWordsInSameContexts(const std::strin
     return wordsInSameContexts;
 }
 
+int lvt::algorithm::calculateIntervalsLength(std::vector<std::pair<int, int>> intervals)
+{
+    // Sorting intervals in ascending order
+    std::sort(std::begin(intervals), std::end(intervals));
+
+    // Calculating total length while maintaining a boundary variable to keep track
+    // of the last processed final value
+    // Desc of a lambda: Handles overlapping intervals
+    return std::accumulate(intervals.begin(), intervals.end(), 0,
+                           [bound = intervals[0].first](int sum, const auto &p) mutable
+                           { 
+                                if (bound < p.second) 
+                                { 
+                                    sum += (p.second - std::max(bound, p.first));
+                                    bound = p.second; 
+                                } 
+                            return sum; });
+}
+
 // Calculates sum of 2 big numbers represented as array of integer
 void big_numbers::sum(const std::vector<int> &num1, const std::vector<int> &num2, std::vector<int> &res)
 {

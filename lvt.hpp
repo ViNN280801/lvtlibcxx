@@ -460,6 +460,13 @@ namespace lvt
          */
         template <std::integral T>
         constexpr T findClosest(std::span<T const> range, T value);
+
+        /**
+         * @brief Calculates a common length of the all specified intervals
+         * @param intervals array of intervals
+         * @return Common length of the all intervals. -1 if smth wrong
+         */
+        int calculateIntervalsLength(std::vector<std::pair<int, int>> intervals);
     }
 
     namespace big_numbers
