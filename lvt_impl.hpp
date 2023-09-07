@@ -938,6 +938,32 @@ constexpr T findClosest(std::span<T const> range, T value)
     return (*it - value < value - *(std::prev(it))) ? *it : *(std::prev(it));
 }
 
+/**
+ * @brief Generates new array that contains only unique elems
+ * @tparam rangeA 1st range of elems
+ * @tparam rangeB 2nd range of elems
+ * @return Vector of an unique elems got from 2 sequences
+ */
+template <std::integral T>
+constexpr std::vector<T> getUniqueElementsFromTwoSequences(std::span<T const> rangeA, std::span<T const> rangeB)
+{
+    // Copying all elements from the both of ranges to one vector
+    std::vector<T> uniqVec(rangeA.begin(), rangeA.end());
+    std::ranges::copy(rangeB, std::back_inserter(uniqVec));
+
+    // Sorting vector
+    std::ranges::sort(uniqVec);
+
+    // Removing all non-unique elems
+    auto it{std::remove_if(uniqVec.begin(), uniqVec.end(), [&uniqVec](T const &val)
+                           { return std::ranges::count(uniqVec, val) > 1; })};
+
+    // Erase the removed elements
+    uniqVec.erase(it, uniqVec.end());
+
+    return uniqVec;
+}
+
 template <typename... Args>
 constexpr std::string gen_str(Args &&...args)
 {

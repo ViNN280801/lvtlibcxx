@@ -467,6 +467,15 @@ namespace lvt
          * @return Common length of the all intervals. -1 if smth wrong
          */
         int calculateIntervalsLength(std::vector<std::pair<int, int>> intervals);
+
+        /**
+         * @brief Generates new array that contains only unique elems
+         * @tparam rangeA 1st range of elems
+         * @tparam rangeB 2nd range of elems
+         * @return Vector of an unique elems got from 2 sequences
+         */
+        template <std::integral T>
+        constexpr std::vector<T> getUniqueElementsFromTwoSequences(std::span<T const> rangeA, std::span<T const> rangeB);
     }
 
     namespace big_numbers
