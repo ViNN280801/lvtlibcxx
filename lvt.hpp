@@ -476,6 +476,13 @@ namespace lvt
          */
         template <std::integral T>
         constexpr std::vector<T> getUniqueElementsFromTwoSequences(std::span<T const> rangeA, std::span<T const> rangeB);
+
+        /**
+         * @brief Gathering all permutations to vector
+         * @param s string
+         * @return Vector that contains all permutations of string 's'
+         */
+        std::vector<std::string> stringPermutations(std::string s);
     }
 
     namespace big_numbers

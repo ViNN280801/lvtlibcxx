@@ -488,6 +488,29 @@ int lvt::algorithm::calculateIntervalsLength(std::vector<std::pair<int, int>> in
                             return sum; });
 }
 
+std::vector<std::string> lvt::algorithm::stringPermutations(std::string s)
+{
+    // Checking of string
+    if (s.empty())
+        return {""};
+
+    std::vector<std::string> perms;
+
+    // Sorting copy of the string to create permutations
+    std::sort(std::begin(s), std::end(s));
+
+    do
+    {
+        // Adding next permutation
+        perms.push_back(s);
+
+        // Checking condition after inserting
+    } while (std::next_permutation(std::begin(s), std::end(s)));
+
+    // Returning result as a vector from unordered set
+    return perms;
+}
+
 // Calculates sum of 2 big numbers represented as array of integer
 void big_numbers::sum(const std::vector<int> &num1, const std::vector<int> &num2, std::vector<int> &res)
 {
