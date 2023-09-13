@@ -912,6 +912,33 @@ constexpr T mostFreqElem(std::span<T const> range)
     return el_max_freq;
 }
 
+template <typename T, std::integral U>
+constexpr std::vector<T> kMostFreqElem(std::span<T const> range, U k)
+{
+    // Dictionary to count the occurrences of each element
+    std::map<T, int> counts;
+
+    // Count the occurrences of each element
+    for (T const &el : range)
+        counts[el]++;
+
+    // Create a vector of pairs where each pair contains the element and its count
+    std::vector<std::pair<T, int>> countPairs;
+    for (auto const &el_and_count : counts)
+        countPairs.push_back({el_and_count.first, el_and_count.second});
+
+    // Sort the vector of pairs by count in descending order
+    std::ranges::sort(countPairs, [](auto const &a, auto const &b)
+                      { return a.second > b.second; });
+
+    // Extract the first 'k' elements from the sorted vector
+    std::vector<T> result;
+    for (size_t i{}; i < static_cast<size_t>(k) && i < countPairs.size(); i++)
+        result.emplace_back(countPairs[i].first);
+
+    return result;
+}
+
 template <std::integral T>
 constexpr T findClosest(std::span<T const> range, T value)
 {

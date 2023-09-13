@@ -453,6 +453,15 @@ namespace lvt
         constexpr T mostFreqElem(std::span<T const> range);
 
         /**
+         * @brief Calculates 'k' most frequency elements in a range
+         * @tparam range sequence of the elements
+         * @param k count of most frequency elements to search
+         * @return Vector of the most frequency elements with size 'k'
+         */
+        template <typename T, std::integral U>
+        extern constexpr std::vector<T> kMostFreqElem(std::span<T const> range, U k);
+
+        /**
          * @brief Searches for closest element to specified in a sequence
          * @tparam range sequence in which search
          * @tparam value value to find closest for it
