@@ -548,6 +548,26 @@ namespace lvt
         /// @param filename name of file to do existance check
         /// @return "true" if file exists, otherwise - "false"
         bool exists(std::string const &filename);
+
+        /**
+         * @brief Collect all filenames with specified mask into a vector
+         * @param path path where to search
+         * @param mask file mask
+         * @return Filenames with specified mask in the vector
+         */
+        std::vector<std::string> getFilenamesByMask(
+            std::filesystem::path const &path = std::filesystem::current_path(),
+            std::string const &mask = ".*\\.txt$");
+
+        /**
+         * @brief Collect all filenames with specified mask into a vector
+         * @param path path where to search
+         * @param mask file mask
+         * @return Filenames with specified mask in the vector
+         */
+        std::vector<std::string> getFilenamesByMaskInDirsAndSubdirs(
+            std::filesystem::path const &path = std::filesystem::current_path(),
+            std::string const &mask = ".*\\.txt$");
     }
 }
 

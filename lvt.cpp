@@ -658,3 +658,41 @@ bool lvt::files::exists(std::string const &filename)
     std::ifstream ifs(filename.c_str());
     return ifs.good();
 }
+
+std::vector<std::string> lvt::files::getFilenamesByMask(std::filesystem::path const &path,
+                                                        std::string const &mask)
+{
+    std::vector<std::string> files;
+    std::regex pattern(mask);
+
+    for (auto const &file : std::filesystem::directory_iterator(path))
+        if (std::filesystem::is_regular_file(file))
+        {
+            std::string filename{file.path().filename().string()};
+
+            // If 'filename' matches with the pattern - add it to vector of files
+            if (std::regex_match(filename, pattern))
+                files.emplace_back(filename);
+        }
+
+    return files;
+}
+
+std::vector<std::string> lvt::files::getFilenamesByMaskInDirsAndSubdirs(std::filesystem::path const &path,
+                                                                        std::string const &mask)
+{
+    std::vector<std::string> files;
+    std::regex pattern(mask);
+
+    for (auto const &file : std::filesystem::recursive_directory_iterator(path))
+        if (std::filesystem::is_regular_file(file))
+        {
+            std::string filename{file.path().filename().string()};
+
+            // If 'filename' matches with the pattern - add it to vector of files
+            if (std::regex_match(filename, pattern))
+                files.emplace_back(filename);
+        }
+
+    return files;
+}
