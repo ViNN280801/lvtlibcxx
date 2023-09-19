@@ -342,6 +342,40 @@ namespace lvt
             // Sorting 2d array by quick sorting (Hoare sort) algorithm
             template <typename T>
             constexpr void quickSort2DDescending(std::vector<std::vector<T>> &);
+
+            /**
+             * @brief Recursive func helper for merge sort
+             * @tparam arr array of elements -> arr[start;end)
+             * @tparam result result vector
+             * @param start left index
+             * @param end right index
+             */
+            template <Comparable T>
+            constexpr void mergeSortAscendingHelper(std::vector<T> &arr, std::vector<T> &result, size_t start, size_t end);
+
+            /**
+             * @brief Merge sort function. Best, middle and worth cases: 0(n*log(n))
+             * @tparam vec array of elements
+             */
+            template <Comparable T>
+            constexpr void mergeSortAscending(std::vector<T> &vec);
+
+            /**
+             * @brief Recursive func helper for merge sort
+             * @tparam arr array of elements -> arr[start;end)
+             * @tparam result result vector
+             * @param start left index
+             * @param end right index
+             */
+            template <Comparable T>
+            constexpr void mergeSortHelper(std::vector<T> &arr, std::vector<T> &result, size_t start, size_t end);
+
+            /**
+             * @brief Merge sort function. Best, middle and worth cases: 0(n*log(n))
+             * @tparam vec array of elements
+             */
+            template <Comparable T>
+            constexpr void mergeSortDescending(std::vector<T> &vec);
         }
 
         // Returns array of digits in descending order
@@ -570,5 +604,7 @@ namespace lvt
             std::string const &mask = ".*\\.txt$");
     }
 }
+
+#include "lvt_impl.hpp"
 
 #endif // LVT_HPP

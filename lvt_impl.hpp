@@ -1,7 +1,38 @@
 #ifndef LVT_IMPL_HPP
 #define LVT_IMPL_HPP
 
-#include "lvt.hpp"
+template <typename T>
+concept StringConvertible = std::is_convertible_v<T, std::string_view> ||
+                            std::is_convertible_v<T, const char *> || std::is_convertible_v<T, char>;
+
+template <typename T>
+concept Comparable = requires(T a, T b) {
+    {
+        a < b
+    } -> std::convertible_to<bool>;
+    {
+        a == b
+    } -> std::convertible_to<bool>;
+    {
+        a != b
+    } -> std::convertible_to<bool>;
+    {
+        a > b
+    } -> std::convertible_to<bool>;
+    {
+        a <= b
+    } -> std::convertible_to<bool>;
+    {
+        a >= b
+    } -> std::convertible_to<bool>;
+};
+
+template <typename T>
+concept Printable = requires(T a, std::ostream &os) {
+    {
+        os << a
+    } -> std::same_as<std::ostream &>;
+};
 
 // Prints array to terminal
 template <typename T>
@@ -737,6 +768,108 @@ constexpr void quickSort2DDescending(std::vector<std::vector<T>> &matrix)
     std::vector<T> arr(matrixToArr(matrix));
     qSortDescending(arr, 0, arr.size() - 1);
     matrix = arrToMatrix(arr, matrix.size(), matrix.at(0).size());
+}
+
+template <Comparable T>
+constexpr void mergeSortAscendingHelper(std::vector<T> &arr, std::vector<T> &result, size_t start, size_t end)
+{
+    // Base case: if array consist of 1 element - do nothing
+    if (end - start <= 1ul)
+        return;
+    // If array consist of 2 elements and it's need to swap them - swap them
+    if (end - start == 2ul)
+    {
+        if (result.at(start) > result.at(start + 1))
+            std::swap(result.at(start), result.at(start + 1));
+        return;
+    }
+
+    size_t middle{(start + end) / 2};
+
+    mergeSortHelper(result, arr, start, middle);
+    mergeSortHelper(result, arr, middle, end);
+
+    // Merging left and right subarrays
+    // 'k' - index for result array
+    size_t i{start}, j{middle}, k{start};
+
+    // Filling result subarray with sorted values
+    while (k < end)
+    {
+        if (j >= end || (i < middle && arr.at(i) < arr.at(j)))
+        {
+            // Filling with elements of left subarray
+            result.at(k) = arr.at(i);
+            i++;
+        }
+        else
+        {
+            // Filling with elements with right subarray
+            result.at(k) = arr.at(j);
+            j++;
+        }
+        k++;
+    }
+}
+
+template <Comparable T>
+constexpr void mergeSortAscending(std::vector<T> &vec)
+{
+    std::vector<T> copy(vec);
+    mergeSortAscendingHelper(copy, vec, 0, vec.size());
+}
+
+template <Comparable T>
+constexpr void mergeSortDescendingHelper(std::vector<T> &arr, std::vector<T> &result, size_t start, size_t end)
+{
+    // Base case: if array consist of 1 element - do nothing
+    if (end - start <= 1ul)
+        return;
+    // If array consist of 2 elements and it's need to swap them - swap them
+    if (end - start == 2ul)
+    {
+        if (result.at(start) < result.at(start + 1))
+            std::swap(result.at(start), result.at(start + 1));
+        return;
+    }
+
+    size_t middle{(start + end) / 2};
+
+    mergeSortHelper(result, arr, start, middle);
+    mergeSortHelper(result, arr, middle, end);
+
+    // Merging left and right subarrays
+    // 'k' - index for result array
+    size_t i{start}, j{middle}, k{start};
+
+    // Filling result subarray with sorted values
+    while (k < end)
+    {
+        if (j >= end || (i < middle && arr.at(i) > arr.at(j)))
+        {
+            // Filling with elements of left subarray
+            result.at(k) = arr.at(i);
+            i++;
+        }
+        else
+        {
+            // Filling with elements with right subarray
+            result.at(k) = arr.at(j);
+            j++;
+        }
+        k++;
+    }
+}
+
+/**
+ * @brief Merge sort function. Best, middle and worth cases: 0(n*log(n))
+ * @tparam vec array of elements
+ */
+template <Comparable T>
+constexpr void mergeSortDescending(std::vector<T> &vec)
+{
+    std::vector<T> copy(vec);
+    mergeSortDescendingHelper(copy, vec, 0, vec.size());
 }
 
 // Returns array of digits in descending order
