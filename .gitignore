@@ -1,0 +1,9 @@
+CMakeFiles/
+.vscode/
+cmake*
+CMakeCache.txt
+*.so
+*.so.*
+Makefile
+main.cpp
+*.out
