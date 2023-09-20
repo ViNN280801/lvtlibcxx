@@ -526,6 +526,16 @@ namespace lvt
          * @return Vector that contains all permutations of string 's'
          */
         std::vector<std::string> stringPermutations(std::string s);
+
+        /**
+         * @brief Calculates sum of two polynomials, assumes that coefficients in both args (polynomials)
+         * are in correct order (for example, A(x) = 5x^3 + 2x^2 - 7x + 3) -> where 5 is the last index, 3 is the first.
+         * @tparam a - first polynomial.
+         * @tparam b - second polynomial.
+         * @return C(x) - resulting polynomial in correct order (see above).
+         */
+        template <std::integral T>
+        constexpr std::vector<T> sumOfPolynomials(std::span<T const> a, std::span<T const> b);
     }
 
     namespace big_numbers

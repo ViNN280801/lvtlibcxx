@@ -34,7 +34,6 @@ concept Printable = requires(T a, std::ostream &os) {
     } -> std::same_as<std::ostream &>;
 };
 
-// Prints array to terminal
 template <typename T>
 void printVec(std::vector<T> const &vec)
 {
@@ -43,8 +42,6 @@ void printVec(std::vector<T> const &vec)
     endl(std::cout);
 }
 
-// Since C++20 (need std::span)
-// Prints range to terminal
 template <typename T>
 void print_range(std::span<const T> __range)
 {
@@ -53,7 +50,6 @@ void print_range(std::span<const T> __range)
     endl(std::cout);
 }
 
-// Prints range to terminal by iterators
 template <typename Iter>
 void print_range(Iter begin, Iter end)
 {
@@ -62,7 +58,6 @@ void print_range(Iter begin, Iter end)
     endl(std::cout);
 }
 
-// Prints matrix to terminal
 template <typename T>
 void printMatrix(std::vector<std::vector<T>> const &matrix)
 {
@@ -74,7 +69,6 @@ void printMatrix(std::vector<std::vector<T>> const &matrix)
     }
 }
 
-// Prints vector of pairs to terminal
 template <typename T1, typename T2>
 void print_pair_vec(const std::vector<std::pair<T1, T2>> &__vec)
 {
@@ -84,7 +78,6 @@ void print_pair_vec(const std::vector<std::pair<T1, T2>> &__vec)
     }
 }
 
-// Prints dictionary to terminal (need std::map)
 template <typename T1, typename T2>
 void print_dictionary(const std::map<T1, T2> &__dictionary)
 {
@@ -94,7 +87,6 @@ void print_dictionary(const std::map<T1, T2> &__dictionary)
     }
 }
 
-// Prints tuple to terminal (need std::tuple)
 template <typename TupleType, size_t TupleSize>
 void printTuple(const TupleType &t)
 {
@@ -104,28 +96,24 @@ void printTuple(const TupleType &t)
     std::cout << std::get<TupleSize - 1>(t) << std::endl;
 }
 
-// Returns true if both are equals
 template <typename T>
 bool is_equal(const T &__num1, const T &__num2)
 {
     return (__num1 == __num2) ? true : false;
 }
 
-// Returns true if first lower than the second
 template <typename T>
 bool is_lower(const T &__num1, const T &__num2)
 {
     return (__num1 < __num2) ? true : false;
 }
 
-// Returns true if first bigger than the second
 template <typename T>
 bool is_bigger(const T &__num1, const T &__num2)
 {
     return (__num1 > __num2) ? true : false;
 }
 
-// Returns true if string is a unsigned integer number (unsigned short, unsigned int, size_t, etc.)
 bool is_uint_number(const std::string &__str)
 {
     // Iterator for '__str' variable
@@ -141,7 +129,6 @@ bool is_uint_number(const std::string &__str)
     return ((!__str.empty()) && (it == __str.end()));
 }
 
-// Returns true if string is a signed integer number (short, int, long, etc.)
 bool is_int_number(const std::string &__str)
 {
     // Iterator for '__str' variable
@@ -175,7 +162,6 @@ bool is_int_number(const std::string &__str)
     return ((!__str.empty()) && (it == __str.end()));
 }
 
-// Returns true if string is a floating number (float, double, etc.)
 bool is_floating_number(const std::string &__str)
 {
     // Iterator for '__str' variable
@@ -221,7 +207,6 @@ bool is_floating_number(const std::string &__str)
     return ((!__str.empty()) && (it == __str.end()));
 }
 
-// Returns "true" if type of passed arg is arythmetic type of 'char'
 template <typename T>
 consteval bool isArithmeticType([[maybe_unused]] const T &val) noexcept
 {
@@ -231,7 +216,6 @@ consteval bool isArithmeticType([[maybe_unused]] const T &val) noexcept
     return false;
 }
 
-// Returns string parameter as T
 template <typename T>
 T str_to_T(const std::string &__str)
 {
@@ -241,7 +225,6 @@ T str_to_T(const std::string &__str)
     return value;
 }
 
-// Returns array that formed from the 2d array
 template <typename T>
 std::vector<T> matrixToArr(std::vector<std::vector<T>> const &matrix)
 {
@@ -258,7 +241,6 @@ std::vector<T> matrixToArr(std::vector<std::vector<T>> const &matrix)
     return arr;
 }
 
-// Returns 'T' as string
 template <typename T>
 std::string T_to_str(const T &__value)
 {
@@ -267,7 +249,6 @@ std::string T_to_str(const T &__value)
     return oss.str();
 }
 
-// Returns 2d array that formed from the 1d array
 template <typename T>
 std::vector<std::vector<T>> arrToMatrix(std::vector<T> const &arr, size_t rows, size_t cols)
 {
@@ -290,7 +271,6 @@ std::vector<std::vector<T>> arrToMatrix(std::vector<T> const &arr, size_t rows, 
     return matrix;
 }
 
-// Returns user's input as unsigned integer number
 template <typename T>
 T input_to_uint(const char *__msg)
 {
@@ -318,7 +298,6 @@ T input_to_uint(const char *__msg)
     return num;
 }
 
-// Returns user's input as signed integer number
 template <typename T>
 T input_to_int(const char *__msg)
 {
@@ -346,7 +325,6 @@ T input_to_int(const char *__msg)
     return num;
 }
 
-// Returns user's input as floating number
 template <typename T>
 T input_to_floating(const char *__msg)
 {
@@ -374,7 +352,6 @@ T input_to_floating(const char *__msg)
     return num;
 }
 
-// Sorting 1d array by bubble sorting algorithm
 template <typename T>
 constexpr void bubbleSortAscending(std::vector<T> &arr)
 {
@@ -384,7 +361,6 @@ constexpr void bubbleSortAscending(std::vector<T> &arr)
                 std::swap(arr.at(i), arr.at(j));
 }
 
-// Sorting 2d array by bubble sorting algorithm
 template <typename T>
 constexpr void bubbleSort2DAscending(std::vector<std::vector<T>> &matrix)
 {
@@ -396,7 +372,6 @@ constexpr void bubbleSort2DAscending(std::vector<std::vector<T>> &matrix)
                         std::swap(matrix.at(row_1).at(col_1), matrix.at(row_2).at(col_2));
 }
 
-// Sorting elems in vector. Best case - O(n). Middle and worst cases - O(n^2)
 template <typename T>
 constexpr void insertionSortAscending(std::vector<T> &vecToSort)
 {
@@ -422,7 +397,6 @@ constexpr void insertionSortAscending(std::vector<T> &vecToSort)
     }
 }
 
-// Sorting 2d array by insertion sorting algorithm
 template <typename T>
 constexpr void insertionSort2DAscending(std::vector<std::vector<T>> &matrix)
 {
@@ -441,7 +415,6 @@ constexpr void insertionSort2DAscending(std::vector<std::vector<T>> &matrix)
     matrix = arrToMatrix(arr, matrix.size(), matrix.at(0).size());
 }
 
-// Sorting vector by selection algorithm (the lowest perfonamce algorithm)
 template <typename T>
 constexpr void selectionSortAscending(std::vector<T> &vecToSort)
 {
@@ -464,7 +437,6 @@ constexpr void selectionSortAscending(std::vector<T> &vecToSort)
     }
 }
 
-// Sorting 2d array by selection sorting algorithm
 template <typename T>
 constexpr void selectionSort2DAscending(std::vector<std::vector<T>> &matrix)
 {
@@ -502,7 +474,6 @@ constexpr void selectionSort2DAscending(std::vector<std::vector<T>> &matrix)
     }
 }
 
-// Sorting array by Shell sorting algorithm
 template <typename T>
 constexpr void ShellSortAscending(std::vector<T> &arr)
 {
@@ -521,7 +492,6 @@ constexpr void ShellSortAscending(std::vector<T> &arr)
     }
 }
 
-// Sorting 2d array by Shell sorting algorithm
 template <typename T>
 constexpr void ShellSort2DAscending(std::vector<std::vector<T>> &matrix)
 {
@@ -530,7 +500,6 @@ constexpr void ShellSort2DAscending(std::vector<std::vector<T>> &matrix)
     matrix = arrToMatrix(arr, matrix.size(), matrix.at(0).size());
 }
 
-// Auxiliary method for quick sort algortihm
 template <typename T>
 constexpr void qSortAscending(std::vector<T> &arr, size_t low, size_t high)
 {
@@ -561,14 +530,12 @@ constexpr void qSortAscending(std::vector<T> &arr, size_t low, size_t high)
         qSortAscending(arr, i, high);
 }
 
-// Sorting array by quick sorting (Hoare sort) algorithm
 template <typename T>
 constexpr void quickSortAscending(std::vector<T> &arr)
 {
     qSortAscending(arr, 0, arr.size() - 1);
 }
 
-// Sorting 2d array by quick sorting (Hoare sort) algorithm
 template <typename T>
 constexpr void quickSort2DAscending(std::vector<std::vector<T>> &matrix)
 {
@@ -577,7 +544,6 @@ constexpr void quickSort2DAscending(std::vector<std::vector<T>> &matrix)
     matrix = arrToMatrix(arr, matrix.size(), matrix.at(0).size());
 }
 
-// Sorting 1d array by bubble sorting algorithm
 template <typename T>
 constexpr void bubbleSortDescending(std::vector<T> &arr)
 {
@@ -587,7 +553,6 @@ constexpr void bubbleSortDescending(std::vector<T> &arr)
                 std::swap(arr.at(i), arr.at(j));
 }
 
-// Sorting 2d array by bubble sorting algorithm
 template <typename T>
 constexpr void bubbleSort2DDescending(std::vector<std::vector<T>> &matrix)
 {
@@ -599,7 +564,6 @@ constexpr void bubbleSort2DDescending(std::vector<std::vector<T>> &matrix)
                         std::swap(matrix.at(row_1).at(col_1), matrix.at(row_2).at(col_2));
 }
 
-// Sorting elems in vector. Best case - O(n). Middle and worst cases - O(n^2)
 template <typename T>
 constexpr void insertionSortDescending(std::vector<T> &arr)
 {
@@ -625,7 +589,6 @@ constexpr void insertionSortDescending(std::vector<T> &arr)
     }
 }
 
-// Sorting 2d array by insertion sorting algorithm
 template <typename T>
 constexpr void insertionSort2DDescending(std::vector<std::vector<T>> &matrix)
 {
@@ -634,7 +597,6 @@ constexpr void insertionSort2DDescending(std::vector<std::vector<T>> &matrix)
     matrix = arrToMatrix(arr, matrix.size(), matrix.at(0).size());
 }
 
-// Sorting vector by selection algorithm (the lowest perfonamce algorithm)
 template <typename T>
 constexpr void selectionSortDescending(std::vector<T> &vecToSort)
 {
@@ -657,7 +619,6 @@ constexpr void selectionSortDescending(std::vector<T> &vecToSort)
     }
 }
 
-// Sorting 2d array by selection sorting algorithm
 template <typename T>
 constexpr void selectionSort2DDescending(std::vector<std::vector<T>> &matrix)
 {
@@ -695,7 +656,6 @@ constexpr void selectionSort2DDescending(std::vector<std::vector<T>> &matrix)
     }
 }
 
-// Sorting array by Shell sorting algorithm
 template <typename T>
 constexpr void ShellSortDescending(std::vector<T> &arr)
 {
@@ -714,7 +674,6 @@ constexpr void ShellSortDescending(std::vector<T> &arr)
     }
 }
 
-// Sorting 2d array by Shell sorting algorithm
 template <typename T>
 constexpr void ShellSort2DDescending(std::vector<std::vector<T>> &matrix)
 {
@@ -723,7 +682,6 @@ constexpr void ShellSort2DDescending(std::vector<std::vector<T>> &matrix)
     matrix = arrToMatrix(arr, matrix.size(), matrix.at(0).size());
 }
 
-// Auxiliary method for quick sort algortihm
 template <typename T>
 constexpr void qSortDescending(std::vector<T> &arr, size_t low, size_t high)
 {
@@ -754,14 +712,12 @@ constexpr void qSortDescending(std::vector<T> &arr, size_t low, size_t high)
         qSortDescending(arr, i, high);
 }
 
-// Sorting array by quick sorting (Hoare sort) algorithm
 template <typename T>
 constexpr void quickSortDescending(std::vector<T> &arr)
 {
     qSortDescending(arr, 0, arr.size() - 1);
 }
 
-// Sorting 2d array by quick sorting (Hoare sort) algorithm
 template <typename T>
 constexpr void quickSort2DDescending(std::vector<std::vector<T>> &matrix)
 {
@@ -861,10 +817,6 @@ constexpr void mergeSortDescendingHelper(std::vector<T> &arr, std::vector<T> &re
     }
 }
 
-/**
- * @brief Merge sort function. Best, middle and worth cases: 0(n*log(n))
- * @tparam vec array of elements
- */
 template <Comparable T>
 constexpr void mergeSortDescending(std::vector<T> &vec)
 {
@@ -872,8 +824,6 @@ constexpr void mergeSortDescending(std::vector<T> &vec)
     mergeSortDescendingHelper(copy, vec, 0, vec.size());
 }
 
-// Returns array of digits in descending order
-// from integer and non-negative type of number
 template <typename unumeric_t>
 std::vector<int> split_number_on_digits(const unumeric_t &__number)
 {
@@ -890,7 +840,6 @@ std::vector<int> split_number_on_digits(const unumeric_t &__number)
     }
 }
 
-// Returns number by vector of digits
 template <typename T, typename retType>
 retType composeNumberWithDigits(const std::vector<T> &vec)
 {
@@ -907,7 +856,6 @@ retType composeNumberWithDigits(const std::vector<T> &vec)
     return num;
 }
 
-// Returns result of mathematical operation 'op' that applies to each element of range
 template <typename Iter, typename StartValue, typename Operation>
 auto accumulateData(Iter begin, Iter end, StartValue start_value, Operation op)
 {
@@ -919,7 +867,6 @@ auto accumulateData(Iter begin, Iter end, StartValue start_value, Operation op)
     return accumulated;
 }
 
-// Removing consecutive same characters from some range
 template <typename T>
 void remove_same_elems(std::vector<T> &__range)
 {
@@ -930,7 +877,6 @@ void remove_same_elems(std::vector<T> &__range)
     }
 }
 
-// Returns vector of pairs from two vectors same length
 template <typename T1, typename T2>
 std::vector<std::pair<T1, T2>> make_vector_of_pairs_by_two_vectors(const std::vector<T1> &__vec1,
                                                                    const std::vector<T2> &__vec2)
@@ -949,12 +895,6 @@ std::vector<std::pair<T1, T2>> make_vector_of_pairs_by_two_vectors(const std::ve
     return result_vec;
 }
 
-// Returns iterator on output sequence that is one-past-last element
-// stored in the output sequence, which is contains all elements with their positions,
-// matching a predicate in a given range
-// 'first' - start iterator of the input sequence
-// 'last' - end iterator of the input sequence
-// 'dest' - start iterator of the output sequence
 template <typename InputIter, typename OutputIter, typename Predicate>
 OutputIter find_all(InputIter first, InputIter last,
                     OutputIter dest, Predicate pred)
@@ -983,8 +923,6 @@ OutputIter find_all(InputIter first, InputIter last,
     // }
 }
 
-// Since C++ 20 (need std::span and <concepts>)
-// Returns sliced vector from 'first' to 'last': [first, last]
 template <typename T>
 std::vector<T> sliceVector(std::span<const T> vec, const std::integral auto &first, const std::integral auto &last)
 {
@@ -992,8 +930,6 @@ std::vector<T> sliceVector(std::span<const T> vec, const std::integral auto &fir
     return res;
 }
 
-// Since C++ 20 (need <concepts>)
-// Slicing vector from 'first' to 'last': [first, last]
 template <typename T>
 void sliceVector(std::vector<T> &vec, const std::integral auto &first, const std::integral auto &last)
 {
@@ -1001,8 +937,6 @@ void sliceVector(std::vector<T> &vec, const std::integral auto &first, const std
     vec.shrink_to_fit();
 }
 
-// Returns max subarray sum of contiguous elements in sequence
-// Solves the "Maximum subarray problem" with the "Kadane's Algorithm"
 template <typename T>
 T maxSubarraySum(std::span<const T> arr)
 {
@@ -1098,12 +1032,6 @@ constexpr T findClosest(std::span<T const> range, T value)
     return (*it - value < value - *(std::prev(it))) ? *it : *(std::prev(it));
 }
 
-/**
- * @brief Generates new array that contains only unique elems
- * @tparam rangeA 1st range of elems
- * @tparam rangeB 2nd range of elems
- * @return Vector of an unique elems got from 2 sequences
- */
 template <std::integral T>
 constexpr std::vector<T> getUniqueElementsFromTwoSequences(std::span<T const> rangeA, std::span<T const> rangeB)
 {
@@ -1122,6 +1050,39 @@ constexpr std::vector<T> getUniqueElementsFromTwoSequences(std::span<T const> ra
     uniqVec.erase(it, uniqVec.end());
 
     return uniqVec;
+}
+
+template <std::integral T>
+constexpr std::vector<T> sumOfPolynomials(std::span<T const> a, std::span<T const> b)
+{
+    std::vector<T> minSizeArr, maxSizeArr, result;
+
+    // Determining arrays with the minimal and maximal sizes
+    if (a.size() > b.size())
+    {
+        minSizeArr.assign(b.begin(), b.end());
+        maxSizeArr.assign(a.begin(), a.end());
+    }
+    else
+    {
+        minSizeArr.assign(a.begin(), a.end());
+        maxSizeArr.assign(b.begin(), b.end());
+    }
+
+    // Reversing order of the coefs
+    std::ranges::reverse(minSizeArr);
+    std::ranges::reverse(maxSizeArr);
+
+    // Add space to the result array
+    result.resize(maxSizeArr.size());
+
+    // Summation of the coefs
+    for (size_t i{}; i < maxSizeArr.size(); i++)
+        (i < minSizeArr.size()) ? result.at(i) = minSizeArr.at(i) + maxSizeArr.at(i) : result.at(i) = maxSizeArr.at(i);
+
+    // Bringing result polynomial to the correct order
+    std::ranges::reverse(result);
+    return result;
 }
 
 template <typename... Args>
