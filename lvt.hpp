@@ -550,6 +550,15 @@ namespace lvt
          */
         template <std::integral T>
         constexpr std::vector<T> sumOfPolynomials(std::span<T const> a, std::span<T const> b);
+
+        /**
+         * @brief Calculates sum of the matrices.
+         * @tparam a - 1st matrix.
+         * @tparam b - 2nd matrix.
+         * @return Matrix where all elements are summarized (a + b).
+         */
+        template <std::integral T>
+        std::vector<std::vector<T>> sumOfTheMatrices(Matrix<T> auto const &a, Matrix<T> auto const &b);
     }
 
     namespace big_numbers

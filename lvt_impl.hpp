@@ -1103,6 +1103,21 @@ constexpr std::vector<T> sumOfPolynomials(std::span<T const> a, std::span<T cons
     return result;
 }
 
+template <std::integral T>
+std::vector<std::vector<T>> sumOfTheMatrices(Matrix<T> auto const &a, Matrix<T> auto const &b)
+{
+    if (a.size() != b.size() && a.at(0ul).size() != b.at(0ul).size())
+        return {{}};
+
+    std::vector<std::vector<T>> result(a.size(), std::vector<T>(a.at(0ul).size()));
+
+    for (size_t i{}; i < a.size(); i++)
+        for (size_t j{}; j < a.at(i).size(); j++)
+            result.at(i).at(j) = a.at(i).at(j) + b.at(i).at(j);
+
+    return result;
+}
+
 template <typename... Args>
 constexpr std::string gen_str(Args &&...args)
 {
