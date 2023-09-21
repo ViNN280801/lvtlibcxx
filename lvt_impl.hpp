@@ -34,6 +34,9 @@ concept Printable = requires(T a, std::ostream &os) {
     } -> std::same_as<std::ostream &>;
 };
 
+template <typename R, typename T>
+concept Matrix = std::convertible_to<std::ranges::range_reference_t<std::ranges::range_reference_t<R>>, T>;
+
 template <typename T>
 void printVec(std::vector<T> const &vec)
 {
@@ -65,6 +68,21 @@ void printMatrix(std::vector<std::vector<T>> const &matrix)
     {
         for (size_t col{}; col < matrix.at(row).size(); col++)
             std::cout << matrix.at(row).at(col) << '\t';
+        std::endl(std::cout);
+    }
+}
+
+/**
+ * @brief Prints matrix
+ * @tparam matrix matrix to print
+ */
+template <Printable T>
+void printMatrix(Matrix<T> auto const &matrix)
+{
+    for (size_t i{}; i < matrix.size(); i++)
+    {
+        for (size_t j{}; j < matrix[i].size(); j++)
+            std::cout << matrix[i][j] << ' ';
         std::endl(std::cout);
     }
 }

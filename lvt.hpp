@@ -75,6 +75,13 @@ namespace lvt
         } -> std::same_as<std::ostream &>;
     };
 
+    /**
+     * @brief Describes matrix. Checks type 'R' representes a 2D-array of elements with type 'T'
+     * by verifying that the elements within 'R' can be convertible to 'T'
+     */
+    template <typename R, typename T>
+    concept Matrix = std::convertible_to<std::ranges::range_reference_t<std::ranges::range_reference_t<R>>, T>;
+
     namespace print
     {
         // Prints array to terminal
@@ -93,6 +100,13 @@ namespace lvt
         // Prints matrix to terminal
         template <typename T>
         void printMatrix(std::vector<std::vector<T>> const &);
+
+        /**
+         * @brief Prints matrix
+         * @tparam matrix matrix to print
+         */
+        template <Printable T>
+        void printMatrix(Matrix<T> auto const &matrix);
 
         // Prints vector of pairs to terminal
         template <typename T1, typename T2>
