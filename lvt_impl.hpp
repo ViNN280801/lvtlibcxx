@@ -1050,6 +1050,56 @@ constexpr T findClosest(std::span<T const> range, T value)
     return (*it - value < value - *(std::prev(it))) ? *it : *(std::prev(it));
 }
 
+template <std::unsigned_integral T>
+unsigned long long maxPairwiseProduct(std::span<T const> range)
+{
+    // Checking bounds
+    if (range.empty() || range.size() < 2ul)
+        return 0ull;
+
+    // Initializing copy of range
+    std::vector<T> copy(range.begin(), range.end());
+
+    unsigned long long fst{}, snd{};
+    for (size_t i{}; i < range.size(); i++)
+    {
+        if (range[i] > fst)
+        {
+            snd = fst;
+            fst = range[i];
+        }
+        else if (range[i] > snd)
+            snd = range[i];
+    }
+
+    return static_cast<unsigned long long>(fst) * static_cast<unsigned long long>(snd);
+}
+
+template <std::integral T>
+long long maxProductOf3Elems(std::span<T const> range)
+{
+    // Checking bounds
+    if (range.empty() || range.size() < 3ul)
+        return std::numeric_limits<long long>::min();
+
+    // Initializing copy of range and sorting it
+    std::vector<T> copy(range.begin(), range.end());
+    std::ranges::sort(copy, std::ranges::greater());
+
+    // Finding two results (when we have a negative numbers they can be greater than max elem in range
+    // {if do not take in account sign}), so we need to find product of them
+    long long result{1ll}, snd_result{copy.at(0)};
+    for (short i{}; i < 3; i++)
+        result *= copy.at(i);
+    for (short i{1}; i < 3; i++)
+        snd_result *= copy.at(range.size() - i);
+
+    // Comparing two results to find max
+    result = (snd_result > result) ? snd_result : result;
+
+    return result;
+}
+
 template <std::integral T>
 constexpr std::vector<T> getUniqueElementsFromTwoSequences(std::span<T const> rangeA, std::span<T const> rangeB)
 {

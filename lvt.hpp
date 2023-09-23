@@ -526,6 +526,22 @@ namespace lvt
         int calculateIntervalsLength(std::vector<std::pair<int, int>> intervals);
 
         /**
+         * @brief Calculates max product of 2 elems in sequence (signs are not taken in account).
+         * @tparam range sequence of elements.
+         * @return Max product of 2 elems. Returns min value of "unsigned long long" type if smth was wrong.
+         */
+        template <std::unsigned_integral T>
+        unsigned long long maxPairwiseProduct(std::span<T const> range);
+
+        /**
+         * @brief Calculates max product of 3 elems in sequence (signs are taken in account).
+         * @tparam range sequence of elements.
+         * @return Max product of 3 elems. Returns min value of "long long" type if smth was wrong.
+         */
+        template <std::integral T>
+        long long maxProductOf3Elems(std::span<T const> range);
+
+        /**
          * @brief Generates new array that contains only unique elems
          * @tparam rangeA 1st range of elems
          * @tparam rangeB 2nd range of elems
