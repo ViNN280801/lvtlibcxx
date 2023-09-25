@@ -511,6 +511,23 @@ std::vector<std::string> lvt::algorithm::stringPermutations(std::string s)
     return perms;
 }
 
+std::vector<int> lvt::algorithm::tribonacci(std::vector<int> signature, int n)
+{
+    // Checking bounds
+    if (signature.empty() || signature.size() < 3ul)
+        return {};
+
+    // Checking if 'n' is less ore equals than size of the passed sequence
+    if (static_cast<size_t>(n) <= signature.size())
+        signature.resize(n);
+
+    // Getting new values from Tribonacci sequence
+    for (int i{3ul}; i < n; i++)
+        signature.emplace_back(signature.at(i - 1) + signature.at(i - 2) + signature.at(i - 3));
+
+    return signature;
+}
+
 // Calculates sum of 2 big numbers represented as array of integer
 void big_numbers::sum(const std::vector<int> &num1, const std::vector<int> &num2, std::vector<int> &res)
 {

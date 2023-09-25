@@ -558,6 +558,14 @@ namespace lvt
         std::vector<std::string> stringPermutations(std::string s);
 
         /**
+         * @brief Calculates 'n' elements from Tribonacci sequence by passes sequence
+         * @param signature sequence of integer elements
+         * @param n count of elements in the result sequence
+         * @return Tribonacci sequence of 'n' size started with 'signature' elements
+         */
+        std::vector<int> tribonacci(std::vector<int> signature, int n);
+
+        /**
          * @brief Calculates sum of two polynomials, assumes that coefficients in both args (polynomials)
          * are in correct order (for example, A(x) = 5x^3 + 2x^2 - 7x + 3) -> where 5 is the last index, 3 is the first.
          * @tparam a - first polynomial.
