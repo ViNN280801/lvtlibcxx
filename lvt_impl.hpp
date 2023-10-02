@@ -1168,6 +1168,36 @@ std::vector<std::vector<T>> sumOfTheMatrices(Matrix<T> auto const &a, Matrix<T> 
     return result;
 }
 
+template <StringConvertible T>
+std::string CommonPrefix(std::span<T const> strings)
+{
+    // Checking boundary condition
+    if (strings.empty())
+        return "";
+
+    // If we have 1 word - return it as a result
+    if (strings.size() == 1ul)
+        return std::string(strings[0]);
+
+    // Finding common (minimal) length between all strings in a vector
+    size_t commonLen{strings[0].length()};
+    for (std::string_view word : strings)
+        commonLen = std::min(commonLen, word.length());
+
+    for (size_t i{}; i < commonLen; i++)
+    {
+        // Remember i-th symbol from 1-st string as a common char
+        char const commonCh{strings[0][i]};
+        for (std::string_view word : strings)
+            // If mismatch returning temporaly string constructed using "word[0:i]"
+            if (word[i] != commonCh)
+                return std::string(strings[0].substr(0, i));
+    }
+
+    // In other cases just return substring from 0 to minimal length
+    return std::string(strings[0]).substr(0, commonLen);
+}
+
 template <typename... Args>
 constexpr std::string gen_str(Args &&...args)
 {

@@ -33,8 +33,7 @@ namespace lvt
      * For example, "char", "const char *", "std::string", etc.
      */
     template <typename T>
-    concept StringConvertible = std::is_convertible_v<T, std::string_view> ||
-                                std::is_convertible_v<T, const char *> || std::is_convertible_v<T, char>;
+    concept StringConvertible = std::is_convertible_v<T, std::string_view>;
 
     /**
      * @brief Concept that checks available of all comparison operators
@@ -583,6 +582,14 @@ namespace lvt
          */
         template <std::integral T>
         std::vector<std::vector<T>> sumOfTheMatrices(Matrix<T> auto const &a, Matrix<T> auto const &b);
+
+        /**
+         * @brief Searches common prefix in sequence of strings.
+         * @tparam strings sequence of strings
+         * @return Common prefix in all passed strings
+         */
+        template <StringConvertible T>
+        std::string CommonPrefix(std::span<T const> strings);
     }
 
     namespace big_numbers
