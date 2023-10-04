@@ -528,6 +528,21 @@ std::vector<int> lvt::algorithm::tribonacci(std::vector<int> signature, int n)
     return signature;
 }
 
+std::string lvt::algorithm::join(std::span<std::string_view> tokens, std::string_view delim)
+{
+    std::string result;
+
+    // Joining each string into result variavle
+    for (std::string_view token : tokens)
+    {
+        result += token;
+        result += delim;
+    }
+
+    // Do not need to include last added delimiter into result string
+    return result.substr(0, result.length() - 1);
+}
+
 // Calculates sum of 2 big numbers represented as array of integer
 void big_numbers::sum(const std::vector<int> &num1, const std::vector<int> &num2, std::vector<int> &res)
 {

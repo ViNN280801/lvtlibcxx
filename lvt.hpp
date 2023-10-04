@@ -590,6 +590,14 @@ namespace lvt
          */
         template <StringConvertible T>
         std::string CommonPrefix(std::span<T const> strings);
+
+        /**
+         * @brief Joins passed strings with passed delimiter.
+         * @param tokens strings to be combined.
+         * @param delim delimiter by which they would joining.
+         * @return String composed from passed range of strings with specified delimiter.
+         */
+        std::string join(std::span<std::string_view> tokens, std::string_view delim);
     }
 
     namespace big_numbers
