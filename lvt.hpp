@@ -584,12 +584,21 @@ namespace lvt
         std::vector<std::vector<T>> sumOfTheMatrices(Matrix<T> auto const &a, Matrix<T> auto const &b);
 
         /**
+         * @brief Transposes matrix
+         * @tparam T restictions: constructible, copy/move-assignable
+         * @tparam matrix matrix to transpose
+         * @return Transposed matrix as vector of vectors
+         */
+        template <typename T>
+        std::vector<std::vector<T>> transposeMatrix(Matrix<T> auto const &matrix);
+
+        /**
          * @brief Searches common prefix in sequence of strings.
          * @tparam strings sequence of strings
          * @return Common prefix in all passed strings
          */
         template <StringConvertible T>
-        std::string CommonPrefix(std::span<T const> strings);
+        std::string commonPrefix(std::span<T const> strings);
 
         /**
          * @brief Joins passed strings with passed delimiter.

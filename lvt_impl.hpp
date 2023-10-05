@@ -1168,8 +1168,24 @@ std::vector<std::vector<T>> sumOfTheMatrices(Matrix<T> auto const &a, Matrix<T> 
     return result;
 }
 
+template <typename T>
+std::vector<std::vector<T>> transposeMatrix(Matrix<T> auto const &matrix)
+{
+    static_assert(std::is_constructible_v<T> && std::is_copy_assignable_v<T> && std::is_move_assignable_v<T>);
+
+    if (matrix.empty())
+        return {{}};
+
+    std::vector<std::vector<T>> transposed(matrix[0].size(), std::vector<T>(matrix.size()));
+    for (size_t i{}; i < matrix.size(); i++)
+        for (size_t j{}; j < matrix[i].size(); j++)
+            transposed[j][i] = matrix[i][j];
+
+    return transposed;
+}
+
 template <StringConvertible T>
-std::string CommonPrefix(std::span<T const> strings)
+std::string commonPrefix(std::span<T const> strings)
 {
     // Checking boundary condition
     if (strings.empty())
