@@ -21,8 +21,21 @@
 #include <ctime>
 #include <utility>
 #include <functional>
+#include <source_location>
+#include <format>
 
 #include "lvt_impl.hpp"
+
+#define ERRMSG(desc) std::cerr << std::format("ERROR: {}: {}({} line): {}: {}\n",          \
+                                              std::chrono::system_clock::now(),            \
+                                              std::source_location::current().file_name(), \
+                                              std::source_location::current().line(),      \
+                                              __PRETTY_FUNCTION__, desc);
+#define LOGMSG(desc) std::clog << std::format("LOG: {}: {}({} line): {}: {}\n",            \
+                                              std::chrono::system_clock::now(),            \
+                                              std::source_location::current().file_name(), \
+                                              std::source_location::current().line(),      \
+                                              __PRETTY_FUNCTION__, desc);
 
 using namespace std::chrono_literals;
 
