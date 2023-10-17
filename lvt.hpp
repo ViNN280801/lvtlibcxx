@@ -614,6 +614,13 @@ namespace lvt
         std::string commonPrefix(std::span<T const> strings);
 
         /**
+         * @brief Finds common letters in a sequence of words
+         * @param words sequence of words
+         * @return Common letters as a word ("std::string" instance)
+         */
+        std::string commonLetters(std::vector<std::string> const &words);
+
+        /**
          * @brief Joins passed strings with passed delimiter.
          * @param tokens strings to be combined.
          * @param delim delimiter by which they would joining.

@@ -1,3 +1,5 @@
+#include <set>
+
 #include "lvt.hpp"
 
 using namespace lvt;
@@ -526,6 +528,27 @@ std::vector<int> lvt::algorithm::tribonacci(std::vector<int> signature, int n)
         signature.emplace_back(signature.at(i - 1) + signature.at(i - 2) + signature.at(i - 3));
 
     return signature;
+}
+
+std::string lvt::algorithm::commonLetters(std::vector<std::string> const &words)
+{
+    if (words.empty())
+        return "";
+
+    std::map<char, size_t> m;
+    for (std::string_view word : words)
+    {
+        std::set<char> letters(word.begin(), word.end());
+        for (char letter : letters)
+            m[letter]++;
+    }
+
+    std::string str;
+    for (auto const &[key, value] : m)
+        if (value == words.size())
+            str += key;
+
+    return str;
 }
 
 std::string lvt::algorithm::join(std::span<std::string_view> tokens, std::string_view delim)
