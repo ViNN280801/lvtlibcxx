@@ -566,6 +566,20 @@ std::string lvt::algorithm::join(std::span<std::string_view> tokens, std::string
     return result.substr(0, result.length() - 1);
 }
 
+std::vector<std::string> lvt::algorithm::extractNonEmptyDirs(std::vector<std::string> dirs)
+{
+    if (dirs.empty())
+        return {};
+
+    std::set<std::string> s;
+    for (std::string_view path : dirs)
+        for (size_t i{}; i < path.length(); i++)
+            if (path[i] == '/')
+                s.insert(std::string(path.substr(0, i + 1)));
+
+    return std::vector<std::string>(std::cbegin(s), std::cend(s));
+}
+
 // Calculates sum of 2 big numbers represented as array of integer
 void big_numbers::sum(const std::vector<int> &num1, const std::vector<int> &num2, std::vector<int> &res)
 {

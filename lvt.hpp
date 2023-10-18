@@ -42,6 +42,126 @@ using namespace std::chrono_literals;
 namespace lvt
 {
     /**
+     * @brief Concept that checks if an element can be destroyed with std::destroy_at.
+     * @tparam E Element type
+     */
+    template <typename E>
+    concept default_erasable = requires(E *p) {
+        std::destroy_at(p);
+    };
+
+    /**
+     * @brief Concept that checks if an element can be destroyed using allocator traits.
+     * @tparam E Element type
+     * @tparam T Container type
+     * @tparam A Allocator type
+     */
+    template <typename E, typename T, typename A>
+    concept allocator_erasable = requires(A m, E *p) {
+        requires std::same_as<typename T::allocator_type, typename std::allocator_traits<A>::rebind_alloc<E>>;
+        std::allocator_traits<A>::destroy(m, p);
+    };
+
+    /**
+     * @brief Concept that checks if a container is allocator-aware.
+     * @tparam T Container type
+     */
+    template <typename T>
+    concept allocator_aware = requires(T a) {
+        {
+            a.get_allocator()
+        } -> std::same_as<typename T::allocator_type>;
+    };
+
+    /**
+     * @brief Metafunction to identify if a type is a std::basic_string.
+     * @tparam T Type to check
+     */
+    template <typename T>
+    struct is_basic_string : std::false_type
+    {
+    };
+
+    /**
+     * @brief Metafunction to identify if a type is a std::basic_string (specialization for std::basic_string).
+     * @tparam C Character type
+     * @tparam T Traits type
+     * @tparam A Allocator type
+     */
+    template <typename C, typename T, typename A>
+    struct is_basic_string<std::basic_string<C, T, A>> : std::true_type
+    {
+    };
+
+    /**
+     * @brief Variable template to check if a type is a std::basic_string.
+     * @tparam T Type to check
+     */
+    template <typename T>
+    constexpr bool is_basic_string_v = is_basic_string<T>::value;
+
+    /**
+     * @brief Concept that checks if an element can be erased from a container.
+     * @tparam E Element type
+     * @tparam T Container type
+     */
+    template <typename E, typename T>
+    concept erasable = (is_basic_string_v<T> && default_erasable<E>) || (allocator_aware<T> && allocator_erasable<E, T, typename T::allocator_type>) || (!allocator_aware<T> && default_erasable<E>);
+
+    /**
+     * @brief Concept that specifies the properties of a container type.
+     * @tparam T Container type
+     */
+    template <typename T>
+    concept Container = requires(T a, const T b) {
+        // Requires the type to be regular and swappable
+        requires std::regular<T>;
+        requires std::swappable<T>;
+
+        // Requires the element type to be erasable
+        requires erasable<typename T::value_type, T>;
+
+        // Requires specific type relationships for references and iterators
+        requires std::same_as<typename T::reference, typename T::value_type &>;
+        requires std::same_as<typename T::const_reference, const typename T::value_type &>;
+        requires std::forward_iterator<typename T::iterator>;
+        requires std::forward_iterator<typename T::const_iterator>;
+        requires std::signed_integral<typename T::difference_type>;
+        requires std::same_as<typename T::difference_type, typename std::iterator_traits<typename T::iterator>::difference_type>;
+        requires std::same_as<typename T::difference_type, typename std::iterator_traits<typename T::const_iterator>::difference_type>;
+        {
+            a.begin()
+        } -> std::same_as<typename T::iterator>;
+        {
+            a.end()
+        } -> std::same_as<typename T::iterator>;
+        {
+            b.begin()
+        } -> std::same_as<typename T::const_iterator>;
+        {
+            b.end()
+        } -> std::same_as<typename T::const_iterator>;
+        {
+            a.cbegin()
+        } -> std::same_as<typename T::const_iterator>;
+        {
+            a.cend()
+        } -> std::same_as<typename T::const_iterator>;
+        {
+            a.size()
+        } -> std::same_as<typename T::size_type>;
+        {
+            a.max_size()
+        } -> std::same_as<typename T::size_type>;
+        {
+            a.empty()
+        } -> std::convertible_to<bool>;
+
+        // Add the std::ranges::range requirement
+        requires std::ranges::range<T>;
+    };
+
+    /**
      * @brief Concept that specifies all types that can be convert to "std::string_view" type
      * For example, "char", "const char *", "std::string", etc.
      */
@@ -627,6 +747,21 @@ namespace lvt
          * @return String composed from passed range of strings with specified delimiter.
          */
         std::string join(std::span<std::string_view> tokens, std::string_view delim);
+
+        /**
+         * @brief Gets all non-empty dirs and subdirs
+         * @param dirs path to directories
+         * @return Set of non-empty directories in lexicographical order
+         *
+         * Example of usage:
+         * std::vector<std::string> dirs;
+         * std::string path;
+         * while (std::getline(std::cin, path))
+         *     dirs.emplace_back(path);
+         * for (std::string_view dir : extractNonEmptyDirs(dirs))
+         *     std::cout << dir << '\n';
+         */
+        std::vector<std::string> extractNonEmptyDirs(std::vector<std::string> dirs);
     }
 
     namespace big_numbers
