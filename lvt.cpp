@@ -580,6 +580,29 @@ std::vector<std::string> lvt::algorithm::extractNonEmptyDirs(std::vector<std::st
     return std::vector<std::string>(std::cbegin(s), std::cend(s));
 }
 
+std::vector<std::pair<std::string, int>> lvt::algorithm::calculateNGramFrequencies(std::vector<std::string> const &words,
+                                                                                   size_t lengthOfNGramm)
+{
+    // Check boundary conditons
+    if (words.empty())
+        return {};
+
+    std::map<std::string, int> m;
+    for (auto const &word : words)
+        // Adding specified by condition length of the word ('n') to the map
+        for (size_t j{lengthOfNGramm}; j <= word.length(); ++j)
+            ++m[word.substr(j - lengthOfNGramm, lengthOfNGramm)];
+
+    // Initializing vector of pairs with values from the map
+    std::vector<std::pair<std::string, int>> v(std::cbegin(m), std::cend(m));
+
+    // Sorting by frequency of the keys
+    std::sort(std::begin(v), std::end(v), [](auto const &pair1, auto const &pair2)
+              { return std::tie(pair2.second, pair1.first) <
+                       std::tie(pair1.second, pair2.first); });
+    return v;
+}
+
 // Calculates sum of 2 big numbers represented as array of integer
 void big_numbers::sum(const std::vector<int> &num1, const std::vector<int> &num2, std::vector<int> &res)
 {

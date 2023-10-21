@@ -762,6 +762,16 @@ namespace lvt
          *     std::cout << dir << '\n';
          */
         std::vector<std::string> extractNonEmptyDirs(std::vector<std::string> dirs);
+
+        /**
+         * @brief Calculate the frequencies of symbolic n-grams in a text
+         * @param words list of words
+         * @param lengthOfNGramm length of each n-gram
+         * @return Vector of words and their frequencies correspondingly.
+         * Vector sorted by frequencies if freqs are equal - lexicograpically sorted
+         */
+        std::vector<std::pair<std::string, int>> calculateNGramFrequencies(std::vector<std::string> const &words,
+                                                                           size_t lengthOfNGramm);
     }
 
     namespace big_numbers
