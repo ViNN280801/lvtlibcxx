@@ -1214,6 +1214,18 @@ std::string commonPrefix(std::span<T const> strings)
     return std::string(strings[0]).substr(0, commonLen);
 }
 
+/**
+ * @brief Duplicates vector elements to itself
+ * @tparam v vector to duplicate
+ */
+template <typename T>
+void duplicateVector(std::vector<T> &v)
+{
+    auto initSize{v.size()};
+    v.reserve(initSize * 2);
+    std::copy(v.begin(), v.end(), std::back_inserter(v));
+}
+
 template <typename... Args>
 constexpr std::string gen_str(Args &&...args)
 {
@@ -1222,4 +1234,4 @@ constexpr std::string gen_str(Args &&...args)
     return oss.str();
 }
 
-#endif // LVT_IMPL_HPP
+#endif // !LVT_IMPL_HPP

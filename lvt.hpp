@@ -772,6 +772,13 @@ namespace lvt
          */
         std::vector<std::pair<std::string, int>> calculateNGramFrequencies(std::vector<std::string> const &words,
                                                                            size_t lengthOfNGramm);
+
+        /**
+         * @brief Duplicates vector elements to itself
+         * @tparam v vector to duplicate
+         */
+        template <typename T>
+        void duplicateVector(std::vector<T> &v);
     }
 
     namespace big_numbers
