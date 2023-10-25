@@ -1214,16 +1214,52 @@ std::string commonPrefix(std::span<T const> strings)
     return std::string(strings[0]).substr(0, commonLen);
 }
 
-/**
- * @brief Duplicates vector elements to itself
- * @tparam v vector to duplicate
- */
 template <typename T>
 void duplicateVector(std::vector<T> &v)
 {
     auto initSize{v.size()};
     v.reserve(initSize * 2);
     std::copy(v.begin(), v.end(), std::back_inserter(v));
+}
+
+template <typename T>
+struct is_comparable
+{
+    template <typename U>
+    static std::true_type test(decltype(std::declval<U>() < std::declval<U>()));
+
+    template <typename U>
+    static std::false_type test(...);
+
+    static constexpr bool value{decltype(test<T>(0))::value};
+};
+
+template <typename T>
+std::vector<T> ApproxBinSearch(std::span<T const> vec1, std::span<T const> vec2)
+{
+    static_assert(is_comparable<T>::value, "Type T must be comparable using the operator<()");
+
+    if (vec1.empty() or vec2.empty())
+        return std::vector<T>{};
+
+    assert(std::is_sorted(std::cbegin(vec1), std::cend(vec1)) && "First range has to be sorted initially");
+
+    std::vector<T> resultVector;
+    for (auto it{std::cbegin(vec2)}; it != std::cend(vec2); ++it)
+    {
+        auto res{std::lower_bound(std::cbegin(vec1), std::cend(vec1), *it)};
+        if (res == std::cend(vec1))
+            resultVector.emplace_back(*std::prev(res));
+        else if (res == std::cbegin(vec1) || *res == *it)
+            resultVector.emplace_back(*res);
+        else
+        {
+            int val1{*std::prev(res)}, val2{*res};
+            (std::abs(val1 - *it) <= std::abs(val2 - *it)) ? resultVector.emplace_back(val1)
+                                                           : resultVector.emplace_back(val2);
+        }
+    }
+    return resultVector;
 }
 
 template <typename... Args>

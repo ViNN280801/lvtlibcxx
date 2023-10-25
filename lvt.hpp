@@ -779,6 +779,20 @@ namespace lvt
          */
         template <typename T>
         void duplicateVector(std::vector<T> &v);
+
+        /**
+         * @brief Approximate Binary Search between two vectors.
+         * This function performs an approximate binary search between two sorted vectors.
+         * It finds the closest value in `vec1` for each element in `vec2`.
+         * If there are multiple elements in `vec1` with the same absolute difference to an
+         * element in `vec2`, the lower value is chosen.
+         * @tparam T The type of elements in the input vectors.
+         * @param vec1 First sorted vector
+         * @param vec2 Second vector for which approximate search is performed
+         * @return A vector containing the closest values from `vec1` for each element in `vec2`
+         */
+        template <typename T>
+        std::vector<T> ApproxBinSearch(std::span<T const> vec1, std::span<T const> vec2);
     }
 
     namespace big_numbers
