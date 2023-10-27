@@ -4,7 +4,6 @@
 
 using namespace lvt;
 
-// Returns "true" if '__ch' is vowel, otherwise - "false"
 bool lvt::checkings::is_vowel(char __ch)
 {
     return (__ch == 'a' || __ch == 'e' || __ch == 'i' || __ch == 'o' ||
@@ -14,7 +13,43 @@ bool lvt::checkings::is_vowel(char __ch)
                : false;
 }
 
-// Turning all characters in string to lowercase
+bool lvt::checkings::isBracketSequenceValid(std::string_view seq)
+{
+    // Check boundary condition
+    if (seq.empty())
+        return false;
+
+    // Storing brackets in the stack adapter
+    std::stack<char> brackets;
+    for (char ch : seq)
+    {
+        // Pushing back opening bracket
+        if (ch == '(' || ch == '[' || ch == '{')
+            brackets.push(ch);
+        // Pushing back closing bracket
+        else
+        {
+            // If stack is empty
+            if (brackets.empty())
+                return false;
+
+            // Storing the top element from the stack
+            char top{brackets.top()};
+
+            // If we have enclosing brackets (pair of opening and closing bracket)
+            // -> erase top element from the stack
+            if ((top == '(' && ch == ')') || (top == '[' && ch == ']') || (top == '{' && ch == '}'))
+                brackets.pop();
+            // Else there is no enclosing pair -> balance is broken
+            else
+                return false;
+        }
+    }
+
+    // If stack is empty - all is OK, otherwise - balance is broken
+    return brackets.empty();
+}
+
 std::string string::modifying::str_to_lower(const std::string &__str)
 {
     std::string str{__str};
@@ -22,7 +57,6 @@ std::string string::modifying::str_to_lower(const std::string &__str)
     return str;
 }
 
-// Makes all characters in string to uppercase
 std::string string::modifying::str_to_upper(const std::string &__str)
 {
     std::string str{__str};
@@ -30,7 +64,6 @@ std::string string::modifying::str_to_upper(const std::string &__str)
     return str;
 }
 
-// Returns string '__str' without vowels
 std::string string::modifying::remove_vowels(const std::string &__str)
 {
     std::string str(__str);
@@ -40,8 +73,6 @@ std::string string::modifying::remove_vowels(const std::string &__str)
     return str;
 }
 
-// Since C++20 (need std::erase_if())
-// Returns string '__str' without vowels
 std::string string::modifying::remove_vowels_cxx_20(const std::string &__str)
 {
     std::string str(__str);
@@ -50,7 +81,6 @@ std::string string::modifying::remove_vowels_cxx_20(const std::string &__str)
     return str;
 }
 
-// Returns string '__str' without vowels (need std::regex)
 std::string string::modifying::remove_vowels_regex(const std::string &__str)
 {
     std::string str(__str);
@@ -58,7 +88,6 @@ std::string string::modifying::remove_vowels_regex(const std::string &__str)
     return std::regex_replace(str, vowels, "");
 }
 
-// Returns string '__str' without vowels
 void string::modifying::remove_vowels(std::string &__str)
 {
     __str.erase(std::remove_if(std::begin(__str), std::end(__str), [](char ch)
@@ -66,22 +95,18 @@ void string::modifying::remove_vowels(std::string &__str)
                 std::cend(__str));
 }
 
-// Since C++20 (need std::erase_if())
-// Returns string '__str' without vowels
 void string::modifying::remove_vowels_cxx_20(std::string &__str)
 {
     std::erase_if(__str, [](char ch)
                   { return lvt::checkings::is_vowel(ch); });
 }
 
-// Returns string '__str' without vowels (need std::regex)
 void string::modifying::remove_vowels_regex(std::string &__str)
 {
     std::regex vowels("[aeiouAEOIOU]");
     std::regex_replace(__str, vowels, "");
 }
 
-// Removing consecutive same characters from some range
 std::string string::modifying::remove_consecutive_spaces(const std::string &__str)
 {
     std::string str(__str);
@@ -95,7 +120,6 @@ std::string string::modifying::remove_consecutive_spaces(const std::string &__st
     return str;
 }
 
-// Removing consecutive same characters from some range
 void string::modifying::remove_consecutive_spaces(std::string &__str)
 {
     for (auto it{std::cbegin(__str)}; it != std::cend(__str); ++it)
@@ -105,17 +129,11 @@ void string::modifying::remove_consecutive_spaces(std::string &__str)
     }
 }
 
-// Returns one random double number
 double lvt::random::create_random_double(const double &__lower, const double &__upper)
 {
     return __lower + (static_cast<double>(rand()) / RAND_MAX) * (__upper - __lower);
 }
 
-// Returns random string
-/* Hint: You must declare at the top following line:
-    #define __GENERATE__ALL__SYMBOLS__ for generate string consisting of all symbols
-    or
-    #define __GENERATE__ONLY__DIGITS__ for generate string consisting of only digits */
 std::string lvt::random::generateRandomString(size_t __lenght)
 {
 #ifdef __GENERATE__ALL__SYMBOLS__
@@ -148,10 +166,6 @@ std::string lvt::random::generateRandomString(size_t __lenght)
     return rndmString;
 }
 
-// Returns random vector filled with integer numbers
-// 'vecSize' - size of the vector
-// 'from' - lower number
-// 'to' - higher number to generate
 std::vector<int> lvt::random::generateRandomIntVector(size_t vecSize, int from, int to)
 {
     // Initializing vector with size 'vecSize'
@@ -171,9 +185,6 @@ std::vector<int> lvt::random::generateRandomIntVector(size_t vecSize, int from, 
     return vec;
 }
 
-// Returns matrix of integers that is filled with random numbers
-// Gets rows as a first parameter and columns as a second
-// Third param - offset, fourth - range
 std::vector<std::vector<int>> lvt::random::generateRandomIntMatrix(size_t rows, size_t cols,
                                                                    int offset, int range)
 {
@@ -203,7 +214,6 @@ void lvt::random::fillVector(std::vector<int> &v, int from, int to)
     std::generate(std::begin(v), std::end(v), generator);
 }
 
-// Returns vector of words in a string, except any spaces
 std::vector<std::string> algorithm::split_str(const std::string &__str, const std::string &__delimiter)
 {
     std::vector<std::string> splitted_str;
@@ -224,7 +234,6 @@ std::vector<std::string> algorithm::split_str(const std::string &__str, const st
     return splitted_str;
 }
 
-// Composing vector of string to a single string
 std::string algorithm::vec_to_str(const std::vector<std::string> &__vec)
 {
     std::string single_str("");
@@ -235,8 +244,6 @@ std::string algorithm::vec_to_str(const std::vector<std::string> &__vec)
     return single_str;
 }
 
-// Since C++20 (need std::span)
-// Composing vector of string to a single string
 std::string algorithm::vec_to_str(std::span<const std::string> __vec)
 {
     std::string single_str("");
@@ -247,7 +254,6 @@ std::string algorithm::vec_to_str(std::span<const std::string> __vec)
     return single_str;
 }
 
-// Returns vector of symbols in the string 'str', except any 'delim'eters
 std::vector<std::string> algorithm::splitVecStringBy(std::string &str, char delim) noexcept
 {
     std::vector<std::string> vec;
@@ -259,7 +265,6 @@ std::vector<std::string> algorithm::splitVecStringBy(std::string &str, char deli
     return vec;
 }
 
-// Returns count of unique symbols in the string 'str'
 int algorithm::countOfUniqueSymbols(const std::string &str)
 {
     std::map<char, int> m;
@@ -274,14 +279,12 @@ int algorithm::countOfUniqueSymbols(const std::string &str)
     return m.size();
 }
 
-// Returns sum of only digits in the string 'str'
 int algorithm::sumOfOnlyDigits(std::string str)
 {
     return std::accumulate(std::begin(str), std::end(str), 0, [](unsigned i, char &ch)
                            { return std::isdigit(ch) ? i + (ch - '0') : i; });
 }
 
-// Returns count of the first consecutive occurrences in the string 's'
 constexpr int algorithm::firstCountOfConsecutiveOccurrences(const std::string &s)
 {
     // Keep the end of the string, and point i to the first run's beginning
@@ -296,8 +299,6 @@ constexpr int algorithm::firstCountOfConsecutiveOccurrences(const std::string &s
     }
 }
 
-// Returns count of the first consecutive occurrences in the string 's'
-// 'n' is number of occurrence
 constexpr int algorithm::countOfConsecutiveOccurrencesAt_n(const std::string &s, size_t n)
 {
     // Keep the end of the string, and point i to the first run's beginning
@@ -323,7 +324,6 @@ constexpr int algorithm::countOfConsecutiveOccurrencesAt_n(const std::string &s,
     return (n - 1UL < counterVec.size()) ? counterVec.at(n - 1UL) : 0;
 }
 
-// Returns maximum count of the consecutive occurrences in the string 's'
 constexpr int algorithm::maxCountOfConsecutiveOccurrences(const std::string &s)
 {
     // Keep the end of the string, and point i to the first run's beginning
@@ -351,8 +351,6 @@ constexpr int algorithm::maxCountOfConsecutiveOccurrences(const std::string &s)
     return *std::max_element(std::cbegin(counterVec), std::cend(counterVec));
 }
 
-// Return vector of pairs that will store the only unique keys as a first value of pair
-// and sum of values of repeating keys as a second value of pair
 std::vector<std::pair<char, int>> algorithm::compressTheVectorOfPairs(std::vector<std::string> const &lstOfArt)
 {
     // Getting vector of all categories of books and it's count
@@ -401,8 +399,6 @@ std::vector<std::pair<char, int>> algorithm::compressTheVectorOfPairs(std::vecto
     return newVec;
 }
 
-// Returns vector of string with all occurences
-// If you want to fill vector with all symbols which are don't match -> 'isMatch' should be -1
 std::vector<std::string> lvt::algorithm::regexFindAll(std::string const &strToSearch, std::string const &pattern, int isMatch)
 {
     // Initializing "std::regex" object (converting string with pattern to a regex)

@@ -282,6 +282,13 @@ namespace lvt
         // Returns "true" if type of passed arg is arythmetic type of 'char'
         template <typename T>
         consteval bool isArithmeticType([[maybe_unused]] const T &) noexcept;
+
+        /**
+         * @brief Checker for bracket sequence that could include: ()[]{}
+         * @param seq sequence of brackets
+         * @return `true` if sequence is valid, otherwise - `false`
+         */
+        bool isBracketSequenceValid(std::string_view seq);
     }
 
     namespace convert
