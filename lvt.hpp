@@ -800,6 +800,16 @@ namespace lvt
          */
         template <typename T>
         std::vector<T> ApproxBinSearch(std::span<T const> vec1, std::span<T const> vec2);
+
+        /**
+         * @brief Comparator for the map
+         * @tparam Map template parameter that defines map
+         * @param lhs first map
+         * @param rhs second map
+         * @return `true` if sizes and contents of the both maps are equal, otherwise `false`.
+         */
+        template <typename Map>
+        constexpr bool map_compare(Map const &lhs, Map const &rhs);
     }
 
     namespace big_numbers

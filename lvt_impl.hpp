@@ -1262,6 +1262,13 @@ std::vector<T> ApproxBinSearch(std::span<T const> vec1, std::span<T const> vec2)
     return resultVector;
 }
 
+template <typename Map>
+constexpr bool map_compare(Map const &lhs, Map const &rhs)
+{
+    // Comparing sizes and contents
+    return lhs.size() == rhs.size() && std::equal(lhs.begin(), lhs.end(), rhs.begin());
+}
+
 template <typename... Args>
 constexpr std::string gen_str(Args &&...args)
 {
