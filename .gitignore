@@ -7,3 +7,5 @@ CMakeCache.txt
 Makefile
 main.cpp
 *.out
+main
+test

@@ -23,6 +23,7 @@
 #include <functional>
 #include <source_location>
 #include <format>
+#include <cassert>
 
 #include "lvt_impl.hpp"
 
@@ -826,6 +827,79 @@ namespace lvt
 
     namespace time
     {
+        /**
+         * @brief A high-resolution timer for measuring elapsed time.
+         * The Timer class provides functionality to measure the elapsed time between
+         * starting and stopping the timer. It uses the high-resolution clock for precision.
+         */
+        class Timer
+        {
+        private:
+            std::chrono::high_resolution_clock::time_point m_start_tp, m_end_tp;
+            bool m_isstarted{false};
+
+        public:
+            /// @brief Defaulted ctor
+            explicit Timer() = default;
+
+            /**
+             * @brief Starts the timer.
+             * Marks the starting point of the timer by recording the current high-resolution time.
+             */
+            void startTimer()
+            {
+                m_isstarted = true;
+                m_start_tp = std::chrono::high_resolution_clock::now();
+            }
+
+            /**
+             * @brief Stops the timer.
+             * Marks the ending point of the timer by recording the current high-resolution time.
+             */
+            void stopTimer()
+            {
+                m_isstarted = false;
+                m_end_tp = std::chrono::high_resolution_clock::now();
+            }
+
+            /**
+             * @brief Gets the elapsed time in milliseconds.
+             * Calculates and returns the elapsed time in milliseconds between the start and stop points.
+             * It is necessary to stop the timer before calling this function.
+             * @return Elapsed time in milliseconds
+             */
+            unsigned elaplsedTimeMS() const
+            {
+                assert(!m_isstarted);
+                auto elapsed{m_end_tp - m_start_tp};
+                auto ms{std::chrono::duration_cast<std::chrono::milliseconds>(elapsed)};
+                return ms.count();
+            }
+        };
+
+        /**
+         * @brief Measures the execution time of a callable function with the provided arguments.
+         * This function executes the given callable object and measures the elapsed time
+         * between the start and stop points using a Timer. The result is the elapsed time
+         * in milliseconds.
+         * @tparam Callable Type of the callable object (function, lambda, etc.)
+         * @tparam Args Parameter types for the callable object
+         * @param callable The callable object to be measured
+         * @param args Arguments to be forwarded to the callable object
+         * @return Elapsed time in milliseconds
+         */
+        template <typename Callable, typename... Args>
+        unsigned int measureExecutionTime(Callable &&callable, Args &&...args)
+        {
+            static_assert(std::is_invocable_v<Callable, Args...>, "Callable must be invocable with Args");
+
+            Timer timer;
+            timer.startTimer();
+            std::invoke(std::forward<Callable>(callable), std::forward<Args>(args)...);
+            timer.stopTimer();
+            return timer.elaplsedTimeMS();
+        }
+
         // Printing current time to terminal at specified format
         void printCurTime(const StringConvertible auto &);
 
@@ -835,16 +909,20 @@ namespace lvt
         // and then execute this func
         void printExecutionTime(const auto &);
 
-        /// @brief Converts string to a formatted time (check 'time_t_to_str()' function)
-        /// @param str string to convert to the time format
-        /// @param format format in which will be time represented
-        /// @return "time_t" time
+        /**
+         * @brief Converts string to a formatted time (check 'time_t_to_str()' function)
+         * @param str string to convert to the time format
+         * @param format format in which will be time represented
+         * @return "time_t" time
+         */
         std::time_t str_to_time_t(std::string const &str, const char *format);
 
-        /// @brief Converts "time_t" variable to a string (check 'str_to_time_t()' function)
-        /// @param time time that will be converted
-        /// @param format format in which will be time represented
-        /// @return Converted time
+        /**
+         * @brief Converts "time_t" variable to a string (check 'str_to_time_t()' function)
+         * @param time time that will be converted
+         * @param format format in which will be time represented
+         * @return Converted time
+         */
         std::string time_t_to_str(std::time_t const &time, char const *format);
 
         /// @brief Generates random date of birth with age in interval [18; 100] (by default)
