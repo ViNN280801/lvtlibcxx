@@ -355,6 +355,14 @@ namespace lvt
          */
         template <typename... Args>
         constexpr std::string gen_str(Args &&...args);
+
+        /**
+         * @brief Finds the length of the longest substring without repeating characters.
+         * This method employs a sliding window approach, continuously updating the window.
+         * @param s The input string_view.
+         * @return The length of the longest substring without repeating characters.
+         */
+        int lengthOfLongestSubstring(std::string_view s);
     }
 
     namespace input

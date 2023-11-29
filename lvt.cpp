@@ -129,6 +129,44 @@ void string::modifying::remove_consecutive_spaces(std::string &__str)
     }
 }
 
+int lvt::string::lengthOfLongestSubstring(std::string_view s)
+{
+    /* Checking boundary conditions */
+    if (s.empty())
+        return 0;
+    if (s.length() == 1ul)
+        return 1;
+
+    size_t posOfUniqSubstr{}; // Position of the initial character in the window
+    int maxLen{};             // Length of the max unique substring
+    std::string uniqSubstr;
+
+    for (size_t i{}; i < s.length();)
+    {
+        // If there is no such a character in the substring - add it
+        if (uniqSubstr.find(s[i]) == std::string::npos)
+        {
+            uniqSubstr += s[i++];
+
+            // If position of the character is equals to the length of the initial string
+            // we need to check its length with current max length and assign if it necessary
+            if (i == s.length())
+                maxLen = std::max(maxLen, static_cast<int>(uniqSubstr.length()));
+        }
+        // Otherwise:
+        // 1. Compare current max length with the substring length.
+        // 2. Update substring.
+        // 3. Change window size.
+        else
+        {
+            maxLen = std::max(maxLen, static_cast<int>(uniqSubstr.length()));
+            uniqSubstr.clear();
+            i = ++posOfUniqSubstr;
+        }
+    }
+    return maxLen;
+}
+
 double lvt::random::create_random_double(const double &__lower, const double &__upper)
 {
     return __lower + (static_cast<double>(rand()) / RAND_MAX) * (__upper - __lower);
